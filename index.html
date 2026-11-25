@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestão do Terreiro — Instituto 7 Cores</title>
-  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=XrbKWV5EJIf2wCCXfFAayxtIABNs3yZ9U9_rtZoVbexhYS_d4qELVt6AKzo0aGTlarrDbNf-Q3Y5yOYeULxiqto1Rc5vHb1Y7L4bFAmdmISTulVTTxWSgz5hso9XYZWsTyfWgORb8V1o-KxDxxromTMajcA9bRSshhbRqHLIIPSEgZGwr_pSxZN2nesPJXcjq4iG9IJz0Sd2kcjORLhfJbEYC9a5YFmWIP9V0rxYgIR82fwq1vDXQ1YXwYy50kGFh8WCpvgswJYObcSyJhJLugja5PfDLY6z--Q_kHBxOzWOj6S7TxDIrxuH96qccIM_" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pBMk1XRTFNR0poWldRNE5EazNNamhtTURBd05qWXhNV1E0WWpJd1kyVTNNREF4TXpBM09Ea3pOMlV5T0daaE9ERVNDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPWluZGV4Lmh0bWwmb3BpPTEwMzEzNTA1MA"/><script src="https://cdn.tailwindcss.com"></script>
+  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=EvEC9EFC5htlRbvWzfkVCgLhrloUElm-MbYJxy1qwd52Q7sGqpAYIP8u7WlzlNeN3iTvOzJ1qxTDUOvnkZPE4dfSW3tgyjCtlEPJiuI49wKRE4MXqBFJrSnx6pyNQv32nzucKBT5SYZs9A1_w0gJRi4OXPNZ41ei4jTSekqmtCQh5v9_tB-8_kRNdHh019SynXOvZvZkhMVJpUMrXqt4V12LQENue3pfjOFaYrBj22TnzKDTkLcZ4oyD2HHzBwoFlw6RkXDHXu-bo-LO0FPfEtnMkHfWYTJkKNT9bW3AGIIEn_2uIJvgTRKWlrCm2OlO" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pCaE9HWTJOVFZoTWpneE0yUTFOVE0yTURBd05qWXhNV1E1TlRjM1pUa3hZakF4TXpBM056bGlOMk16T0RaaU5tUVNDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPWluZGV4Lmh0bWwmb3BpPTEwMzEzNTA1MA"/><script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
@@ -1156,10 +1156,12 @@
         try {
           const res = await fetch(`${url}${url.includes('?') ? '&' : '?'}action=read`, {
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
+            redirect: 'follow'
           });
-          if (res.ok) {
-            data = await res.json();
+          const text = await res.text();
+          if (text) {
+            data = JSON.parse(text);
           }
         } catch (_) {
           data = await fetchJsonp(url);
@@ -1608,8 +1610,7 @@
       if (proximoTrabalho?.compras) {
         msgLines.push(`Lista de compras: ${proximoTrabalho.compras}`);
       }
-      const url = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(msgLines.join('
-'))}`;
+      const url = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(msgLines.join('\n'))}`;
       window.open(url, '_blank', 'noopener,noreferrer');
     });
 
@@ -2043,5 +2044,77 @@
   setInterval(unlockUrlInput, 1500);
 })();
 </script>
+
+<script>
+(function() {
+  function normalizeGasUrl(raw) {
+    var u = String(raw || '').trim();
+    if (!u) return '';
+    if (!/^https?:\/\//i.test(u) && u.indexOf('script.google.com') !== -1) {
+      u = 'https://' + u;
+    }
+    return u;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var input = document.getElementById('gasWebAppUrlInput');
+    var btnSave = document.getElementById('btnSaveGasUrl');
+    var diag = document.getElementById('syncDiagnosticBox');
+
+    if (input) {
+      input.disabled = false;
+      input.readOnly = false;
+      input.style.pointerEvents = 'auto';
+      if (!input.value && typeof getGasUrl === 'function') {
+        input.value = getGasUrl();
+      }
+      if (diag && input.value) {
+        diag.textContent = 'Diagnóstico: URL ativa carregada -> ' + input.value;
+      }
+    }
+
+    if (btnSave && input) {
+      btnSave.addEventListener('click', function() {
+        var cleaned = normalizeGasUrl(input.value);
+        if (!cleaned) return;
+        input.value = cleaned;
+        try {
+          localStorage.setItem('i7c_gestao_terreiro_gas_url_v1', cleaned);
+        } catch (_) {}
+        if (diag) {
+          diag.textContent = 'Diagnóstico: URL salva e pronta para sincronizar -> ' + cleaned;
+        }
+      }, true);
+    }
+  });
+})();
+</script>
+
+<script>
+(function() {
+  // Garante que syncFromSheet e syncToSheet funcionem mesmo se houver algum ajuste na URL do input
+  function resolveCurrentGasUrl() {
+    var input = document.getElementById('gasWebAppUrlInput');
+    var fromInput = input && String(input.value || '').trim();
+    if (fromInput) {
+      if (!/^https?:\/\//i.test(fromInput) && fromInput.indexOf('script.google.com') !== -1) {
+        fromInput = 'https://' + fromInput;
+      }
+      try { localStorage.setItem('i7c_gestao_terreiro_gas_url_v1', fromInput); } catch (_) {}
+      return fromInput;
+    }
+    return typeof getGasUrl === 'function' ? getGasUrl() : '';
+  }
+
+  var _origGetGasUrl = typeof getGasUrl === 'function' ? getGasUrl : null;
+  window.getGasUrl = function() {
+    var u = resolveCurrentGasUrl();
+    if (u) return u;
+    return _origGetGasUrl ? _origGetGasUrl() : '';
+  };
+})();
+</script>
 </body>
+
+
 </html>
