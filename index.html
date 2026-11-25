@@ -1,0 +1,2097 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark"><head><script data-bard-client-injected="true">(function(firebaseConfig, initialAuthToken, appId) {
+        window.__firebase_config = firebaseConfig;
+        window.__initial_auth_token = initialAuthToken;
+        window.__app_id = appId;
+            })("\n{\n  \"apiKey\": \"AIzaSyCqyCcs2R2e7AegGjvFAwG98wlamtbHvZY\",\n  \"authDomain\": \"bard-frontend.firebaseapp.com\",\n  \"projectId\": \"bard-frontend\",\n  \"storageBucket\": \"bard-frontend.firebasestorage.app\",\n  \"messagingSenderId\": \"175205271074\",\n  \"appId\": \"1:175205271074:web:2b7bd4d34d33bf38e6ec7b\"\n}\n","eyJhbGciOiJSUzI1NiIsImtpZCI6IjExNjRiNzdiNDMzZDdhMDAyMWI4NjE4YjhjYTU3ZTMyZGI5MWUxMTMiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0BiYXJkLWZyb250ZW5kLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIxMTcwMDkxNTgyNzUyODUwMjY2OSIsImlzcyI6ImZpcmViYXNlLWFkbWluc2RrLWZic3ZjQGJhcmQtZnJvbnRlbmQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJjbGFpbXMiOnsiYXBwSWQiOiJjXzU4Y2VhN2JlZjIyNzM0NzJfaW5kZXguaHRtbC0xNjQifSwiZXhwIjoxNzk1NjI5ODUwLCJpYXQiOjE3OTU2MjYyNTAsImFsZyI6IlJTMjU2In0.LSGqGUrMUisIkNXmnp3pVwVwGKaIngL51f1QL07U5uiEROIFcHctV3f-ITCoQKXTAgmU4J4fs1sk5lg3s0CmVmwzaU56c7IejkzOkDGd1xZIQJeDuR_Y2jxfZ9-DY3SSSrucdoeKLQmnnCvzApoVDyIAcd45ZGLsYLLECS0IsOA58YRByXGmDnd8PNkWrJ8pYHEDDhP7KbYLUe3KIuLif-FcR4aoAXQfzwBLqNor46Dif7u9K_ngepXoZVPqBbZ08Ze2s_whUDGFRDA5l_mPmSMK8clQHJkOtDSrjp2VkWl6bp4KHn6ukCQvWgA2CHOiJPByw2Vdu0zpVrZpYhBGrg","c_58cea7bef2273472_index.html-164")</script><script data-bard-client-injected="true">
+  document.addEventListener('input', (event) => {
+    if (event.target && (event.target.isContentEditable || event.target.hasAttribute('contenteditable'))) {
+      const clonedDoc = document.cloneNode(true);
+      const injectedScripts = clonedDoc.querySelectorAll('[data-bard-client-injected="true"]');
+      injectedScripts.forEach(el => el.remove());
+      window.parent.postMessage({
+        type: 'inlineEdit',
+        html: '<!DOCTYPE html>\n' + clonedDoc.documentElement.outerHTML
+      }, '*');
+    }
+  });
+</script><script data-bard-client-injected="true">(function(){'use strict';window.addEventListener("message",a=>{a.data&&a.data.type==="SUPPLEMENTAL_DATA_UPDATE"&&window.dispatchEvent(new CustomEvent("supplementaldataupdate",{detail:a.data.data}))});}).call(this);
+</script><script data-bard-client-injected="true">(function() {
+  const SCROLL_KEYS = new Set([
+    'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
+    ' ', 'Spacebar', 'PageUp', 'PageDown', 'Home', 'End',
+  ]);
+  const HORIZONTAL_KEYS = new Set(['ArrowLeft', 'ArrowRight']);
+
+  function isTextEntryTarget(target) {
+    if (!target) return false;
+    const tagName = target.tagName;
+    return tagName === 'INPUT' || tagName === 'TEXTAREA' ||
+        tagName === 'SELECT' || target.isContentEditable === true;
+  }
+
+  // An element absorbs the key only if it both overflows on the axis being
+  // scrolled and is configured to scroll on that axis. The cheap dimension
+  // test runs first because getComputedStyle forces a style recalc, and this
+  // runs on every keypress. Each axis is read from its own longhand: the
+  // 'overflow' shorthand serializes as two values when the axes differ, which
+  // is the common 'overflow-x: hidden; overflow-y: auto' pane.
+  function canScroll(node, horizontal) {
+    const overflows = horizontal ? node.scrollWidth > node.clientWidth
+                                 : node.scrollHeight > node.clientHeight;
+    if (!overflows) return false;
+    const style = window.getComputedStyle(node);
+    const overflow = horizontal ? style.overflowX : style.overflowY;
+    return overflow === 'auto' || overflow === 'scroll';
+  }
+
+  // Walks up from the event target so nested scrollers keep their behavior.
+  // <body> is included because pages that pin the root height make it the
+  // scroll container.
+  function hasScrollableAncestor(target, horizontal) {
+    let node = target;
+    while (node && node !== document.documentElement) {
+      if (canScroll(node, horizontal)) return true;
+      node = node.parentElement;
+    }
+    return false;
+  }
+
+  function rootCanScroll(horizontal) {
+    const scroller = document.scrollingElement || document.documentElement;
+    if (!scroller) return false;
+    // Tolerate a pixel of rounding so subpixel layouts do not look scrollable.
+    return horizontal ? scroller.scrollWidth > window.innerWidth + 1
+                      : scroller.scrollHeight > window.innerHeight + 1;
+  }
+
+  window.addEventListener('keydown', function(event) {
+    if (!SCROLL_KEYS.has(event.key)) return;
+    if (event.defaultPrevented) return;
+    // Alt and Meta turn arrows into browser history navigation, and Ctrl is
+    // reserved for shortcuts, so none of them are scroll intent.
+    if (event.altKey || event.metaKey || event.ctrlKey) return;
+
+    const target = event.target;
+    if (isTextEntryTarget(target)) return;
+
+    // Anything that can still absorb the scroll gets to keep it.
+    const horizontal = HORIZONTAL_KEYS.has(event.key);
+    if (rootCanScroll(horizontal)) return;
+    if (hasScrollableAncestor(target, horizontal)) return;
+
+    event.preventDefault();
+  }, {capture: true, passive: false});
+})();</script><script data-bard-client-injected="true">(function() {
+  // Ensure this script is executed only once
+  if (window.firebaseAuthBridgeScriptLoaded) {
+    return;
+  }
+  window.firebaseAuthBridgeScriptLoaded = true;
+
+  let nextTokenPromiseId = 0;
+
+  // Stores { resolve, reject } for ongoing token requests
+  const pendingTokenPromises = {};
+
+  // Listen for messages from the Host Application
+  window.addEventListener('message', function(event) {
+
+    const messageData = event.data;
+
+  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
+      const { success, token, error, promiseId } = messageData ?? {};
+      if (pendingTokenPromises[promiseId]) {
+        if (success) {
+          pendingTokenPromises[promiseId].resolve(token);
+        } else {
+          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
+        }
+        delete pendingTokenPromises[promiseId];
+      }
+    }
+  });
+
+  // Expose a function for the Generated App to request a new Firebase token
+  window.requestNewFirebaseToken = function() {
+    const currentPromiseId = nextTokenPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingTokenPromises[currentPromiseId] = { resolve, reject };
+    });
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'REQUEST_NEW_FIREBASE_TOKEN',
+        promiseId: currentPromiseId
+      }, '*');
+    } else {
+      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
+      delete pendingTokenPromises[currentPromiseId];
+    }
+    return promise;
+  };
+})();</script><script data-bard-client-injected="true">
+let realOriginalGetUserMedia = null;
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+}
+
+(function() {
+  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
+    try {
+      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
+        get: function() {
+          return undefined; // Or throw an error
+        },
+        configurable: false
+      });
+    } catch (error) {
+      console.error("Error defining prototype getter:", error);
+    }
+  }
+})();
+
+(function() {
+  const pendingMediaResolvers = {};
+  let nextMediaPromiseId = 0;
+
+  function requestMediaPermissions(constraints) {
+    const mediaPromiseId = nextMediaPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingMediaResolvers[mediaPromiseId] = (granted) => {
+        delete pendingMediaResolvers[mediaPromiseId];
+        resolve(granted);
+      };
+    });
+
+    window.parent.postMessage({
+      type: 'requestMediaPermission',
+      constraints: constraints,
+      promiseId: mediaPromiseId,
+    }, '*');
+
+    return promise;
+  }
+
+  let originalGetUserMedia = realOriginalGetUserMedia;
+
+  function interceptGetUserMedia() {
+    if (navigator.mediaDevices) {
+      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
+        value: function(constraints) {
+          return requestMediaPermissions(constraints).then((granted) => {
+            if (granted) {
+              if (originalGetUserMedia) {
+                return originalGetUserMedia(constraints);
+              } else {
+                throw new Error("Original getUserMedia not available.");
+              }
+            } else {
+              throw new DOMException('Permission denied', 'NotAllowedError');
+            }
+          });
+        },
+        writable: false,
+        configurable: false
+      });
+    }
+  }
+
+  interceptGetUserMedia();
+
+  const observer = new MutationObserver(function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'childList' && mutation.addedNodes) {
+        mutation.addedNodes.forEach(node => {
+          if (node === navigator.mediaDevices) {
+            interceptGetUserMedia();
+          }
+        });
+      }
+    }
+  });
+
+  function interceptSpeechRecognition() {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      return;
+    }
+
+    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const SpeechRecognitionWrapper = function(...args) {
+      const recognizer = new OriginalSpeechRecognition(...args);
+      const originalStart = recognizer.start.bind(recognizer);
+
+      recognizer.start = function() {
+        requestMediaPermissions({ audio: true }).then(granted => {
+          if (granted) {
+            originalStart();
+          } else {
+            const errorEvent = new SpeechRecognitionErrorEvent('error');
+            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
+            recognizer.dispatchEvent(errorEvent);
+          }
+        });
+      };
+
+      return recognizer;
+    };
+
+    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
+    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
+
+    if (window.SpeechRecognition) {
+      window.SpeechRecognition = SpeechRecognitionWrapper;
+    }
+    if (window.webkitSpeechRecognition) {
+      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
+    }
+  }
+
+  interceptSpeechRecognition();
+
+  window.addEventListener('message', function(event) {
+    if (event.data) {
+      if (event.data.type === 'resolveMediaPermission') {
+        const { promiseId, granted } = event.data;
+        if (pendingMediaResolvers[promiseId]) {
+          pendingMediaResolvers[promiseId](granted);
+        }
+      }
+    }
+  });
+
+})();</script><script ws-interception-config="{&quot;parentOrigin&quot;:&quot;https://gemini.google.com&quot;,&quot;proxiedDomains&quot;:[]}" data-bard-client-injected="true">(function(){'use strict';var u=typeof Object.defineProperties=="function"?Object.defineProperty:function(b,d,e){if(b==Array.prototype||b==Object.prototype)return b;b[d]=e.value;return b};function v(b){b=["object"==typeof globalThis&&globalThis,b,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var d=0;d<b.length;++d){var e=b[d];if(e&&e.Math==Math)return e}throw Error("Cannot find global object");}var w=v(this);
+function y(b,d){if(d)a:{var e=w;b=b.split(".");for(var h=0;h<b.length-1;h++){var k=b[h];if(!(k in e))break a;e=e[k]}b=b[b.length-1];h=e[b];d=d(h);d!=h&&d!=null&&u(e,b,{configurable:!0,writable:!0,value:d})}}function z(b){function d(h){return b.next(h)}function e(h){return b.throw(h)}return new Promise(function(h,k){function m(n){n.done?h(n.value):Promise.resolve(n.value).then(d,e).then(m,k)}m(b.next())})}y("globalThis",function(b){return b||w});/*
+
+ Copyright The Closure Library Authors.
+ SPDX-License-Identifier: Apache-2.0
+*/
+function A(b,d){function e(){}e.prototype=d.prototype;b.i=d.prototype;b.prototype=new e;b.prototype.constructor=b;b.h=function(h,k,m){for(var n=Array(arguments.length-2),p=2;p<arguments.length;p++)n[p-2]=arguments[p];return d.prototype[k].apply(h,n)}};function B(b,d,e="*"){function h(a){if(typeof a==="string")return F.encode(a).buffer;if(a instanceof ArrayBuffer)return a.slice(0);if(ArrayBuffer.isView(a))return a.buffer.slice(a.byteOffset,a.byteOffset+a.byteLength);throw Error("Invalid data type");}function k(a){a=h(a);var f={type:"send",data:new Uint8Array(a)},g;(g=r)==null||g.postMessage(f,[a])}function m(){if(!r)throw Error("Data port not captured yet.");r.onmessage=a=>{if(a.data.type==="message"){a=new MessageEvent("message",{data:G.decode(a.data.data)});
+let f;(f=c.onmessage)==null||f.call(c,a);c.dispatchEvent(a)}}}function n(){if(!t)throw Error("Control port not captured yet.");t.onmessage=a=>{switch(a.data.type){case "open":l=1;var f=new Event("open"),g;(g=c.onopen)==null||g.call(c,f);c.dispatchEvent(f);q.forEach(H=>{k(H)});q=[];break;case "close":g=a.data;l=3;g=new CloseEvent("close",{code:g.code,reason:g.reason,wasClean:g.wasClean});(f=c.onclose)==null||f.call(c,g);c.dispatchEvent(g);break;case "error":l=3;f=new Event("error");let x;(x=c.onerror)==
+null||x.call(c,f);c.dispatchEvent(f)}}}function p(a){return z(function*(){var f=new MessageChannel;t=f.port1;var g=new MessageChannel;r=g.port1;n();m();window.parent.postMessage({type:"websocket_open",portOrdering:["control","data"],url:b,protocols:a||[],connectionId:I},e,[f.port2,g.port2])}())}var c=Reflect.construct(EventTarget,[],new.target);c.CONNECTING=0;c.OPEN=1;c.CLOSING=2;c.CLOSED=3;c.url=b;c.binaryType="arraybuffer";c.protocol="";c.extensions="";var l=0,t=null,r=null,q=[],F=new TextEncoder,
+G=new TextDecoder;c.onopen=null;c.onmessage=null;c.onclose=null;c.onerror=null;Object.defineProperty(c,"readyState",{get:()=>l,enumerable:!0,configurable:!0});Object.defineProperty(c,"bufferedAmount",{get:()=>{var a=0;q.forEach(f=>{a+=typeof f==="string"?f.length:f.byteLength});return a},enumerable:!0,configurable:!0});var I=function(){var a;return((a=globalThis.crypto)==null?0:a.randomUUID)?globalThis.crypto.randomUUID():"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,f=>{var g=Math.random()*
+16|0;return(f==="x"?g:g&3|8).toString(16)})}();c.send=a=>{if(l===1)a instanceof Blob?a.arrayBuffer().then(f=>{k(f)}):k(a);else if(l===0)if(typeof a==="string")q.push(a);else if(a instanceof ArrayBuffer||ArrayBuffer.isView(a))q.push(h(a));else throw Error("Sending Blob is not supported before the connection is open.");else console.debug("WebSocket send called in CLOSING or CLOSED state; ignored.")};c.close=(a=1E3,f="")=>{if(l!==2&&l!==3){l=2;a={type:"close",code:a,reason:f,wasClean:a===1E3};var g;
+(g=t)==null||g.postMessage(a)}};Promise.resolve().then(()=>p(d));return c}A(B,EventTarget);var C=document.currentScript,D=C==null?void 0:C.getAttribute("ws-interception-config");if(!D)throw Error("WebSocket Interceptor: Missing ws-interception-config attribute in the script tag.");var E=JSON.parse(D);if(!E.parentOrigin||typeof E.parentOrigin!=="string")throw Error("WebSocket Interceptor: Invalid parentOrigin in ws-interception-config");
+(function(b){var d=Object.getOwnPropertyDescriptor(window,"WebSocket");if(!d||d.writable||d.configurable)d=Object.assign(function(e,h){try{let k=(new URL(e)).hostname;if(b.proxiedDomains.some(m=>k===m||k.endsWith(`.${m}`)))return new B(e,h,b.parentOrigin)}catch(k){throw window.parent.postMessage({type:"websocket_blocked",url:e,reason:"blocked_invalid_url"},b.parentOrigin),new DOMException(`WebSocket connection to '${e}' is not allowed in Canvas.`,"SecurityError");}window.parent.postMessage({type:"websocket_blocked",
+url:e,reason:"blocked_domain_not_allowlisted"},b.parentOrigin);throw new DOMException(`WebSocket connection to '${e}' is not allowed in Canvas.`,"SecurityError");},{CONNECTING:0,OPEN:1,CLOSING:2,CLOSED:3}),Object.defineProperty(window,"WebSocket",{value:d,writable:!1,configurable:!1})})({proxiedDomains:E.proxiedDomains||[],parentOrigin:E.parentOrigin});}).call(this);
+</script><script data-bard-client-injected="true">((function(modelInformation) {
+  const originalFetch = window.fetch;
+  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
+  let googleLlmBaseApiUrls = [
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageTransformModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
+  ];
+  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+    );
+  });
+  modelInformation.deprecatedImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predict',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predictLongRunning',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+    );
+  });
+  modelInformation.deprecatedGenerateImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+    );
+  });
+  modelInformation.deprecatedImageTransformModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+    );
+  });
+
+  const pendingFetchResolvers = {};
+  let nextPromiseId = 0;
+
+  function handleStringInput(input, optionsArgument) {
+    const actualUrl = input;
+    const fetchCallArgs = [actualUrl, optionsArgument];
+    const effectiveOptions = optionsArgument || {};
+    const bodyForApiKeyCheck = effectiveOptions.body;
+    const bodyForPostMessage = effectiveOptions.body;
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  function handleRequestInput(input, optionsArgument) {
+    const actualUrl = input.url;
+    const fetchCallArgs = [input, optionsArgument];
+    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (optionsArgument) {
+      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
+      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
+      if ('body' in optionsArgument) {
+        bodyForApiKeyCheck = optionsArgument.body;
+        bodyForPostMessage = optionsArgument.body;
+      } else {
+        bodyForApiKeyCheck = undefined;
+        bodyForPostMessage = input.body;
+      }
+    } else {
+      bodyForApiKeyCheck = undefined;
+      bodyForPostMessage = input.body;
+    }
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  window.fetch = function(input, optionsArgument) {
+    let actualUrl;
+    let fetchCallArgs;
+    let effectiveOptions = {};
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (typeof input === 'string') {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
+    } else if (input instanceof Request) {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
+    } else {
+      return originalFetch.apply(window, [input, optionsArgument]);
+    }
+
+    effectiveOptions.method = effectiveOptions.method || 'GET';
+    if (!effectiveOptions.headers) {
+      effectiveOptions.headers = new Headers();
+    }
+
+
+    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
+      let apiKeyIsNull = true;
+
+      const regex = new RegExp("models/([^:]+)");
+      const modelNameMatch = actualUrl.match(regex);
+      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
+
+
+      try {
+        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
+        const apiKeyParam = urlObject.searchParams.get('key');
+        if (apiKeyParam) {
+          apiKeyIsNull = false;
+        }
+      } catch (e) {
+        // Continue checks even if URL parsing fails
+      }
+
+      if (apiKeyIsNull && effectiveOptions.headers) {
+        const h = new Headers(effectiveOptions.headers);
+        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
+        if (apiKeyHeaderValue) {
+          apiKeyIsNull = false;
+          return originalFetch.apply(window, fetchCallArgs);
+        }
+      }
+
+      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
+        try {
+          const bodyData = JSON.parse(bodyForApiKeyCheck);
+          if (bodyData && bodyData.apiKey) {
+            apiKeyIsNull = false;
+            return originalFetch.apply(window, fetchCallArgs);
+          }
+        } catch (e) {
+          // Ignore JSON parsing errors
+        }
+      }
+
+      if(apiKeyIsNull) {
+        const promiseId = nextPromiseId++;
+        const promise = new Promise((resolve) => {
+          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
+            delete pendingFetchResolvers[promiseId];
+            resolve(resolvedResponse);
+          };
+        });
+
+        let serializedBodyForPostMessage;
+        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
+            serializedBodyForPostMessage = bodyForPostMessage;
+        } else if (bodyForPostMessage instanceof ReadableStream) {
+            serializedBodyForPostMessage = null;
+        } else {
+            try {
+                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
+            } catch (e) {
+                serializedBodyForPostMessage = null;
+            }
+        }
+
+        const messageOptions = {
+            method: effectiveOptions.method,
+            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
+            body: serializedBodyForPostMessage
+        };
+
+        window.parent.postMessage({
+          type: 'requestFetch',
+          url: actualUrl,
+          modelName: modelName,
+          options: messageOptions,
+          promiseId: promiseId,
+        }, '*');
+
+        return promise;
+      }
+      return originalFetch.apply(window, fetchCallArgs);
+    }
+    return originalFetch.apply(window, fetchCallArgs);
+  };
+
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'resolveFetch') {
+      const { promiseId, response } = event.data;
+      if (pendingFetchResolvers[promiseId]) {
+        try {
+          const reconstructedResponse = new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: new Headers(response.headers),
+          });
+          pendingFetchResolvers[promiseId](reconstructedResponse);
+        } catch (error) {
+          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
+        }
+      }
+    }
+  });
+
+}))({"textModelName":"gemini-3-flash-preview","imageModelName":"imagen-4.0-generate-001","imageEditModelName":"gemini-3.1-flash-image","imageTransformModelName":"gemini-3-pro-image","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash","gemini-2.5-flash-preview-04-17","gemini-2.5-flash-preview-05-20","gemini-2.5-flash-preview-09-2025"],"deprecatedImageModelNames":["imagen-3.0-generate-001","imagen-3.0-generate-002"],"deprecatedGenerateImageModelNames":["gemini-2.5-flash-image-preview","gemini-2.5-flash-image","gemini-3.1-flash-image-preview"],"deprecatedImageTransformModelNames":["gemini-3-pro-image-preview-11-2025"]})</script><script data-bard-client-injected="true">(function() {
+  const OVERLAY_SELECTOR =
+    'dialog[open], [role="dialog"], [role="alertdialog"], [role="menu"], [role="listbox"], [role="combobox"]';
+
+  function isVisibleOverlay(element) {
+    if (element.closest('[hidden], [aria-hidden="true"], [inert]')) {
+      return false;
+    }
+    if (window.getComputedStyle(element).visibility === 'hidden') {
+      return false;
+    }
+    for (let cur = element; cur; cur = cur.parentElement) {
+      if (window.getComputedStyle(cur).display === 'none') {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function hasOpenOverlay() {
+    const candidates = document.querySelectorAll(OVERLAY_SELECTOR);
+    for (let i = 0; i < candidates.length; i++) {
+      if (isVisibleOverlay(candidates[i])) {
+        return true;
+      }
+    }
+    try {
+      if (document.querySelector('[popover]:popover-open')) {
+        return true;
+      }
+    } catch (e) {
+      // Ignore engines that do not support :popover-open.
+    }
+    return false;
+  }
+
+  function isNonEmptySearchInput(target) {
+    return (
+      Boolean(target) &&
+      target.tagName === 'INPUT' &&
+      typeof target.type === 'string' &&
+      target.type.toLowerCase() === 'search' &&
+      typeof target.value === 'string' &&
+      target.value.length > 0
+    );
+  }
+
+  function shouldIgnoreEscape(event) {
+    return (
+      event.key !== 'Escape' ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.shiftKey ||
+      event.isComposing ||
+      event.repeat ||
+      event.keyCode === 229 ||
+      isNonEmptySearchInput(event.target)
+    );
+  }
+
+  let shouldIgnoreCaptureState = false;
+
+  window.addEventListener(
+    'keydown',
+    function(event) {
+      if (event.key === 'Escape') {
+        shouldIgnoreCaptureState =
+          hasOpenOverlay() || isNonEmptySearchInput(event.target);
+      }
+    },
+    {capture: true},
+  );
+
+  window.addEventListener('keydown', function(event) {
+    if (
+      shouldIgnoreEscape(event) ||
+      event.defaultPrevented ||
+      shouldIgnoreCaptureState
+    ) {
+      return;
+    }
+    const wasBlockedOnCapture = shouldIgnoreCaptureState;
+    queueMicrotask(function() {
+      if (event.defaultPrevented || wasBlockedOnCapture) {
+        return;
+      }
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({'type': 'escapeKey'}, '*');
+      }
+    });
+  });
+})();</script><script data-bard-client-injected="true">(function() {
+  function normalizeSlug(str) {
+    try {
+      return str
+        .trim()
+        .toLowerCase()
+        .replace(/[^p{L}p{N}s_-]/gu, '')
+        .replace(/s+/g, '-');
+    } catch (e) {
+      return str
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9s_-]/g, '')
+        .replace(/s+/g, '-');
+    }
+  }
+
+  function findTargetElement(hash) {
+    if (!hash || hash === '#') {
+      return null;
+    }
+    const rawId = hash.startsWith('#') ? hash.slice(1) : hash;
+    let decodedId = rawId;
+    try {
+      decodedId = decodeURIComponent(rawId);
+    } catch (e) {
+      // Ignore URI malformed errors.
+    }
+
+    // 1. Direct ID match (raw and decoded).
+    let target = document.getElementById(rawId) || document.getElementById(decodedId);
+    if (target) {
+      return target;
+    }
+
+    // 2. Name attribute match (<a name="...">).
+    try {
+      if (typeof CSS !== 'undefined' && CSS.escape) {
+        target =
+          document.querySelector('[name="' + CSS.escape(rawId) + '"]') ||
+          document.querySelector('[name="' + CSS.escape(decodedId) + '"]');
+      } else {
+        const namedElements = document.getElementsByName(rawId);
+        if (namedElements && namedElements.length > 0) {
+          return namedElements[0];
+        }
+      }
+    } catch (e) {
+      // Ignore querySelector syntax errors.
+    }
+    if (target) {
+      return target;
+    }
+
+    // 3. Match heading text by slug (for Markdown TOCs where headings lack explicit IDs).
+    const targetSlug = normalizeSlug(decodedId);
+    if (targetSlug) {
+      for (const heading of document.querySelectorAll('h1, h2, h3, h4, h5, h6')) {
+        if (normalizeSlug(heading.textContent || '') === targetSlug) {
+          return heading;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  document.addEventListener('click', function(event) {
+    const target = event.target;
+    const anchor = target && typeof target.closest === 'function' ? target.closest('a') : null;
+    if (!anchor) {
+      return;
+    }
+
+    const href = anchor.getAttribute('href');
+    if (
+      !href ||
+      href.trim().toLowerCase().startsWith('javascript:') ||
+      anchor.hasAttribute('download')
+    ) {
+      return;
+    }
+
+    // Check if the link is an in-page hash / anchor link.
+    if (href.startsWith('#')) {
+      event.preventDefault();
+      const targetElement = findTargetElement(href);
+      if (targetElement) {
+        targetElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }
+      return;
+    }
+
+    // Check if the URL has the same origin/pathname but with a hash.
+    try {
+      const url = new URL(anchor.href, window.location.href);
+      if (
+        url.hash &&
+        url.origin === window.location.origin &&
+        url.pathname === window.location.pathname
+      ) {
+        event.preventDefault();
+        const targetElement = findTargetElement(url.hash);
+        if (targetElement) {
+          targetElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+        }
+        return;
+      }
+    } catch (e) {
+      // Fall through if URL parsing fails.
+    }
+
+    // For all external or full navigation links, prevent iframe-level navigation
+    // (which breaks in AGSA WebView or sandboxed iframes) and ensure they open
+    // safely in a new tab/window.
+    if (anchor.target !== '_blank') {
+      event.preventDefault();
+      window.open(anchor.href, '_blank', 'noopener,noreferrer');
+    }
+  }, {capture: true});
+})();</script><script data-bard-client-injected="true">(function(){'use strict';function a(){window.parent.postMessage({type:"interaction"},"*")}window.addEventListener("click",a,{capture:!0,passive:!0});window.addEventListener("touchstart",a,{capture:!0,passive:!0});window.addEventListener("keydown",a,{capture:!0,passive:!0});}).call(this);
+</script><script data-bard-client-injected="true">(function() {
+  const originalConsoleLog = console.log;
+  const originalConsoleError = console.error;
+
+    /**
+   * Normalizes an error event or a promise rejection reason into a structured error object.
+   * @param {*} errorEventOrReason The error object or reason.
+   * @return {object} Structured error data { message, name, stack }.
+   */
+  function getErrorObject(errorEventOrReason) {
+    if (errorEventOrReason instanceof Error) {
+      return {
+        message: errorEventOrReason.message,
+        name: errorEventOrReason.name,
+        stack: errorEventOrReason.stack,
+      };
+    }
+    // Fallback for non-Error objects.
+    try {
+      return {
+        message: JSON.stringify(errorEventOrReason),
+        name: 'UnknownErrorType',
+        stack: null,
+      };
+    } catch (e) {
+      return {
+        message: String(errorEventOrReason),
+        name: 'UnknownErrorTypeNonStringifiable',
+        stack: null,
+      };
+    }
+  }
+
+  /**
+   * Converts an array of arguments (from log/error) into a single string.
+   * Handles Error objects specially to include their message and stack.
+   * @param {Array<*>} args - Arguments passed to console methods.
+   * @return {string} A string representation of the arguments.
+   */
+  function stringifyArgs(args) {
+    return args
+      .map((arg) => {
+        if (arg instanceof Error) {
+          const {message, stack} = arg;
+          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
+        }
+        if (typeof arg === 'object' && arg !== null) {
+          try {
+            return JSON.stringify(arg);
+          } catch (error) {
+            return '[Circular Object]';
+          }
+        } else {
+          return String(arg);
+        }
+      })
+      .join(' ');
+  }
+
+  console.log = function(...args) {
+    const logString = stringifyArgs(args);
+    window.parent.postMessage({ type: 'log', message: logString }, '*');
+    originalConsoleLog.apply(console, args);
+  };
+
+  console.error = function(...args) {
+    let errorData;
+    if (args.length > 0 && args[0] instanceof Error) {
+      const err = args[0];
+      // If the first arg is an Error, capture its details.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        ...getErrorObject(err),
+        rawArgsString: stringifyArgs(args.slice(1)),
+        timestamp: new Date().toISOString(),
+      };
+    } else {
+      // If not an Error object, treat all args as a general error message.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        message: stringifyArgs(args),
+        name: 'ConsoleLoggedError',
+        stack: null,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    window.parent.postMessage(errorData, '*');
+    originalConsoleError.apply(console, args);
+  };
+
+  // Listen for global unhandled synchronous errors.
+  window.addEventListener('error', function(event) {
+    const errorDetails = event.error ? getErrorObject(event.error) : {
+      message: event.message,
+      name: 'GlobalError',
+      stack: null,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    };
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'global',
+      ...errorDetails,
+      message: errorDetails.message || event.message,
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+  // Listen for unhandled promise rejections (asynchronous errors).
+  window.addEventListener('unhandledrejection', function(event) {
+    const errorDetails = getErrorObject(event.reason);
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'unhandledrejection',
+      ...errorDetails,
+      message: errorDetails.message || 'Unhandled Promise Rejection',
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão do Terreiro — Instituto 7 Cores</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .tab-active {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: #ffffff;
+      box-shadow: 0 8px 20px -6px rgba(79, 70, 229, 0.45);
+    }
+  </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, system-ui, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.pointer-events-auto{pointer-events:auto}.fixed{position:fixed}.sticky{position:sticky}.bottom-4{bottom:1rem}.right-4{right:1rem}.top-0{top:0px}.z-30{z-index:30}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.mt-1\.5{margin-top:0.375rem}.line-clamp-1{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-2{height:0.5rem}.h-4{height:1rem}.h-fit{height:-moz-fit-content;height:fit-content}.min-h-screen{min-height:100vh}.w-10{width:2.5rem}.w-2{width:0.5rem}.w-4{width:1rem}.w-full{width:100%}.min-w-0{min-width:0px}.max-w-7xl{max-width:80rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.border-collapse{border-collapse:collapse}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-slate-100 > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(241 245 249 / var(--tw-divide-opacity, 1))}.overflow-x-auto{overflow-x:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-nowrap{white-space:nowrap}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-xl{border-radius:0.75rem}.rounded-lg{border-radius:0.5rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-emerald-500\/30{border-color:rgb(16 185 129 / 0.3)}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240 / var(--tw-border-opacity, 1))}.border-slate-200\/80{border-color:rgb(226 232 240 / 0.8)}.border-emerald-500{--tw-border-opacity:1;border-color:rgb(16 185 129 / var(--tw-border-opacity, 1))}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-emerald-500\/15{background-color:rgb(16 185 129 / 0.15)}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-violet-600{--tw-bg-opacity:1;background-color:rgb(124 58 237 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.bg-indigo-500\/15{background-color:rgb(99 102 241 / 0.15)}.bg-slate-50\/60{background-color:rgb(248 250 252 / 0.6)}.bg-violet-500\/15{background-color:rgb(139 92 246 / 0.15)}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.from-indigo-600{--tw-gradient-from:#4f46e5 var(--tw-gradient-from-position);--tw-gradient-to:rgb(79 70 229 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-violet-600{--tw-gradient-to:rgb(124 58 237 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #7c3aed var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-fuchsia-600{--tw-gradient-to:#c026d3 var(--tw-gradient-to-position)}.p-2\.5{padding:0.625rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.pb-1{padding-bottom:0.25rem}.pl-3{padding-left:0.75rem}.pr-3{padding-right:0.75rem}.text-left{text-align:left}.text-right{text-align:right}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-base{font-size:1rem;line-height:1.5rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.text-emerald-600{--tw-text-opacity:1;color:rgb(5 150 105 / var(--tw-text-opacity, 1))}.text-emerald-700{--tw-text-opacity:1;color:rgb(4 120 87 / var(--tw-text-opacity, 1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.text-violet-600{--tw-text-opacity:1;color:rgb(124 58 237 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-indigo-700{--tw-text-opacity:1;color:rgb(67 56 202 / var(--tw-text-opacity, 1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-violet-700{--tw-text-opacity:1;color:rgb(109 40 217 / var(--tw-text-opacity, 1))}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-200{transition-duration:200ms}.hover\:bg-emerald-700:hover{--tw-bg-opacity:1;background-color:rgb(4 120 87 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-700:hover{--tw-bg-opacity:1;background-color:rgb(67 56 202 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-100:hover{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.hover\:bg-violet-700:hover{--tw-bg-opacity:1;background-color:rgb(109 40 217 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-500\/10:hover{background-color:rgb(99 102 241 / 0.1)}.hover\:bg-rose-500\/10:hover{background-color:rgb(244 63 94 / 0.1)}.hover\:bg-slate-50\/80:hover{background-color:rgb(248 250 252 / 0.8)}.hover\:text-slate-800:hover{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.hover\:opacity-90:hover{opacity:0.9}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-emerald-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(16 185 129 / var(--tw-ring-opacity, 1))}.focus\:ring-indigo-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(99 102 241 / var(--tw-ring-opacity, 1))}.focus\:ring-violet-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(139 92 246 / var(--tw-ring-opacity, 1))}.dark\:divide-slate-800\/70:is(.dark *) > :not([hidden]) ~ :not([hidden]){border-color:rgb(30 41 59 / 0.7)}.dark\:border-slate-700:is(.dark *){--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.dark\:border-slate-800:is(.dark *){--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.dark\:border-slate-800\/80:is(.dark *){border-color:rgb(30 41 59 / 0.8)}.dark\:bg-slate-100:is(.dark *){--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.dark\:bg-slate-800:is(.dark *){--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.dark\:bg-slate-900:is(.dark *){--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.dark\:bg-slate-900\/90:is(.dark *){background-color:rgb(15 23 42 / 0.9)}.dark\:bg-slate-950:is(.dark *){--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.dark\:bg-slate-800\/30:is(.dark *){background-color:rgb(30 41 59 / 0.3)}.dark\:text-emerald-300:is(.dark *){--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.dark\:text-emerald-400:is(.dark *){--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.dark\:text-indigo-400:is(.dark *){--tw-text-opacity:1;color:rgb(129 140 248 / var(--tw-text-opacity, 1))}.dark\:text-slate-100:is(.dark *){--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.dark\:text-slate-200:is(.dark *){--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.dark\:text-slate-300:is(.dark *){--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.dark\:text-slate-400:is(.dark *){--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.dark\:text-slate-900:is(.dark *){--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.dark\:text-violet-400:is(.dark *){--tw-text-opacity:1;color:rgb(167 139 250 / var(--tw-text-opacity, 1))}.dark\:text-indigo-300:is(.dark *){--tw-text-opacity:1;color:rgb(165 180 252 / var(--tw-text-opacity, 1))}.dark\:text-rose-400:is(.dark *){--tw-text-opacity:1;color:rgb(251 113 133 / var(--tw-text-opacity, 1))}.dark\:text-violet-300:is(.dark *){--tw-text-opacity:1;color:rgb(196 181 253 / var(--tw-text-opacity, 1))}.dark\:hover\:bg-slate-700:hover:is(.dark *){--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.dark\:hover\:bg-slate-800:hover:is(.dark *){--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.dark\:hover\:bg-slate-800\/40:hover:is(.dark *){background-color:rgb(30 41 59 / 0.4)}.dark\:hover\:text-slate-200:hover:is(.dark *){--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}@media (min-width: 640px){.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:px-0{padding-left:0px;padding-right:0px}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:text-lg{font-size:1.125rem;line-height:1.75rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}}@media (min-width: 1024px){.lg\:col-span-2{grid-column:span 2 / span 2}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}}</style></head>
+<body class="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200">
+  <!-- Barra superior -->
+  <header class="sticky top-0 z-30 border-b border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-600 via-violet-600 to-fuchsia-600 flex items-center justify-center text-white font-extrabold text-base shadow-md shrink-0">
+          7C
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <h1 class="text-base sm:text-lg font-extrabold tracking-tight truncate">
+              Instituto 7 Cores • Gestão do Terreiro
+            </h1>
+            <span id="statusBadge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              Planilha Pronta
+            </span>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 truncate">
+            Controle de Filhos, Trabalhos, Usuários e Sincronização com Google Sheets
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 flex-wrap">
+        <button id="btnSyncPull" type="button" title="Sincronizar dados da planilha" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+          <span>Sincronizar</span>
+        </button>
+
+        <button id="btnSyncPush" type="button" title="Enviar alterações para a planilha" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-violet-600 hover:bg-violet-700 text-white shadow-sm transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+          </svg>
+          <span>Enviar p/ Planilha</span>
+        </button>
+
+        <button id="btnToggleTheme" type="button" aria-label="Alternar tema claro ou escuro" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Notificações (toast) -->
+  <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full px-4 sm:px-0 pointer-events-none"></div>
+
+  <!-- Conteúdo principal -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
+    <!-- Cartões de resumo -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Filhos Cadastrados</p>
+        <p id="statFilhos" class="mt-1.5 text-2xl font-extrabold text-indigo-600 dark:text-indigo-400">2</p>
+        <p id="statFilhosAtivos" class="mt-1 text-xs text-slate-500 dark:text-slate-400">2 ativo(s) na casa</p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Trabalhos &amp; Giras</p>
+        <p id="statTrabalhos" class="mt-1.5 text-2xl font-extrabold text-violet-600 dark:text-violet-400">1</p>
+        <p id="statTrabalhosPendentes" class="mt-1 text-xs text-slate-500 dark:text-slate-400">1 aberto(s)/agendado(s)</p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Usuários da Equipe</p>
+        <p id="statUsuarios" class="mt-1.5 text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">1</p>
+        <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Perfis cadastrados</p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Última Sincronização</p>
+        <p id="statUltimaSync" class="mt-1.5 text-sm font-bold text-slate-800 dark:text-slate-200">Padrão pronto</p>
+        <p id="lastSyncLabel" class="mt-1 text-xs text-slate-500 dark:text-slate-400 truncate">Clique em Sincronizar</p>
+      </div>
+    </section>
+
+    <!-- Navegação por abas -->
+    <nav class="flex items-center gap-2 overflow-x-auto pb-1" aria-label="Abas do sistema">
+      <button type="button" data-tab="filhos" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300">
+        Filhos
+      </button>
+      <button type="button" data-tab="trabalhos" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+        Trabalhos
+      </button>
+      <button type="button" data-tab="usuarios" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+        Usuários
+      </button>
+      <button type="button" data-tab="integracao" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap hover:bg-slate-100 dark:hover:bg-slate-800 transition tab-active">
+        Integração &amp; Backup
+      </button>
+    </nav>
+
+    <!-- ABA 1: FILHOS -->
+    <section id="panel-filhos" class="tab-panel space-y-6 hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <form id="formFilho" class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4 h-fit">
+          <div class="flex items-center justify-between">
+            <h2 id="formFilhoTitle" class="text-base font-bold">Cadastrar Filho(a)</h2>
+            <button id="btnCancelFilho" type="button" class="hidden text-xs font-semibold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+              Cancelar edição
+            </button>
+          </div>
+
+          <input type="hidden" id="filhoId">
+
+          <div>
+            <label for="filhoNome" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Nome completo *</label>
+            <input id="filhoNome" type="text" required="" placeholder="Ex.: Ana Paula Souza" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="filhoGuia" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Guia / Orixá de cabeça</label>
+              <select id="filhoGuia" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"><option value="Oxalá">Oxalá</option><option value="Iemanjá">Iemanjá</option><option value="Oxóssi">Oxóssi</option><option value="Xangô">Xangô</option><option value="Ogum">Ogum</option><option value="Iansã">Iansã</option><option value="Oxum">Oxum</option><option value="Nanã">Nanã</option><option value="Omulu / Obaluaiê">Omulu / Obaluaiê</option></select>
+            </div>
+
+            <div>
+              <label for="filhoStatus" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Situação</label>
+              <select id="filhoStatus" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <option value="Ativo">Ativo</option>
+                <option value="Em observação">Em observação</option>
+                <option value="Afastado">Afastado</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="filhoTelefone" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Telefone / WhatsApp</label>
+              <input id="filhoTelefone" type="text" placeholder="(11) 99999-9999" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+            <div>
+              <label for="filhoEntrada" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Data de entrada</label>
+              <input id="filhoEntrada" type="date" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+          </div>
+
+          <div>
+            <label for="filhoObs" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Observações espirituais / avisos</label>
+            <textarea id="filhoObs" rows="2" placeholder="Anotações importantes do terreiro..." class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+          </div>
+
+          <button type="submit" class="w-full py-2.5 px-4 rounded-xl text-sm font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition">
+            Salvar Filho(a)
+          </button>
+        </form>
+
+        <div class="lg:col-span-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <h2 class="text-base font-bold">Lista de Filhos</h2>
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input id="searchFilho" type="search" placeholder="Buscar por nome ou guia..." class="px-3.5 py-2 rounded-xl text-xs sm:text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <select id="filterGuia" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"><option value="">Todos os Orixás</option><option value="Oxalá">Oxalá</option><option value="Iemanjá">Iemanjá</option><option value="Oxóssi">Oxóssi</option><option value="Xangô">Xangô</option><option value="Ogum">Ogum</option><option value="Iansã">Iansã</option><option value="Oxum">Oxum</option><option value="Nanã">Nanã</option><option value="Omulu / Obaluaiê">Omulu / Obaluaiê</option></select>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 dark:border-slate-800 text-xs uppercase text-slate-500 dark:text-slate-400">
+                  <th class="py-2.5 pr-3">Nome</th>
+                  <th class="py-2.5 px-3">Guia</th>
+                  <th class="py-2.5 px-3">Situação</th>
+                  <th class="py-2.5 px-3">Contato</th>
+                  <th class="py-2.5 pl-3 text-right">Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyFilhos" class="divide-y divide-slate-100 dark:divide-slate-800/70 text-sm">
+            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+              <td class="py-3 pr-3">
+                <p class="font-semibold text-slate-900 dark:text-slate-100">João Pedro Silva</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">Atua na assistência e organização do salão.</p>
+              </td>
+              <td class="py-3 px-3 whitespace-nowrap text-xs sm:text-sm">Ogum</td>
+              <td class="py-3 px-3 whitespace-nowrap">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">
+                  Ativo
+                </span>
+              </td>
+              <td class="py-3 px-3 whitespace-nowrap text-xs sm:text-sm text-slate-600 dark:text-slate-300">(11) 98888-1111</td>
+              <td class="py-3 pl-3 text-right whitespace-nowrap">
+                <button type="button" data-edit-filho="f-1" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-500/10 transition">
+                  Editar
+                </button>
+                <button type="button" data-del-filho="f-1" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition">
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          
+            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+              <td class="py-3 pr-3">
+                <p class="font-semibold text-slate-900 dark:text-slate-100">Camila Ferreira</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">Acompanhamento de desenvolvimento.</p>
+              </td>
+              <td class="py-3 px-3 whitespace-nowrap text-xs sm:text-sm">Oxum</td>
+              <td class="py-3 px-3 whitespace-nowrap">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">
+                  Ativo
+                </span>
+              </td>
+              <td class="py-3 px-3 whitespace-nowrap text-xs sm:text-sm text-slate-600 dark:text-slate-300">(11) 97777-2222</td>
+              <td class="py-3 pl-3 text-right whitespace-nowrap">
+                <button type="button" data-edit-filho="f-2" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-500/10 transition">
+                  Editar
+                </button>
+                <button type="button" data-del-filho="f-2" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition">
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABA 2: TRABALHOS -->
+    <section id="panel-trabalhos" class="tab-panel hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <form id="formTrabalho" class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4 h-fit">
+          <div class="flex items-center justify-between">
+            <h2 id="formTrabalhoTitle" class="text-base font-bold">Novo Trabalho / Gira</h2>
+            <button id="btnCancelTrabalho" type="button" class="hidden text-xs font-semibold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
+              Cancelar edição
+            </button>
+          </div>
+
+          <input type="hidden" id="trabalhoId">
+
+          <div>
+            <label for="trabalhoTitulo" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Título do trabalho *</label>
+            <input id="trabalhoTitulo" type="text" required="" placeholder="Ex.: Gira de Pretos Velhos / Limpeza" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="trabalhoData" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Data *</label>
+              <input id="trabalhoData" type="date" required="" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
+            </div>
+
+            <div>
+              <label for="trabalhoStatus" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Status</label>
+              <select id="trabalhoStatus" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
+                <option value="Agendado">Agendado</option>
+                <option value="Em andamento">Em andamento</option>
+                <option value="Concluído">Concluído</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="trabalhoResponsavel" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Responsável / Dirigente</label>
+            <input id="trabalhoResponsavel" type="text" placeholder="Ex.: Pai João / Cambono Lucas" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
+          </div>
+
+          <div>
+            <label for="trabalhoDetalhes" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Detalhes / Materiais necessários</label>
+            <textarea id="trabalhoDetalhes" rows="2" placeholder="Velas, ervas, orientações..." class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500"></textarea>
+          </div>
+
+          <button type="submit" class="w-full py-2.5 px-4 rounded-xl text-sm font-bold bg-violet-600 hover:bg-violet-700 text-white shadow-sm transition">
+            Salvar Trabalho
+          </button>
+        </form>
+
+        <div class="lg:col-span-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <h2 class="text-base font-bold">Agenda e Trabalhos</h2>
+            <select id="filterTrabalhoStatus" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
+              <option value="">Todos os status</option>
+              <option value="Agendado">Agendado</option>
+              <option value="Em andamento">Em andamento</option>
+              <option value="Concluído">Concluído</option>
+            </select>
+          </div>
+
+          <div id="listaTrabalhos" class="space-y-3">
+            <div class="rounded-xl border border-slate-200 dark:border-slate-800 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/60 dark:bg-slate-800/30">
+              <div class="space-y-1">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100">Gira de abertura e limpeza espiritual</h3>
+                  <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-violet-500/15 text-violet-700 dark:text-violet-300">Agendado</span>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400">
+                  Data: <strong>2026-11-25</strong> • Responsável: <strong>Dirigente da Casa</strong>
+                </p>
+                <p class="text-xs text-slate-600 dark:text-slate-300">Chegar 1h antes para preparo do espaço.</p>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <button type="button" data-edit-trabalho="t-1" class="px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                  Editar
+                </button>
+                <button type="button" data-del-trabalho="t-1" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition">
+                  Excluir
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABA 3: USUÁRIOS -->
+    <section id="panel-usuarios" class="tab-panel hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <form id="formUsuario" class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4 h-fit">
+          <h2 class="text-base font-bold">Adicionar Usuário da Equipe</h2>
+
+          <div>
+            <label for="usuarioNome" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Nome *</label>
+            <input id="usuarioNome" type="text" required="" placeholder="Ex.: Maria Clara" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          </div>
+
+          <div>
+            <label for="usuarioEmail" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">E-mail *</label>
+            <input id="usuarioEmail" type="email" required="" placeholder="maria@exemplo.com" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          </div>
+
+          <div>
+            <label for="usuarioPapel" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Função na casa</label>
+            <select id="usuarioPapel" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="Dirigente">Dirigente</option>
+              <option value="Cambono">Cambono</option>
+              <option value="Secretaria">Secretaria</option>
+              <option value="Membro">Membro</option>
+            </select>
+          </div>
+
+          <button type="submit" class="w-full py-2.5 px-4 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">
+            Salvar Usuário
+          </button>
+        </form>
+
+        <div class="lg:col-span-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4">
+          <h2 class="text-base font-bold">Usuários Cadastrados</h2>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 dark:border-slate-800 text-xs uppercase text-slate-500 dark:text-slate-400">
+                  <th class="py-2.5 pr-3">Nome</th>
+                  <th class="py-2.5 px-3">E-mail</th>
+                  <th class="py-2.5 px-3">Função</th>
+                  <th class="py-2.5 pl-3 text-right">Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyUsuarios" class="divide-y divide-slate-100 dark:divide-slate-800/70 text-sm">
+            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+              <td class="py-3 pr-3 font-semibold">Guilherme Curto</td>
+              <td class="py-3 px-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">guilherme.curto2004@gmail.com</td>
+              <td class="py-3 px-3 text-xs sm:text-sm">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/15 text-indigo-700 dark:text-indigo-300">
+                  Dirigente
+                </span>
+              </td>
+              <td class="py-3 pl-3 text-right">
+                <button type="button" data-del-usuario="u-1" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition">
+                  Remover
+                </button>
+              </td>
+            </tr>
+          </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABA 4: INTEGRAÇÃO & BACKUP -->
+    <section id="panel-integracao" class="tab-panel space-y-6">
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4">
+        <div>
+          <h2 class="text-base font-bold">Conexão com Google Apps Script (Planilha)</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            A URL padrão do seu Web App já vem configurada para abrir em qualquer computador.
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input id="gasWebAppUrlInput" type="url" placeholder="https://script.google.com/macros/s/.../exec" class="flex-1 px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <button id="btnSaveGasUrl" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-indigo-600 hover:bg-indigo-700 text-white transition whitespace-nowrap">
+            Salvar URL
+          </button>
+          <button id="btnResetGasUrl" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap">
+            Restaurar Padrão
+          </button>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          <button id="btnSyncPullTab" type="button" class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+            Sincronizar da Planilha
+          </button>
+          <button id="btnSyncPushTab" type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-violet-600 hover:bg-violet-700 text-white transition">
+            Enviar p/ Planilha
+          </button>
+          <button id="btnOpenGasTab" type="button" class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            Abrir URL em Nova Aba
+          </button>
+        </div>
+
+        <div id="syncDiagnosticBox" class="rounded-xl p-3.5 text-xs font-mono bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
+          Diagnóstico: pronto para sincronizar com a planilha.
+        </div>
+      </div>
+
+      <!-- Backup JSON e download do index.html pronto -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4">
+          <h3 class="text-base font-bold">Backup &amp; Restauração (JSON)</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            Exporte seus dados locais em JSON ou restaure um arquivo salvo anteriormente.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <button id="btnExportJson" type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 dark:bg-slate-100 text-white dark:text-slate-900 hover:opacity-90 transition">
+              Exportar JSON
+            </button>
+            <label class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition">
+              <span>Importar JSON</span>
+              <input id="inputImportJson" type="file" accept="application/json" class="hidden">
+            </label>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4">
+          <h3 class="text-base font-bold">Baixar Site Pronto (index.html)</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            Baixe este arquivo completo já com sua URL do Apps Script configurada para publicar no Vercel ou em qualquer servidor.
+          </p>
+          <button id="btnDownloadIndex" type="button" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition">
+            Baixar index.html Pronto
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Chaves de armazenamento local no navegador
+    const STORAGE_KEYS = {
+      DATA: 'i7c_gestao_terreiro_data_v1',
+      GAS_URL: 'i7c_gestao_terreiro_gas_url_v1',
+      THEME: 'i7c_gestao_terreiro_theme_v1',
+      LAST_SYNC: 'i7c_gestao_terreiro_last_sync_v1'
+    };
+
+    // URL padrão do Google Apps Script Web App (/exec)
+    const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbydnBQeThbs_D_Ic3N34vA05JGkb8TaZ6F7DUAhDi6pUTouih0q3OfXsxdVCmcgT0ngng/exec';
+
+    const ORIXAS_PADRAO = [
+      'Oxalá', 'Iemanjá', 'Oxóssi', 'Xangô', 'Ogum',
+      'Iansã', 'Oxum', 'Nanã', 'Omulu / Obaluaiê'
+    ];
+
+    function createInitialData() {
+      return {
+        filhos: [
+          {
+            id: 'f-1',
+            nome: 'João Pedro Silva',
+            guia: 'Ogum',
+            status: 'Ativo',
+            telefone: '(11) 98888-1111',
+            entrada: '2025-02-10',
+            obs: 'Atua na assistência e organização do salão.'
+          },
+          {
+            id: 'f-2',
+            nome: 'Camila Ferreira',
+            guia: 'Oxum',
+            status: 'Ativo',
+            telefone: '(11) 97777-2222',
+            entrada: '2025-05-04',
+            obs: 'Acompanhamento de desenvolvimento.'
+          }
+        ],
+        trabalhos: [
+          {
+            id: 't-1',
+            titulo: 'Gira de abertura e limpeza espiritual',
+            data: new Date().toISOString().slice(0, 10),
+            status: 'Agendado',
+            responsavel: 'Dirigente da Casa',
+            detalhes: 'Chegar 1h antes para preparo do espaço.'
+          }
+        ],
+        usuarios: [
+          {
+            id: 'u-1',
+            nome: 'Guilherme Curto',
+            email: 'guilherme.curto2004@gmail.com',
+            papel: 'Dirigente'
+          }
+        ]
+      };
+    }
+
+    let stateData = loadData();
+
+    function loadData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEYS.DATA);
+        if (!raw) return createInitialData();
+        const parsed = JSON.parse(raw);
+        return {
+          filhos: Array.isArray(parsed.filhos) ? parsed.filhos : [],
+          trabalhos: Array.isArray(parsed.trabalhos) ? parsed.trabalhos : [],
+          usuarios: Array.isArray(parsed.usuarios) ? parsed.usuarios : []
+        };
+      } catch (err) {
+        console.error('Erro ao ler dados locais:', err);
+        return createInitialData();
+      }
+    }
+
+    function saveData() {
+      try {
+        localStorage.setItem(STORAGE_KEYS.DATA, JSON.stringify(stateData));
+      } catch (err) {
+        console.error('Erro ao salvar dados locais:', err);
+        showToast('Não foi possível salvar no navegador.', 'error');
+      }
+    }
+
+    function getGasUrl() {
+      try {
+        const saved = (localStorage.getItem(STORAGE_KEYS.GAS_URL) || '').trim();
+        return saved || DEFAULT_GAS_URL;
+      } catch (_) {
+        return DEFAULT_GAS_URL;
+      }
+    }
+
+    function setGasUrl(url) {
+      const clean = String(url || '').trim();
+      try {
+        if (clean) {
+          localStorage.setItem(STORAGE_KEYS.GAS_URL, clean);
+        } else {
+          localStorage.removeItem(STORAGE_KEYS.GAS_URL);
+        }
+      } catch (err) {
+        console.error('Erro ao salvar URL:', err);
+      }
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+
+      const palette = {
+        success: 'bg-emerald-600 text-white border-emerald-500',
+        error: 'bg-rose-600 text-white border-rose-500',
+        info: 'bg-slate-900 dark:bg-slate-800 text-white border-slate-700'
+      };
+
+      const toast = document.createElement('div');
+      toast.className = `pointer-events-auto rounded-xl border px-4 py-3 text-xs sm:text-sm font-semibold shadow-lg transition ${palette[type] || palette.info}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3600);
+    }
+
+    function setDiagnostic(text, isError = false) {
+      const box = document.getElementById('syncDiagnosticBox');
+      if (!box) return;
+      box.textContent = `Diagnóstico: ${text}`;
+      box.className = isError
+        ? 'rounded-xl p-3.5 text-xs font-mono bg-rose-500/10 border border-rose-500/30 text-rose-700 dark:text-rose-300'
+        : 'rounded-xl p-3.5 text-xs font-mono bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300';
+    }
+
+    function recordSyncTimestamp(label) {
+      const nowStr = new Date().toLocaleString('pt-BR');
+      try {
+        localStorage.setItem(STORAGE_KEYS.LAST_SYNC, JSON.stringify({ time: nowStr, label }));
+      } catch (_) {}
+      renderLastSyncLabel();
+    }
+
+    function renderLastSyncLabel() {
+      const statEl = document.getElementById('statUltimaSync');
+      const labelEl = document.getElementById('lastSyncLabel');
+      try {
+        const raw = localStorage.getItem(STORAGE_KEYS.LAST_SYNC);
+        if (!raw) {
+          if (statEl) statEl.textContent = 'Padrão pronto';
+          if (labelEl) labelEl.textContent = 'Clique em Sincronizar';
+          return;
+        }
+        const info = JSON.parse(raw);
+        if (statEl) statEl.textContent = info.time || 'Sincronizado';
+        if (labelEl) labelEl.textContent = info.label || 'Planilha conectada';
+      } catch (_) {}
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function renderStatsAndStatus() {
+      const totalFilhos = stateData.filhos.length;
+      const ativos = stateData.filhos.filter((f) => f.status === 'Ativo').length;
+      const totalTrabalhos = stateData.trabalhos.length;
+      const pendentes = stateData.trabalhos.filter((t) => t.status !== 'Concluído').length;
+      const totalUsuarios = stateData.usuarios.length;
+
+      document.getElementById('statFilhos').textContent = String(totalFilhos);
+      document.getElementById('statFilhosAtivos').textContent = `${ativos} ativo(s) na casa`;
+      document.getElementById('statTrabalhos').textContent = String(totalTrabalhos);
+      document.getElementById('statTrabalhosPendentes').textContent = `${pendentes} aberto(s)/agendado(s)`;
+      document.getElementById('statUsuarios').textContent = String(totalUsuarios);
+    }
+
+    function buildGuiaControls() {
+      const selectGuia = document.getElementById('filhoGuia');
+      const filterGuia = document.getElementById('filterGuia');
+      const existingGuias = new Set([
+        ...ORIXAS_PADRAO,
+        ...stateData.filhos.map((f) => f.guia).filter(Boolean)
+      ]);
+
+      if (selectGuia) {
+        const current = selectGuia.value;
+        selectGuia.innerHTML = [...existingGuias]
+          .map((g) => `<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`)
+          .join('');
+        if (current) selectGuia.value = current;
+      }
+
+      if (filterGuia) {
+        const currentFilter = filterGuia.value;
+        filterGuia.innerHTML = `<option value="">Todos os Orixás</option>` + [...existingGuias]
+          .map((g) => `<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`)
+          .join('');
+        filterGuia.value = currentFilter;
+      }
+    }
+
+    function renderFilhos() {
+      const tbody = document.getElementById('tbodyFilhos');
+      if (!tbody) return;
+
+      const query = (document.getElementById('searchFilho')?.value || '').trim().toLowerCase();
+      const guiaFilter = document.getElementById('filterGuia')?.value || '';
+
+      const filtered = stateData.filhos.filter((f) => {
+        const matchesGuia = !guiaFilter || f.guia === guiaFilter;
+        const matchesQuery =
+          !query ||
+          String(f.nome || '').toLowerCase().includes(query) ||
+          String(f.guia || '').toLowerCase().includes(query) ||
+          String(f.telefone || '').toLowerCase().includes(query);
+        return matchesGuia && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="py-6 text-center text-slate-500 dark:text-slate-400 text-xs sm:text-sm">
+              Nenhum filho encontrado com os filtros atuais.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered
+        .map((f) => {
+          const statusClasses =
+            f.status === 'Ativo'
+              ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+              : f.status === 'Em observação'
+              ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300'
+              : 'bg-slate-500/15 text-slate-600 dark:text-slate-300';
+
+          return `
+            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+              <td class="py-3 pr-3">
+                <p class="font-semibold text-slate-900 dark:text-slate-100">${escapeHtml(f.nome)}</p>
+                ${f.obs ? `<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">${escapeHtml(f.obs)}</p>` : ''}
+              </td>
+              <td class="py-3 px-3 whitespace-nowrap text-xs sm:text-sm">${escapeHtml(f.guia || '-')}</td>
+              <td class="py-3 px-3 whitespace-nowrap">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${statusClasses}">
+                  ${escapeHtml(f.status || 'Ativo')}
+                </span>
+              </td>
+              <td class="py-3 px-3 whitespace-nowrap text-xs sm:text-sm text-slate-600 dark:text-slate-300">${escapeHtml(f.telefone || '-')}</td>
+              <td class="py-3 pl-3 text-right whitespace-nowrap">
+                <button type="button" data-edit-filho="${escapeHtml(f.id)}" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-500/10 transition">
+                  Editar
+                </button>
+                <button type="button" data-del-filho="${escapeHtml(f.id)}" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition">
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          `;
+        })
+        .join('');
+    }
+
+    function renderTrabalhos() {
+      const container = document.getElementById('listaTrabalhos');
+      if (!container) return;
+
+      const statusFilter = document.getElementById('filterTrabalhoStatus')?.value || '';
+      const filtered = stateData.trabalhos.filter((t) => !statusFilter || t.status === statusFilter);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="rounded-xl border border-dashed border-slate-300 dark:border-slate-700 p-6 text-center text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+            Nenhum trabalho encontrado.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered
+        .map((t) => {
+          const badge =
+            t.status === 'Concluído'
+              ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+              : t.status === 'Em andamento'
+              ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300'
+              : 'bg-violet-500/15 text-violet-700 dark:text-violet-300';
+
+          return `
+            <div class="rounded-xl border border-slate-200 dark:border-slate-800 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/60 dark:bg-slate-800/30">
+              <div class="space-y-1">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100">${escapeHtml(t.titulo)}</h3>
+                  <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold ${badge}">${escapeHtml(t.status)}</span>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400">
+                  Data: <strong>${escapeHtml(t.data || '-')}</strong> • Responsável: <strong>${escapeHtml(t.responsavel || 'Não informado')}</strong>
+                </p>
+                ${t.detalhes ? `<p class="text-xs text-slate-600 dark:text-slate-300">${escapeHtml(t.detalhes)}</p>` : ''}
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <button type="button" data-edit-trabalho="${escapeHtml(t.id)}" class="px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                  Editar
+                </button>
+                <button type="button" data-del-trabalho="${escapeHtml(t.id)}" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition">
+                  Excluir
+                </button>
+              </div>
+            </div>
+          `;
+        })
+        .join('');
+    }
+
+    function renderUsuarios() {
+      const tbody = document.getElementById('tbodyUsuarios');
+      if (!tbody) return;
+
+      if (stateData.usuarios.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="4" class="py-6 text-center text-slate-500 dark:text-slate-400 text-xs sm:text-sm">
+              Nenhum usuário cadastrado.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = stateData.usuarios
+        .map(
+          (u) => `
+            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+              <td class="py-3 pr-3 font-semibold">${escapeHtml(u.nome)}</td>
+              <td class="py-3 px-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">${escapeHtml(u.email)}</td>
+              <td class="py-3 px-3 text-xs sm:text-sm">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/15 text-indigo-700 dark:text-indigo-300">
+                  ${escapeHtml(u.papel || 'Membro')}
+                </span>
+              </td>
+              <td class="py-3 pl-3 text-right">
+                <button type="button" data-del-usuario="${escapeHtml(u.id)}" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition">
+                  Remover
+                </button>
+              </td>
+            </tr>
+          `
+        )
+        .join('');
+    }
+
+    function renderAll() {
+      buildGuiaControls();
+      renderStatsAndStatus();
+      renderFilhos();
+      renderTrabalhos();
+      renderUsuarios();
+    }
+
+    // Troca de abas
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-btn').forEach((btn) => {
+        const isTarget = btn.dataset.tab === tabName;
+        btn.classList.toggle('tab-active', isTarget);
+        if (!isTarget) {
+          btn.classList.add('border', 'border-slate-200', 'dark:border-slate-800', 'bg-white', 'dark:bg-slate-900', 'text-slate-700', 'dark:text-slate-300');
+        } else {
+          btn.classList.remove('border', 'border-slate-200', 'dark:border-slate-800', 'bg-white', 'dark:bg-slate-900', 'text-slate-700', 'dark:text-slate-300');
+        }
+      });
+
+      document.querySelectorAll('.tab-panel').forEach((panel) => {
+        panel.classList.toggle('hidden', panel.id !== `panel-${tabName}`);
+      });
+    }
+
+    // JSONP fallback para leitura via Google Apps Script
+    function fetchJsonp(url, timeoutMs = 12000) {
+      return new Promise((resolve, reject) => {
+        const callbackName = 'i7cGasCallback_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+        const separator = url.includes('?') ? '&' : '?';
+        const script = document.createElement('script');
+        script.src = `${url}${separator}callback=${callbackName}`;
+        script.async = true;
+
+        const timer = setTimeout(() => {
+          cleanup();
+          reject(new Error('JSONP: Tempo limite esgotado ao carregar script do Google Apps Script.'));
+        }, timeoutMs);
+
+        function cleanup() {
+          clearTimeout(timer);
+          if (script.parentNode) script.parentNode.removeChild(script);
+          try {
+            delete window[callbackName];
+          } catch (_) {
+            window[callbackName] = undefined;
+          }
+        }
+
+        window[callbackName] = (payload) => {
+          cleanup();
+          resolve(payload);
+        };
+
+        script.onerror = () => {
+          cleanup();
+          reject(new Error('JSONP: Falha ao carregar script do Google Apps Script.'));
+        };
+
+        document.body.appendChild(script);
+      });
+    }
+
+    function normalizeIncomingPayload(payload) {
+      if (!payload || typeof payload !== 'object') return null;
+      const source = payload.data && typeof payload.data === 'object' ? payload.data : payload;
+      const hasArrays =
+        Array.isArray(source.filhos) ||
+        Array.isArray(source.trabalhos) ||
+        Array.isArray(source.usuarios);
+
+      if (!hasArrays) return null;
+
+      return {
+        filhos: Array.isArray(source.filhos) ? source.filhos : stateData.filhos,
+        trabalhos: Array.isArray(source.trabalhos) ? source.trabalhos : stateData.trabalhos,
+        usuarios: Array.isArray(source.usuarios) ? source.usuarios : stateData.usuarios
+      };
+    }
+
+    async function syncFromSheet() {
+      const url = getGasUrl();
+      if (!url) {
+        showToast('Configure a URL do Google Apps Script primeiro.', 'error');
+        setDiagnostic('URL do Google Apps Script não configurada.', true);
+        return;
+      }
+
+      setDiagnostic('Sincronizando dados da planilha...');
+      try {
+        let data = null;
+        try {
+          const res = await fetch(`${url}${url.includes('?') ? '&' : '?'}action=read`, {
+            method: 'GET',
+            mode: 'cors'
+          });
+          if (res.ok) {
+            data = await res.json();
+          }
+        } catch (_) {
+          data = await fetchJsonp(url);
+        }
+
+        const normalized = normalizeIncomingPayload(data);
+        if (!normalized) {
+          throw new Error('Resposta recebida não contém listas válidas (filhos, trabalhos ou usuários).');
+        }
+
+        stateData = normalized;
+        saveData();
+        renderAll();
+        recordSyncTimestamp('Sincronizado da planilha');
+        setDiagnostic(`Sucesso (${stateData.filhos.length} filhos, ${stateData.trabalhos.length} trabalhos, ${stateData.usuarios.length} usuários).`);
+        showToast('Dados sincronizados da planilha com sucesso.', 'success');
+      } catch (err) {
+        const msg = err && err.message ? err.message : 'Erro desconhecido';
+        setDiagnostic(`Falha ao sincronizar: ${msg}`, true);
+        showToast(`Falha ao sincronizar: ${msg}`, 'error');
+      }
+    }
+
+    async function syncToSheet() {
+      const url = getGasUrl();
+      if (!url) {
+        showToast('Configure a URL do Google Apps Script primeiro.', 'error');
+        setDiagnostic('URL do Google Apps Script não configurada.', true);
+        return;
+      }
+
+      setDiagnostic('Enviando alterações para a planilha...');
+      try {
+        await fetch(url, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            action: 'write',
+            data: stateData,
+            updatedAt: new Date().toISOString()
+          })
+        });
+
+        recordSyncTimestamp('Enviado para a planilha');
+        setDiagnostic('Pacote enviado ao Google Apps Script. Confira a planilha para validar.');
+        showToast('Dados enviados para a planilha.', 'success');
+      } catch (err) {
+        const msg = err && err.message ? err.message : 'Erro ao enviar';
+        setDiagnostic(`Falha ao enviar: ${msg}`, true);
+        showToast(`Falha ao enviar: ${msg}`, 'error');
+      }
+    }
+
+    // Tema claro / escuro
+    function initTheme() {
+      let theme = 'dark';
+      try {
+        const saved = localStorage.getItem(STORAGE_KEYS.THEME);
+        if (saved === 'light' || saved === 'dark') theme = saved;
+      } catch (_) {}
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      try {
+        localStorage.setItem(STORAGE_KEYS.THEME, isDark ? 'dark' : 'light');
+      } catch (_) {}
+    }
+
+    // Eventos de interface
+    document.querySelectorAll('.tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    document.getElementById('btnToggleTheme').addEventListener('click', toggleTheme);
+    document.getElementById('btnSyncPull').addEventListener('click', syncFromSheet);
+    document.getElementById('btnSyncPush').addEventListener('click', syncToSheet);
+    document.getElementById('btnSyncPullTab').addEventListener('click', syncFromSheet);
+    document.getElementById('btnSyncPushTab').addEventListener('click', syncToSheet);
+
+    document.getElementById('btnSaveGasUrl').addEventListener('click', () => {
+      const input = document.getElementById('gasWebAppUrlInput');
+      const val = (input?.value || '').trim();
+      if (!val) {
+        showToast('Digite uma URL válida antes de salvar.', 'error');
+        return;
+      }
+      setGasUrl(val);
+      setDiagnostic(`URL salva: ${val}`);
+      showToast('URL do Google Apps Script salva.', 'success');
+    });
+
+    document.getElementById('btnResetGasUrl').addEventListener('click', () => {
+      setGasUrl('');
+      const input = document.getElementById('gasWebAppUrlInput');
+      if (input) input.value = DEFAULT_GAS_URL;
+      setDiagnostic(`URL restaurada para o padrão: ${DEFAULT_GAS_URL}`);
+      showToast('URL padrão restaurada.', 'info');
+    });
+
+    document.getElementById('btnOpenGasTab').addEventListener('click', () => {
+      const url = getGasUrl();
+      if (!url) {
+        showToast('Nenhuma URL configurada.', 'error');
+        return;
+      }
+      window.open(url, '_blank', 'noopener,noreferrer');
+    });
+
+    // Formulário de Filhos
+    const formFilho = document.getElementById('formFilho');
+    const btnCancelFilho = document.getElementById('btnCancelFilho');
+
+    function resetFilhoForm() {
+      formFilho.reset();
+      document.getElementById('filhoId').value = '';
+      document.getElementById('formFilhoTitle').textContent = 'Cadastrar Filho(a)';
+      btnCancelFilho.classList.add('hidden');
+    }
+
+    btnCancelFilho.addEventListener('click', resetFilhoForm);
+
+    formFilho.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const idField = document.getElementById('filhoId').value;
+      const payload = {
+        id: idField || 'f-' + Date.now(),
+        nome: document.getElementById('filhoNome').value.trim(),
+        guia: document.getElementById('filhoGuia').value,
+        status: document.getElementById('filhoStatus').value,
+        telefone: document.getElementById('filhoTelefone').value.trim(),
+        entrada: document.getElementById('filhoEntrada').value,
+        obs: document.getElementById('filhoObs').value.trim()
+      };
+
+      if (!payload.nome) {
+        showToast('Informe o nome completo.', 'error');
+        return;
+      }
+
+      if (idField) {
+        stateData.filhos = stateData.filhos.map((item) => (item.id === idField ? payload : item));
+        showToast('Cadastro do filho atualizado.', 'success');
+      } else {
+        stateData.filhos.unshift(payload);
+        showToast('Filho(a) cadastrado(a).', 'success');
+      }
+
+      saveData();
+      resetFilhoForm();
+      renderAll();
+    });
+
+    document.getElementById('tbodyFilhos').addEventListener('click', (e) => {
+      const editId = e.target.closest('[data-edit-filho]')?.dataset.editFilho;
+      const delId = e.target.closest('[data-del-filho]')?.dataset.delFilho;
+
+      if (editId) {
+        const item = stateData.filhos.find((f) => f.id === editId);
+        if (!item) return;
+        document.getElementById('filhoId').value = item.id;
+        document.getElementById('filhoNome').value = item.nome || '';
+        document.getElementById('filhoGuia').value = item.guia || 'Oxalá';
+        document.getElementById('filhoStatus').value = item.status || 'Ativo';
+        document.getElementById('filhoTelefone').value = item.telefone || '';
+        document.getElementById('filhoEntrada').value = item.entrada || '';
+        document.getElementById('filhoObs').value = item.obs || '';
+        document.getElementById('formFilhoTitle').textContent = 'Editar Filho(a)';
+        btnCancelFilho.classList.remove('hidden');
+      } else if (delId) {
+        stateData.filhos = stateData.filhos.filter((f) => f.id !== delId);
+        saveData();
+        renderAll();
+        showToast('Registro removido.', 'info');
+      }
+    });
+
+    document.getElementById('searchFilho').addEventListener('input', renderFilhos);
+    document.getElementById('filterGuia').addEventListener('change', renderFilhos);
+
+    // Formulário de Trabalhos
+    const formTrabalho = document.getElementById('formTrabalho');
+    const btnCancelTrabalho = document.getElementById('btnCancelTrabalho');
+
+    function resetTrabalhoForm() {
+      formTrabalho.reset();
+      document.getElementById('trabalhoId').value = '';
+      document.getElementById('formTrabalhoTitle').textContent = 'Novo Trabalho / Gira';
+      btnCancelTrabalho.classList.add('hidden');
+    }
+
+    btnCancelTrabalho.addEventListener('click', resetTrabalhoForm);
+
+    formTrabalho.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const idField = document.getElementById('trabalhoId').value;
+      const payload = {
+        id: idField || 't-' + Date.now(),
+        titulo: document.getElementById('trabalhoTitulo').value.trim(),
+        data: document.getElementById('trabalhoData').value,
+        status: document.getElementById('trabalhoStatus').value,
+        responsavel: document.getElementById('trabalhoResponsavel').value.trim(),
+        detalhes: document.getElementById('trabalhoDetalhes').value.trim()
+      };
+
+      if (!payload.titulo) {
+        showToast('Informe o título do trabalho.', 'error');
+        return;
+      }
+
+      if (idField) {
+        stateData.trabalhos = stateData.trabalhos.map((item) => (item.id === idField ? payload : item));
+        showToast('Trabalho atualizado.', 'success');
+      } else {
+        stateData.trabalhos.unshift(payload);
+        showToast('Trabalho cadastrado.', 'success');
+      }
+
+      saveData();
+      resetTrabalhoForm();
+      renderAll();
+    });
+
+    document.getElementById('listaTrabalhos').addEventListener('click', (e) => {
+      const editId = e.target.closest('[data-edit-trabalho]')?.dataset.editTrabalho;
+      const delId = e.target.closest('[data-del-trabalho]')?.dataset.delTrabalho;
+
+      if (editId) {
+        const item = stateData.trabalhos.find((t) => t.id === editId);
+        if (!item) return;
+        document.getElementById('trabalhoId').value = item.id;
+        document.getElementById('trabalhoTitulo').value = item.titulo || '';
+        document.getElementById('trabalhoData').value = item.data || '';
+        document.getElementById('trabalhoStatus').value = item.status || 'Agendado';
+        document.getElementById('trabalhoResponsavel').value = item.responsavel || '';
+        document.getElementById('trabalhoDetalhes').value = item.detalhes || '';
+        document.getElementById('formTrabalhoTitle').textContent = 'Editar Trabalho / Gira';
+        btnCancelTrabalho.classList.remove('hidden');
+      } else if (delId) {
+        stateData.trabalhos = stateData.trabalhos.filter((t) => t.id !== delId);
+        saveData();
+        renderAll();
+        showToast('Trabalho excluído.', 'info');
+      }
+    });
+
+    document.getElementById('filterTrabalhoStatus').addEventListener('change', renderTrabalhos);
+
+    // Formulário de Usuários
+    document.getElementById('formUsuario').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('usuarioNome').value.trim();
+      const email = document.getElementById('usuarioEmail').value.trim();
+      const papel = document.getElementById('usuarioPapel').value;
+
+      if (!nome || !email) {
+        showToast('Preencha nome e e-mail.', 'error');
+        return;
+      }
+
+      stateData.usuarios.push({
+        id: 'u-' + Date.now(),
+        nome,
+        email,
+        papel
+      });
+
+      saveData();
+      e.target.reset();
+      renderAll();
+      showToast('Usuário adicionado.', 'success');
+    });
+
+    document.getElementById('tbodyUsuarios').addEventListener('click', (e) => {
+      const delId = e.target.closest('[data-del-usuario]')?.dataset.delUsuario;
+      if (!delId) return;
+      stateData.usuarios = stateData.usuarios.filter((u) => u.id !== delId);
+      saveData();
+      renderAll();
+      showToast('Usuário removido.', 'info');
+    });
+
+    // Exportar e importar JSON
+    document.getElementById('btnExportJson').addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify(stateData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `backup-terreiro-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Backup JSON exportado.', 'success');
+    });
+
+    document.getElementById('inputImportJson').addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(String(reader.result || '{}'));
+          const normalized = normalizeIncomingPayload(parsed);
+          if (!normalized) {
+            showToast('Arquivo JSON inválido.', 'error');
+            return;
+          }
+          stateData = normalized;
+          saveData();
+          renderAll();
+          showToast('Backup JSON importado com sucesso.', 'success');
+        } catch (_) {
+          showToast('Não foi possível ler o arquivo JSON.', 'error');
+        } finally {
+          e.target.value = '';
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    // Baixar index.html pronto
+    document.getElementById('btnDownloadIndex').addEventListener('click', () => {
+      const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'index.html';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Arquivo index.html baixado.', 'success');
+    });
+
+    function initIntegrationTab() {
+      const input = document.getElementById('gasWebAppUrlInput');
+      if (input) {
+        input.value = getGasUrl();
+      }
+      renderLastSyncLabel();
+    }
+
+    // Inicialização
+    initTheme();
+    initIntegrationTab();
+    renderAll();
+  </script>
+
+</body></html>
