@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instituto 7 Cores • Gestão do Terreiro</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=I7Ky4xd9UIWQ0vgt2UoWrBKr29aPJXhMT2WAD82tLdzEAmV41fUdWVdV0f4xIODkoFxhkOFa7TCL-G66kvKiJCabav6RleyFuKO-EqiPZR-EQaDOaVZSxmAoh1G8VrKqGmMhISjBqoiZC5hoPxzp9EBMzgF0s5BDIUtoHOCrYndW1MkKjZhMWD3f1WBAgfQiUsKzsPUFERqVtjPz5PSFyRazj-qCuuKvpINIpU9g-2N71HvRkUkMKT4bDEvKniW0F1UkC9uuK3nNPshrcpliNwmLj0PAOXEeANWI3B3TyJIoq8_EurzrU9OqAX0WuSOUrp5nJoAPwaLkCpT_9Is8zQ" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pBMFpqRmtNV1JrTnpaaU5qTmtNakkwTURBd05qWXhNbVU1T0dRMFlUUTBaVEE0T0RSaE1ESm1OR0V5TjJFME5XSVNDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPXNpdGVfYXR1YWxpemFkby12OS5odG1sJm9waT0xMDMxMzUwNTA"/><script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -142,20 +142,6 @@
         </div>
       </div>
 
-      <!-- FAIXA DOS 7 ORIXÁS (1 A 7) SEMPRE VISÍVEL -->
-      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-3">
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <div>
-            <h2 class="text-sm sm:text-base font-extrabold text-white">7 Orixás (1 a 7)</h2>
-            <p class="text-xs text-slate-400">Clique em um Orixá de 1 a 7 para filtrar na planilha ou vincular no cadastro.</p>
-          </div>
-          <button type="button" id="btnLimparFiltroOrixa" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200">
-            Mostrar Todos
-          </button>
-        </div>
-        <div id="gradeSeteOrixas" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2"></div>
-      </div>
-
       <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div>
@@ -165,7 +151,7 @@
           <input
             id="filtroPlanilha"
             type="text"
-            placeholder="Buscar filho, orixá (1-7), guia ou trabalho..."
+            placeholder="Buscar filho, orixá, guia ou trabalho..."
             class="px-3.5 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
           >
         </div>
@@ -175,7 +161,7 @@
             <thead>
               <tr class="border-b border-violet-500/25 text-violet-200">
                 <th class="py-2.5 px-3 font-bold">Filho</th>
-                <th class="py-2.5 px-3 font-bold">Orixá (1-7)</th>
+                <th class="py-2.5 px-3 font-bold">Orixá</th>
                 <th class="py-2.5 px-3 font-bold">Guia</th>
                 <th class="py-2.5 px-3 font-bold">Trabalhos do Filho</th>
                 <th class="py-2.5 px-3 font-bold">Função</th>
@@ -187,13 +173,13 @@
       </div>
     </section>
 
-    <!-- SEÇÃO CADASTRO DE FILHOS (COM SUB-ABAS DE ORIXÁ 1..7 E GUIA DENTRO DO CADASTRO) -->
+    <!-- SEÇÃO CADASTRO DE FILHOS -->
     <section id="tab-filhos" class="tab-panel hidden space-y-5">
       <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-5">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 class="text-base font-extrabold text-white">Cadastro de Filho</h2>
-            <p class="text-xs text-slate-400">Dados principais, abas internas de Orixá (1 a 7) e Guia junto ao cadastro e seleção de 1 ou vários trabalhos.</p>
+            <p class="text-xs text-slate-400">Cada filho tem seus próprios campos livres de Orixá, Guia e Trabalhos conforme sua planilha.</p>
           </div>
 
           <div class="flex flex-wrap gap-1.5 bg-slate-900/90 p-1 rounded-xl border border-violet-500/25">
@@ -201,28 +187,21 @@
               Dados & Trabalhos
             </button>
             <button type="button" data-cad-subtab="orixa" class="cad-subtab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition">
-              Aba Orixá (1-7)
+              Orixá
             </button>
             <button type="button" data-cad-subtab="guia" class="cad-subtab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition">
-              Aba Guia
+              Guia
             </button>
           </div>
         </div>
 
         <form id="formFilho" class="space-y-4">
+          <!-- ABA DADOS & TRABALHOS (SEM ORIXÁ E SEM GUIA REPETIDOS AQUI) -->
           <div id="cad-panel-dados" class="cad-subpanel space-y-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               <div>
                 <label for="filhoNome" class="block text-xs font-semibold mb-1 text-slate-300">Nome do filho *</label>
                 <input id="filhoNome" type="text" required placeholder="Nome completo *" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-              </div>
-              <div>
-                <label for="filhoOrixaDireto" class="block text-xs font-semibold mb-1 text-slate-300">Orixá (1 a 7 ou livre)</label>
-                <select id="filhoOrixaDireto" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white"></select>
-              </div>
-              <div>
-                <label for="filhoGuiaDireto" class="block text-xs font-semibold mb-1 text-slate-300">Guia / Entidade</label>
-                <input id="filhoGuiaDireto" type="text" list="sugestoesGuias" placeholder="Ex: Caboclo Sete Flechas" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
               </div>
               <div>
                 <label for="filhoFuncao" class="block text-xs font-semibold mb-1 text-slate-300">Função / Cargo</label>
@@ -239,11 +218,9 @@
             </div>
 
             <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-3">
-              <div class="flex flex-wrap items-center justify-between gap-2">
-                <div>
-                  <h3 class="text-xs sm:text-sm font-bold text-white">Trabalhos vinculáveis ao filho (marque 1 ou vários)</h3>
-                  <p class="text-[11px] text-slate-400">Você também pode adicionar um trabalho novo na hora abaixo.</p>
-                </div>
+              <div>
+                <h3 class="text-xs sm:text-sm font-bold text-white">Trabalhos vinculáveis ao filho (marque 1 ou vários)</h3>
+                <p class="text-[11px] text-slate-400">Você também pode adicionar um trabalho novo na hora abaixo.</p>
               </div>
 
               <div id="checkboxTrabalhosCadastro" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2"></div>
@@ -259,36 +236,40 @@
             </div>
           </div>
 
+          <!-- ABA ORIXÁ -->
           <div id="cad-panel-orixa" class="cad-subpanel hidden rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-3">
-            <h3 class="text-sm font-bold text-white">Detalhes de Orixá (1 a 7) no Cadastro</h3>
+            <h3 class="text-sm font-bold text-white">Orixá do Filho</h3>
+            <p class="text-xs text-slate-400">Informe livremente o Orixá deste filho conforme o seu cadastro e a planilha.</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label for="filhoOrixaDetalhe" class="block text-xs font-semibold mb-1 text-slate-300">Escolha de 1 a 7 ou digite outro</label>
-                <input id="filhoOrixaDetalhe" type="text" list="listaOrixas1a7" placeholder="Ex: 1. Ogum ou 2. Oxóssi" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+                <label for="filhoOrixaDetalhe" class="block text-xs font-semibold mb-1 text-slate-300">Orixá</label>
+                <input id="filhoOrixaDetalhe" type="text" list="sugestoesOrixasPlanilha" placeholder="Digite o Orixá do filho" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
               </div>
               <div>
-                <label for="filhoOrixaObs" class="block text-xs font-semibold mb-1 text-slate-300">Cor / Dia / Observação de Orixá</label>
-                <input id="filhoOrixaObs" type="text" placeholder="Ex: Quarta-feira, marrom/branco" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+                <label for="filhoOrixaObs" class="block text-xs font-semibold mb-1 text-slate-300">Observação de Orixá</label>
+                <input id="filhoOrixaObs" type="text" placeholder="Detalhes ou observações do Orixá" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
               </div>
             </div>
           </div>
 
+          <!-- ABA GUIA -->
           <div id="cad-panel-guia" class="cad-subpanel hidden rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-3">
-            <h3 class="text-sm font-bold text-white">Detalhes de Guia / Entidade no Cadastro</h3>
+            <h3 class="text-sm font-bold text-white">Guia / Entidade do Filho</h3>
+            <p class="text-xs text-slate-400">Informe livremente a Guia ou Entidade deste filho conforme a planilha.</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label for="filhoGuiaDetalhe" class="block text-xs font-semibold mb-1 text-slate-300">Guia / Entidade Principal</label>
-                <input id="filhoGuiaDetalhe" type="text" list="sugestoesGuias" placeholder="Ex: Preto Velho Pai Joaquim" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+                <label for="filhoGuiaDetalhe" class="block text-xs font-semibold mb-1 text-slate-300">Guia / Entidade</label>
+                <input id="filhoGuiaDetalhe" type="text" list="sugestoesGuiasPlanilha" placeholder="Digite a Guia do filho" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
               </div>
               <div>
-                <label for="filhoGuiaLinha" class="block text-xs font-semibold mb-1 text-slate-300">Linha / Outras Guias</label>
-                <input id="filhoGuiaLinha" type="text" placeholder="Ex: Linha das Almas, Baiano, Malandro" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+                <label for="filhoGuiaLinha" class="block text-xs font-semibold mb-1 text-slate-300">Observação / Linha da Guia</label>
+                <input id="filhoGuiaLinha" type="text" placeholder="Detalhes ou linha da Guia" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
               </div>
             </div>
           </div>
 
-          <datalist id="listaOrixas1a7"></datalist>
-          <datalist id="sugestoesGuias"></datalist>
+          <datalist id="sugestoesOrixasPlanilha"></datalist>
+          <datalist id="sugestoesGuiasPlanilha"></datalist>
 
           <button type="submit" class="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white transition">
             Salvar Filho na Planilha
@@ -358,15 +339,15 @@
       <div id="balaoFilhoDetalhes" class="space-y-1 text-xs sm:text-sm text-slate-200 border-t border-violet-500/20 pt-3"></div>
 
       <div class="border-t border-violet-500/20 pt-3 space-y-3">
-        <h4 class="text-xs font-bold uppercase tracking-wider text-violet-300">Editar Orixá (1-7), Guia, Função e Trabalhos deste Filho</h4>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-violet-300">Editar Orixá, Guia, Função e Trabalhos deste Filho</h4>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           <div>
-            <label for="editFilhoOrixa" class="block text-xs font-semibold mb-1 text-slate-300">Orixá (1-7)</label>
-            <input id="editFilhoOrixa" type="text" list="listaOrixas1a7" class="w-full px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900 text-white">
+            <label for="editFilhoOrixa" class="block text-xs font-semibold mb-1 text-slate-300">Orixá</label>
+            <input id="editFilhoOrixa" type="text" list="sugestoesOrixasPlanilha" class="w-full px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900 text-white">
           </div>
           <div>
             <label for="editFilhoGuia" class="block text-xs font-semibold mb-1 text-slate-300">Guia</label>
-            <input id="editFilhoGuia" type="text" list="sugestoesGuias" class="w-full px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900 text-white">
+            <input id="editFilhoGuia" type="text" list="sugestoesGuiasPlanilha" class="w-full px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900 text-white">
           </div>
           <div class="sm:col-span-2">
             <label for="editFilhoFuncao" class="block text-xs font-semibold mb-1 text-slate-300">Função / Cargo</label>
@@ -387,16 +368,6 @@
   <script>
     const DEFAULT_DB_URL = 'https://script.google.com/macros/s/AKfycbydnBQeThbs_D_Ic3N34vA05JGkb8TaZ6F7DUAhDi6pUTouih0q3OfXsxdVCmcgT0ngng/exec';
     let runtimeDbUrl = DEFAULT_DB_URL;
-
-    const SETE_ORIXAS = [
-      '1. Ogum',
-      '2. Oxóssi',
-      '3. Xangô',
-      '4. Iansã',
-      '5. Oxum',
-      '6. Iemanjá',
-      '7. Omulu / Obaluaê'
-    ];
 
     const DEFAULT_USERS = [
       {
@@ -420,7 +391,6 @@
     };
 
     let filhoEditIndex = null;
-    let filtroOrixaAtivo = '';
 
     function getDbUrl() {
       return (runtimeDbUrl || DEFAULT_DB_URL).trim();
@@ -473,7 +443,6 @@
       for (const k of keys) {
         if (Array.isArray(src[k])) return src[k];
       }
-      // Se o Apps Script retornar abas em um mapa de planilhas (ex: sheets: { Filhos: [...] })
       if (src.sheets && typeof src.sheets === 'object') {
         for (const k of keys) {
           if (Array.isArray(src.sheets[k])) return src.sheets[k];
@@ -482,9 +451,28 @@
       return [];
     }
 
+    function extrairCampoFlexivel(obj, chaves) {
+      if (!obj || typeof obj !== 'object') return '';
+      for (const k of chaves) {
+        if (obj[k] !== undefined && obj[k] !== null && String(obj[k]).trim() !== '') {
+          return String(obj[k]).trim();
+        }
+      }
+      for (const prop of Object.keys(obj)) {
+        const norm = prop.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+        if (chaves.some((c) => c.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '') === norm)) {
+          const val = obj[prop];
+          if (val !== undefined && val !== null && String(val).trim() !== '') {
+            return String(val).trim();
+          }
+        }
+      }
+      return '';
+    }
+
     function normalizeTrabalhosFilho(f) {
       if (!f || typeof f !== 'object') return [];
-      const raw = f.trabalhos || f.Trabalhos || f.trabalho || f.Trabalho || [];
+      const raw = f.trabalhos ?? f.Trabalhos ?? f.trabalho ?? f.Trabalho ?? f['Trabalhos do Filho'] ?? [];
       if (Array.isArray(raw)) return raw.map((x) => String(x || '').trim()).filter(Boolean);
       if (typeof raw === 'string' && raw.trim()) {
         return raw.split(/[,;|]/).map((s) => s.trim()).filter(Boolean);
@@ -583,87 +571,52 @@
     }
 
     function getFilhoOrixa(f) {
-      return f.orixa || f.Orixa || f['Orixá'] || f['orixá'] || f.orixaCabeca || '';
+      return extrairCampoFlexivel(f, ['orixa', 'orixaCabeca', 'orixaPrincipal', 'orixa de frente', 'coroa']);
     }
 
     function getFilhoGuia(f) {
-      return f.guia || f.Guia || f.entidade || f.Entidade || '';
+      return extrairCampoFlexivel(f, ['guia', 'guiaPrincipal', 'entidade', 'guia de trabalho', 'linha']);
     }
 
     function getFilhoFuncao(f) {
-      return f.funcao || f.Funcao || f['Função'] || f['função'] || f.cargo || f.Cargo || f.papel || '';
+      return extrairCampoFlexivel(f, ['funcao', 'cargo', 'papel']);
     }
 
     function getTrabalhoNome(t) {
-      return typeof t === 'string' ? t : (t.titulo || t.nome || t.Nome || 'Trabalho');
+      return typeof t === 'string' ? t : (extrairCampoFlexivel(t, ['titulo', 'nome', 'trabalho']) || 'Trabalho');
+    }
+
+    function getListaOrixasConhecidos() {
+      const setOrixas = new Set();
+      (state.filhos || []).forEach((f) => {
+        const o = getFilhoOrixa(f);
+        if (o) setOrixas.add(o);
+      });
+      return [...setOrixas];
     }
 
     function getListaGuiasConhecidas() {
       const setGuias = new Set();
       (state.guias || []).forEach((g) => {
-        const nome = typeof g === 'string' ? g : (g.nome || g.Nome || g.guia || g.Guia || '');
-        if (String(nome).trim()) setGuias.add(String(nome).trim());
+        const nome = typeof g === 'string' ? g : extrairCampoFlexivel(g, ['nome', 'guia', 'entidade']);
+        if (nome) setGuias.add(nome);
       });
       (state.filhos || []).forEach((f) => {
-        const g = getFilhoGuia(f).trim();
+        const g = getFilhoGuia(f);
         if (g) setGuias.add(g);
       });
       return [...setGuias];
     }
 
-    function popularOrixasEGuias() {
-      const selectOrixa = document.getElementById('filhoOrixaDireto');
-      const dlOrixas = document.getElementById('listaOrixas1a7');
-      const dlGuias = document.getElementById('sugestoesGuias');
-
-      if (selectOrixa) {
-        const atual = selectOrixa.value;
-        selectOrixa.innerHTML = [
-          `<option value="">Selecione um Orixá (1 a 7)...</option>`,
-          ...SETE_ORIXAS.map((o) => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`)
-        ].join('');
-        if (atual) selectOrixa.value = atual;
-      }
-
+    function popularSugestoesPlanilha() {
+      const dlOrixas = document.getElementById('sugestoesOrixasPlanilha');
+      const dlGuias = document.getElementById('sugestoesGuiasPlanilha');
       if (dlOrixas) {
-        dlOrixas.innerHTML = SETE_ORIXAS.map((o) => `<option value="${escapeHtml(o)}"></option>`).join('');
+        dlOrixas.innerHTML = getListaOrixasConhecidos().map((o) => `<option value="${escapeHtml(o)}"></option>`).join('');
       }
-
       if (dlGuias) {
         dlGuias.innerHTML = getListaGuiasConhecidas().map((g) => `<option value="${escapeHtml(g)}"></option>`).join('');
       }
-    }
-
-    function renderGradeSeteOrixas() {
-      const wrap = document.getElementById('gradeSeteOrixas');
-      if (!wrap) return;
-      wrap.innerHTML = SETE_ORIXAS.map((orixa) => {
-        const qtd = state.filhos.filter((f) => getFilhoOrixa(f).toLowerCase().includes(orixa.toLowerCase()) || getFilhoOrixa(f).startsWith(orixa.slice(0, 2))).length;
-        const ativo = filtroOrixaAtivo && filtroOrixaAtivo.toLowerCase() === orixa.toLowerCase();
-        return `
-          <button
-            type="button"
-            data-orixa="${escapeHtml(orixa)}"
-            class="btn-filtro-orixa text-left rounded-xl border p-2.5 transition ${
-              ativo
-                ? 'border-violet-300 bg-violet-600 text-white'
-                : 'border-violet-500/25 bg-slate-950/80 text-slate-200 hover:border-violet-400/50'
-            }"
-          >
-            <p class="text-xs font-extrabold truncate">${escapeHtml(orixa)}</p>
-            <p class="text-[11px] opacity-80 mt-0.5">${qtd} filho(s)</p>
-          </button>
-        `;
-      }).join('');
-
-      wrap.querySelectorAll('.btn-filtro-orixa').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const val = btn.getAttribute('data-orixa') || '';
-          filtroOrixaAtivo = filtroOrixaAtivo === val ? '' : val;
-          renderGradeSeteOrixas();
-          renderPlanilha();
-        });
-      });
     }
 
     function getListaOpcoesTrabalhos() {
@@ -705,7 +658,7 @@
         return;
       }
       wrap.innerHTML = state.filhos.map((f, idx) => {
-        const nome = f.nome || f.Nome || 'Sem nome';
+        const nome = extrairCampoFlexivel(f, ['nome']) || 'Sem nome';
         return `
           <label class="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900/90 border border-violet-500/20 text-xs text-slate-200 cursor-pointer hover:border-violet-400/50">
             <input type="checkbox" class="trab-filho-check rounded accent-violet-500" data-filho-idx="${idx}">
@@ -726,12 +679,12 @@
       if (!overlay || !nomeEl || !detEl || !filho) return;
 
       filhoEditIndex = idxReal;
-      const nome = filho.nome || filho.Nome || 'Sem nome';
-      const orixa = getFilhoOrixa(filho) || '';
-      const guia = getFilhoGuia(filho) || '';
+      const nome = extrairCampoFlexivel(filho, ['nome']) || 'Sem nome';
+      const orixa = getFilhoOrixa(filho);
+      const guia = getFilhoGuia(filho);
       const funcao = getFilhoFuncao(filho) || 'Membro';
-      const telefone = filho.telefone || filho.Telefone || filho.whatsapp || filho.WhatsApp || 'Não informado';
-      const obs = filho.obs || filho.Observacao || filho.observacoes || filho['Observações'] || 'Sem observações';
+      const telefone = extrairCampoFlexivel(filho, ['telefone', 'whatsapp']) || 'Não informado';
+      const obs = extrairCampoFlexivel(filho, ['obs', 'observacao', 'observacoes']) || 'Sem observações';
       const trabFilho = normalizeTrabalhosFilho(filho);
 
       nomeEl.textContent = nome;
@@ -805,16 +758,9 @@
       const linhas = state.filhos
         .map((f, realIdx) => ({ f, realIdx }))
         .filter(({ f }) => {
-          const orixaAtual = getFilhoOrixa(f).toLowerCase();
-          if (filtroOrixaAtivo) {
-            const numPrefix = filtroOrixaAtivo.slice(0, 2).toLowerCase();
-            if (!orixaAtual.includes(filtroOrixaAtivo.toLowerCase()) && !orixaAtual.startsWith(numPrefix)) {
-              return false;
-            }
-          }
           if (!filtro) return true;
           const blob = [
-            f.nome || f.Nome || '',
+            extrairCampoFlexivel(f, ['nome']),
             getFilhoOrixa(f),
             getFilhoGuia(f),
             getFilhoFuncao(f),
@@ -833,7 +779,7 @@
       }
 
       tbody.innerHTML = linhas.map(({ f, realIdx }) => {
-        const nome = f.nome || f.Nome || 'Sem nome';
+        const nome = extrairCampoFlexivel(f, ['nome']) || 'Sem nome';
         const orixa = getFilhoOrixa(f) || '—';
         const guia = getFilhoGuia(f) || '—';
         const trabTexto = normalizeTrabalhosFilho(f).join(', ') || '—';
@@ -869,7 +815,7 @@
         return;
       }
       wrap.innerHTML = state.filhos.map((f, idx) => {
-        const nome = f.nome || f.Nome || 'Sem nome';
+        const nome = extrairCampoFlexivel(f, ['nome']) || 'Sem nome';
         const orixa = getFilhoOrixa(f) || 'Sem orixá';
         const guia = getFilhoGuia(f) || 'Sem guia';
         const trabArr = normalizeTrabalhosFilho(f);
@@ -903,11 +849,11 @@
 
       wrap.innerHTML = state.trabalhos.map((t) => {
         const titulo = getTrabalhoNome(t);
-        const data = t.data || t.Data || 'Sem data';
-        const valor = t.valor || t.Valor || 'Sem valor';
+        const data = extrairCampoFlexivel(t, ['data']) || 'Sem data';
+        const valor = extrairCampoFlexivel(t, ['valor']) || 'Sem valor';
         const filhosVinculados = state.filhos
           .filter((f) => normalizeTrabalhosFilho(f).some((x) => x.toLowerCase() === titulo.toLowerCase()))
-          .map((f) => f.nome || f.Nome || 'Sem nome');
+          .map((f) => extrairCampoFlexivel(f, ['nome']) || 'Sem nome');
 
         return `
           <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-1">
@@ -924,9 +870,9 @@
       const wrap = document.getElementById('listaUsuarios');
       if (!wrap) return;
       wrap.innerHTML = state.usuarios.map((u) => {
-        const nome = u.nome || u.Nome || 'Usuário';
-        const email = u.email || u.Email || '—';
-        const papel = u.papel || u.Cargo || 'Membro';
+        const nome = extrairCampoFlexivel(u, ['nome']) || 'Usuário';
+        const email = extrairCampoFlexivel(u, ['email']) || '—';
+        const papel = extrairCampoFlexivel(u, ['papel', 'cargo']) || 'Membro';
         return `
           <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-1">
             <p class="text-sm font-bold text-white">${escapeHtml(nome)}</p>
@@ -941,8 +887,7 @@
       document.getElementById('statFilhos').textContent = String(state.filhos.length);
       document.getElementById('statTrabalhos').textContent = String(state.trabalhos.length);
       document.getElementById('statGuias').textContent = String(getListaGuiasConhecidas().length);
-      popularOrixasEGuias();
-      renderGradeSeteOrixas();
+      popularSugestoesPlanilha();
       renderPlanilha();
       renderFilhos();
       renderTrabalhos();
@@ -950,12 +895,6 @@
       renderCheckboxesTrabalhosCadastro();
       renderCheckboxesFilhosTrabalho();
     }
-
-    document.getElementById('btnLimparFiltroOrixa')?.addEventListener('click', () => {
-      filtroOrixaAtivo = '';
-      renderGradeSeteOrixas();
-      renderPlanilha();
-    });
 
     document.querySelectorAll('.tab-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -1011,15 +950,11 @@
       const nome = (document.getElementById('filhoNome').value || '').trim();
       if (!nome) return;
 
-      const orixaDireto = (document.getElementById('filhoOrixaDireto')?.value || '').trim();
-      const orixaSub = (document.getElementById('filhoOrixaDetalhe')?.value || '').trim();
+      const orixaValor = (document.getElementById('filhoOrixaDetalhe')?.value || '').trim();
       const orixaObs = (document.getElementById('filhoOrixaObs')?.value || '').trim();
-      const orixaFinal = orixaSub || orixaDireto;
 
-      const guiaDireto = (document.getElementById('filhoGuiaDireto')?.value || '').trim();
-      const guiaSub = (document.getElementById('filhoGuiaDetalhe')?.value || '').trim();
+      const guiaValor = (document.getElementById('filhoGuiaDetalhe')?.value || '').trim();
       const guiaLinha = (document.getElementById('filhoGuiaLinha')?.value || '').trim();
-      const guiaFinal = guiaSub || guiaDireto;
 
       const obsBase = (document.getElementById('filhoObs')?.value || '').trim();
       const extrasObs = [
@@ -1034,10 +969,10 @@
         id: 'f-' + Date.now(),
         nome,
         Nome: nome,
-        orixa: orixaFinal,
-        Orixa: orixaFinal,
-        guia: guiaFinal,
-        Guia: guiaFinal,
+        orixa: orixaValor,
+        Orixa: orixaValor,
+        guia: guiaValor,
+        Guia: guiaValor,
         funcao: (document.getElementById('filhoFuncao')?.value || '').trim() || 'Membro',
         telefone: (document.getElementById('filhoTelefone')?.value || '').trim(),
         obs: obsFinal,
@@ -1105,12 +1040,3 @@
   </script>
 </body>
 </html>
-"""
-
-assert "localStorage" not in site_v8
-assert "sessionStorage" not in site_v8
-
-with open("site_atualizado-v8.html", "w", encoding="utf-8") as f:
-    f.write(site_v8)
-
-print("Generated site_atualizado-v8.html successfully")
