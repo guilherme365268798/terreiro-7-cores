@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instituto 7 Cores • Gestão do Terreiro</title>
-  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=hAWdgXBbKG4GhEb_LB6916-cDYxAPqStFVHc8-zeLFg-c13m9nOclQgRm4kCHuAhz4OW_LaJZJnAr1cJ7W4sujb8CJNUJzOEtkxAyOr1asMt7ngSqL8uY93yJ3vxMwzMw85PcMwpMHPu_gpH2xlNtcto9Z3xpPd5qwcE4cCWCIvCzxCKvOwINXPxGPQE8D5O_PS9Jcy0wHt82fZty-FwUUXj5T-VicK381hVTQABwZOwjVgkzJNuHgQBghFVwX9FKu2GBkfwuGq02oyN3N3HCushVNYb86-eEpHiYo4p4lmTxqrJr0dtfbYd1opTTv87vQNnV3eAUy-SWW3htZmOcA" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pBME56Vmlaak5sWldRMU4yUXpZekk1TURBd05qWXhNbVZrTkRZMk1XSTBaREE0T0RRNU1XUm1OR1l3T0dJeFpXRVNDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPXNpdGVfYXR1YWxpemFkby12MTMuaHRtbCZvcGk9MTAzMTM1MDUw"/><script src="https://cdn.tailwindcss.com"></script>
+  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=Aw_tQtqJFGMxv_W1Vmuix2NXkXMl1UZ-MQWQngGELOovK53OrcaeVFnwJWyFiaMAV_34ikZP-QI2IqmUraQndRHsck_nRlsb3TuNYINiGk_n3D9fWLM4k2xSy6A_3FIyWOlRERp5SWCAkLcZAhd6ZBaxWJWMJOX-eN-IvSAK7OCPvs8NqMY9ra4spjIi5HxJobJzwXuTyO5uDSltRqVNb58TCBe0gjCzFOCz0EHB_2b4RsMYPw0RUwPqyri0pp71h-jMiV-TOPB0N33cW_VT4SVEKrPTuZSlwllbKTsorP2yFd6eWm8U5n-4iJpav9uBPF4RGQScs3NJMj7IbnOa3Q" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pBd016TXdPR1ExWkRjeVltTXhNMlEzTURBd05qWXhNekJpWkRsbFltWmhOREE0T0RRNFpqRTFNamt6TW1RNE1EZ1NDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPXNpdGVfYXR1YWxpemFkby12MTMuaHRtbCZvcGk9MTAzMTM1MDUw"/><script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -302,10 +302,55 @@
 
     <!-- SEÇÃO USUÁRIOS -->
     <section id="tab-usuarios" class="tab-panel hidden space-y-5">
-      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-3">
-        <h2 class="text-base font-extrabold text-white">Usuários Cadastrados na Planilha</h2>
-        <p class="text-xs text-slate-400">Usuários carregados diretamente da aba Usuarios da planilha.</p>
+      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 class="text-base font-extrabold text-white">Usuários Cadastrados na Planilha</h2>
+            <p class="text-xs text-slate-400">Edite dados ou exclua antigos usuários diretamente e salve na aba Usuarios da planilha.</p>
+          </div>
+          <span id="contadorUsuarios" class="text-xs font-semibold px-3 py-1 rounded-xl bg-violet-500/15 border border-violet-500/30 text-violet-200">
+            0 usuário(s)
+          </span>
+        </div>
+
         <div id="listaUsuarios" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+
+        <!-- PAINEL DE EDIÇÃO DE USUÁRIO -->
+        <div id="painelEditarUsuario" class="hidden rounded-xl border border-violet-400/35 bg-slate-950/90 p-4 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <h3 class="text-xs sm:text-sm font-bold text-white">Editar Usuário</h3>
+            <button type="button" id="btnCancelarEdicaoUsuario" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200">
+              Cancelar
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div>
+              <label for="editUsuarioNome" class="block text-[11px] font-semibold mb-1 text-slate-300">Nome</label>
+              <input id="editUsuarioNome" type="text" class="w-full px-3 py-2 rounded-lg text-xs border border-violet-500/30 bg-slate-900 text-white">
+            </div>
+            <div>
+              <label for="editUsuarioEmail" class="block text-[11px] font-semibold mb-1 text-slate-300">E-mail</label>
+              <input id="editUsuarioEmail" type="email" class="w-full px-3 py-2 rounded-lg text-xs border border-violet-500/30 bg-slate-900 text-white">
+            </div>
+            <div>
+              <label for="editUsuarioCargo" class="block text-[11px] font-semibold mb-1 text-slate-300">Cargo</label>
+              <input id="editUsuarioCargo" type="text" class="w-full px-3 py-2 rounded-lg text-xs border border-violet-500/30 bg-slate-900 text-white">
+            </div>
+            <div>
+              <label for="editUsuarioWhatsApp" class="block text-[11px] font-semibold mb-1 text-slate-300">WhatsApp</label>
+              <input id="editUsuarioWhatsApp" type="text" class="w-full px-3 py-2 rounded-lg text-xs border border-violet-500/30 bg-slate-900 text-white">
+            </div>
+          </div>
+          <div class="flex items-center justify-between flex-wrap gap-2 pt-1">
+            <label class="inline-flex items-center gap-2 text-xs text-slate-200 cursor-pointer">
+              <input id="editUsuarioAcessoSite" type="checkbox" class="rounded accent-violet-500">
+              <span>Acesso ao site ativo (acessoSite)</span>
+            </label>
+            <button type="button" id="btnSalvarEdicaoUsuario" class="px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white transition">
+              Salvar Usuário na Planilha
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -971,22 +1016,119 @@
       }).join('');
     }
 
+    let usuarioEditIndex = null;
+
     function renderUsuarios() {
       const wrap = document.getElementById('listaUsuarios');
+      const contador = document.getElementById('contadorUsuarios');
       if (!wrap) return;
-      wrap.innerHTML = state.usuarios.map((u) => {
+
+      const lista = Array.isArray(state.usuarios) ? state.usuarios : [];
+      if (contador) {
+        contador.textContent = `${lista.length} usuário(s)`;
+      }
+
+      if (lista.length === 0) {
+        wrap.innerHTML = `<p class="text-xs text-slate-400 col-span-full">Nenhum usuário cadastrado na planilha.</p>`;
+        return;
+      }
+
+      wrap.innerHTML = lista.map((u, idx) => {
         const nome = extrairCampoFlexivel(u, ['Nome', 'nome']) || 'Usuário';
         const email = extrairCampoFlexivel(u, ['Email', 'email']) || '—';
-        const cargo = extrairCampoFlexivel(u, ['Cargo', 'cargo']) || 'Membro';
+        const cargo = extrairCampoFlexivel(u, ['Cargo', 'cargo', 'papel']) || 'Membro';
+        const whats = extrairCampoFlexivel(u, ['WhatsApp', 'whatsapp', 'Telefone', 'telefone']);
         return `
-          <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-1">
-            <p class="text-sm font-bold text-white">${escapeHtml(nome)}</p>
-            <p class="text-xs text-violet-200">${escapeHtml(email)}</p>
-            <p class="text-xs text-slate-400">Cargo: ${escapeHtml(cargo)}</p>
+          <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 flex flex-col justify-between gap-3">
+            <div class="space-y-1">
+              <p class="text-sm font-bold text-white">${escapeHtml(nome)}</p>
+              <p class="text-xs text-violet-200 break-all">${escapeHtml(email)}</p>
+              <p class="text-xs text-slate-400">Cargo: ${escapeHtml(cargo)}</p>
+              ${whats ? `<p class="text-xs text-slate-400">WhatsApp: ${escapeHtml(whats)}</p>` : ''}
+            </div>
+            <div class="flex items-center gap-2 pt-2 border-t border-violet-500/15">
+              <button
+                type="button"
+                data-edit-idx="${idx}"
+                class="btn-editar-usuario px-3 py-1.5 rounded-lg text-xs font-bold bg-violet-600/80 hover:bg-violet-500 text-white transition"
+              >
+                Editar
+              </button>
+              <button
+                type="button"
+                data-del-idx="${idx}"
+                class="btn-excluir-usuario px-3 py-1.5 rounded-lg text-xs font-bold bg-rose-600/80 hover:bg-rose-500 text-white transition"
+              >
+                Excluir
+              </button>
+            </div>
           </div>
         `;
       }).join('');
+
+      wrap.querySelectorAll('.btn-editar-usuario').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const idx = Number(btn.getAttribute('data-edit-idx'));
+          const alvo = state.usuarios[idx];
+          if (!alvo) return;
+          usuarioEditIndex = idx;
+          document.getElementById('editUsuarioNome').value = extrairCampoFlexivel(alvo, ['Nome', 'nome']);
+          document.getElementById('editUsuarioEmail').value = extrairCampoFlexivel(alvo, ['Email', 'email']);
+          document.getElementById('editUsuarioCargo').value = extrairCampoFlexivel(alvo, ['Cargo', 'cargo', 'papel']);
+          document.getElementById('editUsuarioWhatsApp').value = extrairCampoFlexivel(alvo, ['WhatsApp', 'whatsapp', 'Telefone', 'telefone']);
+          const rawAcesso = alvo.acessoSite ?? alvo.AcessoSite ?? true;
+          document.getElementById('editUsuarioAcessoSite').checked = !(rawAcesso === false || String(rawAcesso).toLowerCase() === 'false');
+          document.getElementById('painelEditarUsuario')?.classList.remove('hidden');
+        });
+      });
+
+      wrap.querySelectorAll('.btn-excluir-usuario').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const idx = Number(btn.getAttribute('data-del-idx'));
+          const alvo = state.usuarios[idx];
+          if (!alvo) return;
+          const nomeAlvo = extrairCampoFlexivel(alvo, ['Nome', 'nome']) || 'este usuário';
+          const confirmado = window.confirm(`Deseja realmente excluir "${nomeAlvo}" da lista e da planilha?`);
+          if (!confirmado) return;
+
+          state.usuarios.splice(idx, 1);
+          if (usuarioEditIndex === idx) {
+            usuarioEditIndex = null;
+            document.getElementById('painelEditarUsuario')?.classList.add('hidden');
+          } else if (usuarioEditIndex !== null && usuarioEditIndex > idx) {
+            usuarioEditIndex -= 1;
+          }
+          renderUsuarios();
+          await gravarBanco(state);
+        });
+      });
     }
+
+    document.getElementById('btnCancelarEdicaoUsuario')?.addEventListener('click', () => {
+      usuarioEditIndex = null;
+      document.getElementById('painelEditarUsuario')?.classList.add('hidden');
+    });
+
+    document.getElementById('btnSalvarEdicaoUsuario')?.addEventListener('click', async () => {
+      if (usuarioEditIndex === null || !state.usuarios[usuarioEditIndex]) return;
+      const alvo = state.usuarios[usuarioEditIndex];
+      const novoNome = (document.getElementById('editUsuarioNome')?.value || '').trim();
+      const novoEmail = (document.getElementById('editUsuarioEmail')?.value || '').trim();
+      const novoCargo = (document.getElementById('editUsuarioCargo')?.value || '').trim();
+      const novoWhats = (document.getElementById('editUsuarioWhatsApp')?.value || '').trim();
+      const acessoMarcado = Boolean(document.getElementById('editUsuarioAcessoSite')?.checked);
+
+      if (novoNome) alvo.Nome = novoNome;
+      alvo.Email = novoEmail;
+      alvo.Cargo = novoCargo;
+      alvo.WhatsApp = novoWhats;
+      alvo.acessoSite = acessoMarcado;
+
+      usuarioEditIndex = null;
+      document.getElementById('painelEditarUsuario')?.classList.add('hidden');
+      renderUsuarios();
+      await gravarBanco(state);
+    });
 
     function renderTudo() {
       document.getElementById('statFilhos').textContent = String(state.filhos.length);
