@@ -43,8 +43,13 @@ const TOKEN_KEY = 'auth_token';
 const LAST_EMAIL_KEY = 'i7c_last_email';
 const NOTICES_KEY = 'i7c_terreiro_notices';
 const AGENDA_KEY = 'i7c_terreiro_agenda';
+const SITE_URL = '/site';
 
 let isLogin = true;
+
+function irParaSite() {
+  window.location.href = SITE_URL;
+}
 
 function getSavedSession() {
   const token = localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY);
@@ -119,6 +124,7 @@ function switchSection(sectionName) {
 }
 
 function renderAgenda() {
+  if (!agendaList) return;
   const items = readJsonList(AGENDA_KEY);
   agendaList.innerHTML = '';
 
@@ -158,6 +164,7 @@ function renderAgenda() {
 }
 
 function renderNotices() {
+  if (!noticeList) return;
   const items = readJsonList(NOTICES_KEY);
   noticeList.innerHTML = '';
 
@@ -193,11 +200,13 @@ function renderNotices() {
 }
 
 function setFeedback(message = '', type = '') {
+  if (!feedback) return;
   feedback.textContent = message;
   feedback.className = type ? `feedback ${type}` : 'feedback';
 }
 
 function updatePasswordHint() {
+  if (!passwordHint || !passwordInput) return;
   const len = passwordInput.value.length;
   if (len === 0) {
     passwordHint.textContent = 'Mínimo de 6 caracteres.';
@@ -215,22 +224,22 @@ function updatePasswordHint() {
 
 function openTerreiroSite(user) {
   const displayName = user?.name || user?.email?.split('@')[0] || 'Visitante';
-  headerUserPill.textContent = displayName;
-  terreiroGreeting.textContent = `Olá, ${displayName}`;
+  if (headerUserPill) headerUserPill.textContent = displayName;
+  if (terreiroGreeting) terreiroGreeting.textContent = `Olá, ${displayName}`;
   renderAgenda();
   renderNotices();
   switchSection('inicio');
 
   document.body.classList.remove('mode-auth');
-  authScreen.classList.add('hidden');
-  terreiroScreen.classList.remove('hidden');
+  if (authScreen) authScreen.classList.add('hidden');
+  if (terreiroScreen) terreiroScreen.classList.remove('hidden');
 }
 
 function showLoginScreen(prefillEmail = '') {
   document.body.classList.add('mode-auth');
-  terreiroScreen.classList.add('hidden');
-  authScreen.classList.remove('hidden');
-  if (prefillEmail) {
+  if (terreiroScreen) terreiroScreen.classList.add('hidden');
+  if (authScreen) authScreen.classList.remove('hidden');
+  if (prefillEmail && emailInput) {
     emailInput.value = prefillEmail;
   }
   updateModeUI();
@@ -238,189 +247,14 @@ function showLoginScreen(prefillEmail = '') {
 
 function updateModeUI() {
   setFeedback('');
-  emailInput.classList.remove('invalid');
-  passwordInput.classList.remove('invalid');
-  nameInput.classList.remove('invalid');
+  emailInput?.classList.remove('invalid');
+  passwordInput?.classList.remove('invalid');
+  nameInput?.classList.remove('invalid');
 
   if (isLogin) {
-    formTitle.textContent = 'Que bom te ver por aqui';
-    formSubtitle.textContent = 'Informe seu e-mail e senha para continuar.';
-    nameGroup.classList.add('hidden');
-    nameInput.required = false;
-    passwordInput.autocomplete = 'current-password';
-    forgotPasswordBtn.classList.remove('hidden');
-    submitBtn.textContent = 'Continuar';
-    toggleText.textContent = 'Primeiro acesso por aqui?';
-    toggleLink.textContent = 'Criar acesso';
-  } else {
-    formTitle.textContent = 'Criar seu acesso';
-    formSubtitle.textContent = 'Preencha os dados abaixo para começar.';
-    nameGroup.classList.remove('hidden');
-    nameInput.required = true;
-    passwordInput.autocomplete = 'new-password';
-    forgotPasswordBtn.classList.add('hidden');
-    submitBtn.textContent = 'Concluir cadastro';
-    toggleText.textContent = 'Já tem acesso?';
-    toggleLink.textContent = 'Entrar';
-  }
-}
-
-navTabs.forEach((btn) => {
-  btn.addEventListener('click', () => switchSection(btn.dataset.section));
-});
-
-goGirasBtn.addEventListener('click', () => switchSection('giras'));
-goRecadosBtn.addEventListener('click', () => switchSection('recados'));
-
-toggleLink.addEventListener('click', (e) => {
-  e.preventDefault();
-  isLogin = !isLogin;
-  updateModeUI();
-});
-
-togglePasswordBtn.addEventListener('click', () => {
-  const isPass = passwordInput.type === 'password';
-  passwordInput.type = isPass ? 'text' : 'password';
-  togglePasswordBtn.textContent = isPass ? '🙈' : '👁️';
-});
-
-passwordInput.addEventListener('input', () => {
-  passwordInput.classList.remove('invalid');
-  updatePasswordHint();
-});
-
-emailInput.addEventListener('input', () => emailInput.classList.remove('invalid'));
-nameInput.addEventListener('input', () => nameInput.classList.remove('invalid'));
-
-forgotPasswordBtn.addEventListener('click', () => {
-  const email = emailInput.value.trim();
-  if (email) {
-    setFeedback(`Esqueceu a senha de ${email}? Fale com quem cuida do acesso na casa.`, 'info');
-  } else {
-    setFeedback('Esqueceu sua senha? Peça para quem cuida do acesso redefinir.', 'info');
-  }
-});
-
-terreiroLogoutBtn.addEventListener('click', () => {
-  const previousEmail = getSavedSession()?.user?.email || getLastEmail();
-  clearSession();
-  isLogin = true;
-  passwordInput.value = '';
-  updatePasswordHint();
-  showLoginScreen(previousEmail);
-  setFeedback('Você saiu desta conta neste aparelho.', 'info');
-});
-
-agendaForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const day = agendaDayInput.value.trim();
-  const title = agendaTitleInput.value.trim();
-  if (!day || !title) return;
-
-  const items = readJsonList(AGENDA_KEY);
-  items.unshift({ day, title });
-  writeJsonList(AGENDA_KEY, items);
-  agendaDayInput.value = '';
-  agendaTitleInput.value = '';
-  renderAgenda();
-});
-
-noticeForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const text = noticeInput.value.trim();
-  if (!text) return;
-
-  const items = readJsonList(NOTICES_KEY);
-  items.unshift(text);
-  writeJsonList(NOTICES_KEY, items);
-  noticeInput.value = '';
-  renderNotices();
-});
-
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  setFeedback('');
-
-  const name = nameInput.value.trim();
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
-  const persistLocally = keepLoggedCheckbox.checked;
-
-  if (!isLogin && name.length < 2) {
-    nameInput.classList.add('invalid');
-    setFeedback('Digite seu nome para criar o acesso.', 'error');
-    nameInput.focus();
-    return;
-  }
-
-  if (!email || !email.includes('@')) {
-    emailInput.classList.add('invalid');
-    setFeedback('Digite um e-mail válido.', 'error');
-    emailInput.focus();
-    return;
-  }
-
-  if (password.length < 6) {
-    passwordInput.classList.add('invalid');
-    setFeedback('A senha precisa ter pelo menos 6 caracteres.', 'error');
-    passwordInput.focus();
-    return;
-  }
-
-  const endpoint = isLogin ? '/api/login' : '/api/register';
-  const payload = isLogin ? { email, password } : { name, email, password };
-
-  submitBtn.disabled = true;
-  const defaultLabel = isLogin ? 'Continuar' : 'Concluir cadastro';
-  submitBtn.textContent = isLogin ? 'Entrando...' : 'Salvando...';
-  setFeedback('Conferindo seus dados...', 'info');
-
-  try {
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      setFeedback(data.error || 'Não foi possível entrar agora.', 'error');
-      return;
-    }
-
-    const userInfo = {
-      name: data.user?.name || name || email.split('@')[0],
-      email: data.user?.email || email
-    };
-
-    if (data.token) {
-      saveSession(data.token, userInfo, persistLocally);
-      openTerreiroSite(userInfo);
-    } else if (!isLogin) {
-      isLogin = true;
-      updateModeUI();
-      emailInput.value = email;
-      passwordInput.value = '';
-      updatePasswordHint();
-      setFeedback('Acesso criado! Agora é só entrar com sua senha.', 'success');
-    }
-  } catch (_) {
-    setFeedback('Não consegui falar com o servidor de login. Verifique as rotas /api na Vercel.', 'error');
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = defaultLabel;
-  }
-});
-
-const activeSession = getSavedSession();
-if (activeSession) {
-  openTerreiroSite(activeSession.user);
-} else {
-  const lastEmail = getLastEmail();
-  if (lastEmail) {
-    emailInput.value = lastEmail;
-  }
-  showLoginScreen(lastEmail);
-  updatePasswordHint();
-}
+    if (formTitle) formTitle.textContent = 'Que bom te ver por aqui';
+    if (formSubtitle) formSubtitle.textContent = 'Informe seu e-mail e senha para continuar.';
+    nameGroup?.classList.add('hidden');
+    if (nameInput) nameInput.required = false;
+    if (passwordInput) passwordInput.autocomplete = 'current-password';
+    forgot
