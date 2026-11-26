@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instituto 7 Cores • Gestão do Terreiro</title>
-  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=qxB2yBeGhp3utO8lDCMvoWaPMkOowRZnLqnQ3bKoesjROuM3TjjooRUAC1pVbsgEbmxQNn_YkOoMEWpM_QLdD22kbekNq33ZE07jxH73-V77ez0dXucKxhBuOSg-N54vIsXRlT5RZubtDgQAt7fb_6YcjSYqFgV40Nji9gVQzDVn6m5q0ST41zyGqfKkpxZYa-sLOS3woCwdDwli8cLTZN49iP3OVT2RcQOb9PZbM4js94A7ONfD3oNKiQusMGGYami3UZMbNzhSD7Jz9W2Q8u5arig441Qgk6Evn1okILRZhyq48waaJr0KuRUZhgl2uQa4QeXrhWeODEUoErRd8A" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pCaVptWmlOVE5qWXpoaE5EaGxNRFpqTURBd05qWXhNekpoWVdaaFltTXdPREExWWpCaFpUaG1OVGt6TkRSaE9EVVNDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPXNpdGVfYXR1YWxpemFkby12MTUuaHRtbCZvcGk9MTAzMTM1MDUw"/><script src="https://cdn.tailwindcss.com"></script>
+  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=gei9xxCr41NoBYtDi-zuyQ7B8wUdzMxzYnLIue2dVi4EVKh1eaazeqg24AaqpqYoxultXIFKsPEywdEttJKQa9U9xb6rdUbyoHSoEjZiUgv1ZSeFJB5UXa5IWcfpOfpE-fmORZGy5ueOfRG87CwhWaYvcokek9tWthY6IexTxa8aj6lpzi5uBuszAjgjjvCi3AJiciOc5JiCvpNLaLZLhQWe4N3umSEsnracnL6fCg8V-8PUxr2EqUbVL_2PmWLFnp1hnUxra5xL1U62X7N9nif8ayOmYwOi7SV8A_u6izLEZ23bGVHTfH6c2BkCz9SXH52d3gzcSACn5zD8zscPbA" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pBMk56VXpaR1JrTmpVeVlqRTNaVGczTURBd05qWXhNekprTkRZNFptTXdNREF4TXpBM09HTXhaV0l5WlRnek1XUVNDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPXNpdGVfYXR1YWxpemFkby12MTcuaHRtbCZvcGk9MTAzMTM1MDUw"/><script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -100,6 +100,20 @@
         </span>
         <button
           type="button"
+          id="btnToggleUrlBarra"
+          class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800/90 hover:bg-slate-700 text-violet-200 border border-violet-500/30 transition"
+        >
+          URL Planilha
+        </button>
+        <button
+          type="button"
+          id="btnBaixarBackup"
+          class="px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-700/80 hover:bg-emerald-600 text-white border border-emerald-400/30 transition"
+        >
+          Baixar Backup
+        </button>
+        <button
+          type="button"
           id="btnSincronizarAgora"
           class="px-3.5 py-2 rounded-xl text-xs font-bold bg-violet-600/80 hover:bg-violet-500 text-white border border-violet-400/30 transition"
         >
@@ -115,8 +129,8 @@
       </div>
     </header>
 
-    <!-- BARRA DE URL & SINCRONIZAÇÃO COM A PLANILHA -->
-    <section id="barraConexaoPlanilha" class="rounded-2xl border border-violet-500/30 bg-black/65 backdrop-blur-md p-4 space-y-2.5 shadow-lg">
+    <!-- BARRA DE URL & SINCRONIZAÇÃO COM A PLANILHA (OCULTA POR PADRÃO) -->
+    <section id="barraConexaoPlanilha" class="hidden rounded-2xl border border-violet-500/30 bg-black/65 backdrop-blur-md p-4 space-y-2.5 shadow-lg">
       <div class="flex flex-wrap items-center justify-between gap-2">
         <label for="topoDbUrl" class="text-xs font-bold text-violet-200">
           URL da Planilha / Google Apps Script (/exec)
@@ -395,6 +409,30 @@
     <!-- SEÇÃO USUÁRIOS -->
     <section id="tab-usuarios" class="tab-panel hidden space-y-5">
       <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-4">
+        <div>
+          <h2 class="text-base font-extrabold text-white">Cadastrar Novo Usuário</h2>
+          <p class="text-xs text-slate-400">Libere acesso ao sistema para outro dirigente, médium ou auxiliar direto na aba Usuarios da planilha.</p>
+        </div>
+        <form id="formNovoUsuario" class="space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <input id="novoUsuarioNome" type="text" required placeholder="Nome *" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+            <input id="novoUsuarioEmail" type="email" required placeholder="E-mail de acesso *" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+            <input id="novoUsuarioCargo" type="text" placeholder="Cargo (ex: Dirigente, Cambono)" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+            <input id="novoUsuarioWhatsApp" type="text" placeholder="WhatsApp (opcional)" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <label class="inline-flex items-center gap-2 text-xs text-slate-200 cursor-pointer">
+              <input id="novoUsuarioAcessoSite" type="checkbox" checked class="rounded accent-violet-500">
+              <span>Liberar acesso ao site (acessoSite = true)</span>
+            </label>
+            <button type="submit" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white transition">
+              Adicionar Usuário na Planilha
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div>
             <h2 class="text-base font-extrabold text-white">Usuários Cadastrados na Planilha</h2>
@@ -521,8 +559,24 @@
         <h4 class="text-xs font-bold uppercase tracking-wider text-violet-300 pt-1">Editar Guias da Planilha</h4>
         <div id="balaoEditGuiasPlanilha" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5"></div>
 
-        <div>
-          <p class="text-xs font-semibold mb-1.5 text-slate-300">Trabalhos vinculados (1 ou vários):</p>
+        <div class="rounded-xl border border-emerald-500/25 bg-emerald-950/20 p-3 space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <p class="text-xs font-bold text-emerald-200">Resumo Financeiro & Trabalhos do Filho</p>
+            <span id="balaoResumoFinanceiroBadge" class="text-xs font-extrabold px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-200 border border-emerald-400/30">
+              0 trabalho(s) • R$ 0,00
+            </span>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-2 no-print">
+            <p class="text-[11px] text-slate-300">Marque ou desmarque quantos trabalhos o filho fez (1, vários ou todos):</p>
+            <div class="flex items-center gap-1.5">
+              <button type="button" id="btnMarcarTodosTrabBalao" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-violet-600/80 hover:bg-violet-500 text-white transition">
+                Marcar Todos
+              </button>
+              <button type="button" id="btnLimparTrabBalao" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 transition">
+                Tirar Todos
+              </button>
+            </div>
+          </div>
           <div id="balaoTrabalhosCheckboxes" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
         </div>
 
@@ -563,6 +617,7 @@
       usuarios: [...DEFAULT_USERS]
     };
 
+    let bancoCarregadoComSucesso = false;
     let filhoEditIndex = null;
 
     function getDbUrl() {
@@ -685,24 +740,79 @@
         : (extrairCampoFlexivel(t, ['Tipo_Trabalho', 'titulo', 'nome', 'trabalho']) || 'Trabalho');
     }
 
-    function getTrabalhosVinculadosFilho(f, trabalhosPlanilha) {
+    function parseValorNumerico(raw) {
+      const txt = String(raw ?? '').trim();
+      if (!txt) return 0;
+      const limpo = txt.replace(/[^0-9,.-]/g, '');
+      if (!limpo) return 0;
+      let normalizado = limpo;
+      if (limpo.includes(',') && limpo.includes('.')) {
+        normalizado = limpo.replace(/\./g, '').replace(',', '.');
+      } else if (limpo.includes(',')) {
+        normalizado = limpo.replace(',', '.');
+      }
+      const num = parseFloat(normalizado);
+      return Number.isFinite(num) ? num : 0;
+    }
+
+    function formatarMoedaBRL(valor) {
+      return Number(valor || 0).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      });
+    }
+
+    function getObjetosTrabalhosVinculadosFilho(f, trabalhosPlanilha) {
       const idFilho = extrairCampoFlexivel(f, ['ID_Filho', 'id']);
       const nomeFilho = extrairCampoFlexivel(f, ['Nome', 'nome']).toLowerCase();
+      const marcadosExplicitos = Array.isArray(f && f._trabalhosMarcados)
+        ? f._trabalhosMarcados.map((s) => String(s).trim().toLowerCase())
+        : null;
 
-      const vinculados = (trabalhosPlanilha || [])
-        .filter((t) => {
-          if (!t || typeof t !== 'object') return false;
-          const tIdFilho = extrairCampoFlexivel(t, ['ID_Filho', 'id_filho']);
-          const tResp = extrairCampoFlexivel(t, ['responsavel']).toLowerCase();
-          const tDetalhes = extrairCampoFlexivel(t, ['detalhes']).toLowerCase();
-          if (idFilho && tIdFilho && String(tIdFilho) === String(idFilho)) return true;
-          if (nomeFilho && tResp && tResp === nomeFilho) return true;
-          if (nomeFilho && tDetalhes && tDetalhes.split(/[,;|]/).map((s) => s.trim().toLowerCase()).includes(nomeFilho)) return true;
-          return false;
-        })
+      return (trabalhosPlanilha || []).filter((t) => {
+        if (!t || typeof t !== 'object') return false;
+        const nomeTrab = getTrabalhoNome(t).toLowerCase();
+        if (marcadosExplicitos !== null) {
+          return marcadosExplicitos.includes(nomeTrab);
+        }
+        const tIdFilho = extrairCampoFlexivel(t, ['ID_Filho', 'id_filho']);
+        const tIdsFilhos = extrairCampoFlexivel(t, ['IDs_Filhos', 'ids_filhos']);
+        const tResp = extrairCampoFlexivel(t, ['responsavel']).toLowerCase();
+        const tDetalhes = extrairCampoFlexivel(t, ['detalhes']).toLowerCase();
+        if (idFilho && tIdFilho) {
+          const listaIds = String(tIdFilho).split(/[,;|]/).map((s) => s.trim()).filter(Boolean);
+          if (listaIds.includes(String(idFilho))) return true;
+        }
+        if (idFilho && tIdsFilhos) {
+          const listaIdsMulti = String(tIdsFilhos).split(/[,;|]/).map((s) => s.trim()).filter(Boolean);
+          if (listaIdsMulti.includes(String(idFilho))) return true;
+        }
+        if (nomeFilho && tResp) {
+          const listaResp = tResp.split(/[,;|]/).map((s) => s.trim().toLowerCase()).filter(Boolean);
+          if (listaResp.includes(nomeFilho)) return true;
+        }
+        if (nomeFilho && tDetalhes) {
+          const listaDet = tDetalhes.split(/[,;|]/).map((s) => s.trim().toLowerCase()).filter(Boolean);
+          if (listaDet.includes(nomeFilho)) return true;
+        }
+        return false;
+      });
+    }
+
+    function getResumoFinanceiroFilho(f, trabalhosPlanilha) {
+      const objs = getObjetosTrabalhosVinculadosFilho(f, trabalhosPlanilha);
+      const total = objs.reduce((acc, t) => acc + parseValorNumerico(extrairCampoFlexivel(t, ['Valor', 'valor'])), 0);
+      return {
+        quantidade: objs.length,
+        total,
+        totalFormatado: formatarMoedaBRL(total)
+      };
+    }
+
+    function getTrabalhosVinculadosFilho(f, trabalhosPlanilha) {
+      const vinculados = getObjetosTrabalhosVinculadosFilho(f, trabalhosPlanilha)
         .map(getTrabalhoNome)
         .filter(Boolean);
-
       return [...new Set(vinculados)];
     }
 
@@ -729,25 +839,41 @@
         const idFilho = extrairCampoFlexivel(f, ['ID_Filho', 'id']);
         const nomeFilho = extrairCampoFlexivel(f, ['Nome', 'nome']);
         const marcados = Array.isArray(f._trabalhosMarcados) ? f._trabalhosMarcados : null;
-        if (!marcados) return;
+        if (!marcados || !nomeFilho) return;
 
         trabalhos.forEach((t) => {
           const nomeTrab = getTrabalhoNome(t);
           const deveVincular = marcados.some((m) => m.toLowerCase() === nomeTrab.toLowerCase());
+
           const respAtual = extrairCampoFlexivel(t, ['responsavel']);
           const listaResp = respAtual
             ? respAtual.split(',').map((s) => s.trim()).filter(Boolean)
             : [];
-          const jaTem = listaResp.some((r) => r.toLowerCase() === nomeFilho.toLowerCase());
+          const jaTemNome = listaResp.some((r) => r.toLowerCase() === nomeFilho.toLowerCase());
 
-          if (deveVincular && nomeFilho && !jaTem) {
-            listaResp.push(nomeFilho);
-            t.responsavel = listaResp.join(', ');
-            if (!t.ID_Filho && idFilho) t.ID_Filho = idFilho;
-          } else if (!deveVincular && nomeFilho && jaTem) {
-            const filtrados = listaResp.filter((r) => r.toLowerCase() !== nomeFilho.toLowerCase());
-            t.responsavel = filtrados.join(', ');
+          const idsAtuaisRaw = extrairCampoFlexivel(t, ['IDs_Filhos', 'ID_Filho', 'id_filho']);
+          const listaIds = idsAtuaisRaw
+            ? idsAtuaisRaw.split(',').map((s) => s.trim()).filter(Boolean)
+            : [];
+          const jaTemId = idFilho ? listaIds.includes(String(idFilho)) : false;
+
+          if (deveVincular) {
+            if (!jaTemNome) listaResp.push(nomeFilho);
+            if (idFilho && !jaTemId) listaIds.push(String(idFilho));
+          } else {
+            const filtradosResp = listaResp.filter((r) => r.toLowerCase() !== nomeFilho.toLowerCase());
+            listaResp.length = 0;
+            listaResp.push(...filtradosResp);
+            if (idFilho) {
+              const filtradosIds = listaIds.filter((x) => x !== String(idFilho));
+              listaIds.length = 0;
+              listaIds.push(...filtradosIds);
+            }
           }
+
+          t.responsavel = listaResp.join(', ');
+          t.IDs_Filhos = listaIds.join(', ');
+          t.ID_Filho = listaIds[0] || '';
         });
       });
     }
@@ -771,9 +897,19 @@
     }
 
     async function gravarBanco(nextState) {
+      if (!bancoCarregadoComSucesso) {
+        const prosseguir = window.confirm(
+          'Atenção: a planilha ainda não confirmou a leitura inicial. Salvar agora pode sobrescrever dados se a leitura falhou. Deseja continuar mesmo assim?'
+        );
+        if (!prosseguir) {
+          setStatus('Gravação cancelada por segurança. Clique em "Sincronizar Planilha" primeiro.');
+          return;
+        }
+      }
+
       sincronizarVinculosTrabalhosFilhos();
       const url = getDbUrl();
-      setStatus('Gravando na planilha...');
+      setStatus('Gravando e confirmando na planilha...');
       try {
         await fetch(url, {
           method: 'POST',
@@ -792,7 +928,16 @@
             updatedAt: new Date().toISOString()
           })
         });
-        setStatus('Salvo na planilha para todos os PCs.');
+
+        await new Promise((r) => setTimeout(r, 900));
+        try {
+          const confirmPayload = await lerBanco();
+          const confirmado = extrairDadosPlanilha(confirmPayload);
+          bancoCarregadoComSucesso = true;
+          setStatus(`Confirmado na planilha (${confirmado.filhos.length} filho(s), ${confirmado.trabalhos.length} trabalho(s))`);
+        } catch (_) {
+          setStatus('Enviado para a planilha! Clique em "Sincronizar Planilha" se quiser conferir.');
+        }
       } catch (_) {
         setStatus('Falha ao gravar na planilha — confira a URL.');
       }
@@ -804,6 +949,7 @@
         const payload = await lerBanco();
         const temErro = payload && (payload.ok === false || payload.error || payload.status === 'error');
         state = extrairDadosPlanilha(payload);
+        bancoCarregadoComSucesso = !temErro;
         renderTudo();
         if (temErro) {
           setStatus(`Resposta com aviso da planilha: ${payload.error || payload.message || 'verifique o Apps Script'}`);
@@ -811,6 +957,7 @@
           setStatus(`Planilha conectada (${state.filhos.length} filho(s), ${state.trabalhos.length} trabalho(s))`);
         }
       } catch (_) {
+        bancoCarregadoComSucesso = false;
         renderTudo();
         setStatus('Erro ao acessar a planilha — confira a URL /exec e permissões do Apps Script');
       }
@@ -960,6 +1107,7 @@
       const orixasTxt = resumoOrixasFilho(filho);
       const guiasTxt = resumoGuiasFilho(filho);
       const trabFilho = getTrabalhosVinculadosFilho(filho, state.trabalhos);
+      const finInfo = getResumoFinanceiroFilho(filho, state.trabalhos);
 
       const linhas = [
         `*Instituto 7 Cores • Ficha do Filho*`,
@@ -968,7 +1116,8 @@
         `*Telefone:* ${telefone} | *Nascimento:* ${nasc}`,
         `*Orixás (1–7):* ${orixasTxt}`,
         `*Guias:* ${guiasTxt}`,
-        `*Trabalhos:* ${trabFilho.length ? trabFilho.join(', ') : 'Nenhum trabalho vinculado'}`
+        `*Trabalhos:* ${trabFilho.length ? trabFilho.join(', ') : 'Nenhum trabalho vinculado'}`,
+        `*Resumo Financeiro:* ${finInfo.quantidade} trabalho(s) • Total: ${finInfo.totalFormatado}`
       ];
       if (obs) linhas.push(`*Obs:* ${obs}`);
       return linhas.join('\n');
@@ -995,12 +1144,19 @@
       const obs = extrairCampoFlexivel(filho, ['obs', 'Obs', 'observacoes', 'Observacoes']);
       const trabFilho = getTrabalhosVinculadosFilho(filho, state.trabalhos);
 
+      const finInfo = getResumoFinanceiroFilho(filho, state.trabalhos);
+      const finBadge = document.getElementById('balaoResumoFinanceiroBadge');
+      if (finBadge) {
+        finBadge.textContent = `${finInfo.quantidade} trabalho(s) • Total: ${finInfo.totalFormatado}`;
+      }
+
       nomeEl.textContent = nome;
       detEl.innerHTML = `
         <p><strong class="text-violet-300">Orixás (1–7):</strong> ${escapeHtml(resumoOrixasFilho(filho))}</p>
         <p><strong class="text-violet-300">Guias:</strong> ${escapeHtml(resumoGuiasFilho(filho))}</p>
         <p><strong class="text-violet-300">Cargo:</strong> ${escapeHtml(cargo || '—')} • <strong class="text-violet-300">Status:</strong> ${escapeHtml(status || '—')} • <strong class="text-violet-300">Telefone:</strong> ${escapeHtml(telefone || '—')}</p>
         <p><strong class="text-violet-300">Trabalhos:</strong> ${trabFilho.length ? escapeHtml(trabFilho.join(', ')) : 'Nenhum trabalho vinculado'}</p>
+        <p><strong class="text-emerald-300">Resumo Financeiro:</strong> ${finInfo.quantidade} trabalho(s) • <strong class="text-emerald-300">Total:</strong> ${escapeHtml(finInfo.totalFormatado)}</p>
         ${obs ? `<p><strong class="text-violet-300">Obs:</strong> ${escapeHtml(obs)}</p>` : ''}
       `;
 
@@ -1034,19 +1190,65 @@
       }
 
       const opcoesTrab = getListaOpcoesTrabalhos();
+      const atualizarSomaBalaoAoMarcar = () => {
+        const marcadosNomes = [...document.querySelectorAll('.balao-trab-check:checked')].map((el) => el.value.toLowerCase());
+        let soma = 0;
+        let qtd = 0;
+        (state.trabalhos || []).forEach((t) => {
+          const n = getTrabalhoNome(t).toLowerCase();
+          if (marcadosNomes.includes(n)) {
+            qtd += 1;
+            soma += parseValorNumerico(extrairCampoFlexivel(t, ['Valor', 'valor']));
+          }
+        });
+        if (finBadge) {
+          finBadge.textContent = `${qtd} trabalho(s) • Total: ${formatarMoedaBRL(soma)}`;
+        }
+        if (resumoWhatsEl && filhoEditIndex !== null && state.filhos[filhoEditIndex]) {
+          const cloneTemp = {
+            ...state.filhos[filhoEditIndex],
+            _trabalhosMarcados: [...document.querySelectorAll('.balao-trab-check:checked')].map((el) => el.value)
+          };
+          resumoWhatsEl.value = gerarTextoFichaFilho(cloneTemp);
+        }
+      };
+
       if (checksWrap) {
         checksWrap.innerHTML = opcoesTrab.length
           ? opcoesTrab.map((tNome) => {
               const checked = trabFilho.some((x) => x.toLowerCase() === tNome.toLowerCase()) ? 'checked' : '';
+              const trabObj = (state.trabalhos || []).find((t) => getTrabalhoNome(t).toLowerCase() === tNome.toLowerCase());
+              const valStr = trabObj ? extrairCampoFlexivel(trabObj, ['Valor', 'valor']) : '';
+              const valFormatado = valStr ? (parseValorNumerico(valStr) > 0 ? formatarMoedaBRL(parseValorNumerico(valStr)) : valStr) : '';
               return `
-                <label class="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900 border border-violet-500/20 text-xs text-slate-200 cursor-pointer">
-                  <input type="checkbox" class="balao-trab-check rounded accent-violet-500" value="${escapeHtml(tNome)}" ${checked}>
-                  <span class="truncate">${escapeHtml(tNome)}</span>
+                <label class="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-slate-900 border border-violet-500/20 text-xs text-slate-200 cursor-pointer hover:border-violet-400/50">
+                  <span class="flex items-center gap-2 min-w-0">
+                    <input type="checkbox" class="balao-trab-check rounded accent-violet-500 shrink-0" value="${escapeHtml(tNome)}" ${checked}>
+                    <span class="truncate">${escapeHtml(tNome)}</span>
+                  </span>
+                  ${valFormatado ? `<span class="text-[11px] font-bold text-emerald-300 shrink-0">${escapeHtml(valFormatado)}</span>` : ''}
                 </label>
               `;
             }).join('')
           : `<p class="text-xs text-slate-400 col-span-full">Cadastre trabalhos na aba "Trabalhos & Vínculos" para marcar aqui.</p>`;
+
+        checksWrap.querySelectorAll('.balao-trab-check').forEach((chk) => {
+          chk.addEventListener('change', atualizarSomaBalaoAoMarcar);
+        });
       }
+
+      document.getElementById('btnMarcarTodosTrabBalao')?.replaceWith(document.getElementById('btnMarcarTodosTrabBalao').cloneNode(true));
+      document.getElementById('btnLimparTrabBalao')?.replaceWith(document.getElementById('btnLimparTrabBalao').cloneNode(true));
+
+      document.getElementById('btnMarcarTodosTrabBalao')?.addEventListener('click', () => {
+        document.querySelectorAll('.balao-trab-check').forEach((chk) => { chk.checked = true; });
+        atualizarSomaBalaoAoMarcar();
+      });
+
+      document.getElementById('btnLimparTrabBalao')?.addEventListener('click', () => {
+        document.querySelectorAll('.balao-trab-check').forEach((chk) => { chk.checked = false; });
+        atualizarSomaBalaoAoMarcar();
+      });
 
       overlay.classList.remove('hidden');
     }
@@ -1199,7 +1401,10 @@
             </td>
             <td class="py-2.5 px-3 text-slate-200">${escapeHtml(orixasTxt)}</td>
             <td class="py-2.5 px-3 text-slate-200">${escapeHtml(guiasTxt)}</td>
-            <td class="py-2.5 px-3 text-violet-200">${escapeHtml(trabTexto)}</td>
+            <td class="py-2.5 px-3 text-violet-200 space-y-0.5">
+              <div>${escapeHtml(trabTexto)}</div>
+              <div class="text-[11px] font-bold text-emerald-300">${escapeHtml(getResumoFinanceiroFilho(f, state.trabalhos).quantidade + ' trab. • ' + getResumoFinanceiroFilho(f, state.trabalhos).totalFormatado)}</div>
+            </td>
             <td class="py-2.5 px-3 text-slate-300">${escapeHtml(cargoStatus)}</td>
           </tr>
         `;
@@ -1234,6 +1439,7 @@
               <p class="text-xs text-slate-300">Orixás: ${escapeHtml(orixasTxt)}</p>
               <p class="text-xs text-slate-400">Guias: ${escapeHtml(guiasTxt)}</p>
               <p class="text-xs text-violet-200/90">Trabalhos: ${trabArr.length ? escapeHtml(trabArr.join(', ')) : 'Nenhum'}</p>
+            <p class="text-xs font-bold text-emerald-300">Resumo Financeiro: ${getResumoFinanceiroFilho(f, state.trabalhos).quantidade} trabalho(s) • ${escapeHtml(getResumoFinanceiroFilho(f, state.trabalhos).totalFormatado)}</p>
             </div>
             <div class="flex flex-wrap items-center gap-1.5 pt-2 border-t border-violet-500/15">
               <button type="button" data-idx="${idx}" class="balao-filho-card-btn px-2.5 py-1 rounded-lg text-[11px] font-bold bg-violet-600/80 hover:bg-violet-500 text-white transition">
@@ -1445,15 +1651,16 @@
         .map((idx) => extrairCampoFlexivel(state.filhos[idx], ['Nome', 'nome']))
         .filter(Boolean);
 
-      const primeiroIdFilho = indicesFilhos.length > 0
-        ? extrairCampoFlexivel(state.filhos[indicesFilhos[0]], ['ID_Filho', 'id'])
-        : '';
+      const idsFilhos = indicesFilhos
+        .map((idx) => extrairCampoFlexivel(state.filhos[idx], ['ID_Filho', 'id']))
+        .filter(Boolean);
 
       alvo.Tipo_Trabalho = novoTipo;
       if (novaData) alvo.Data = novaData;
       alvo.Valor = novoValor;
       alvo.Observacoes = novaObs;
-      alvo.ID_Filho = primeiroIdFilho;
+      alvo.IDs_Filhos = idsFilhos.join(', ');
+      alvo.ID_Filho = idsFilhos[0] || '';
       alvo.responsavel = [respManual, ...nomesFilhos].filter(Boolean).join(', ');
 
       state.filhos.forEach((f) => {
@@ -1693,9 +1900,9 @@
         .map((idx) => extrairCampoFlexivel(state.filhos[idx], ['Nome', 'nome']))
         .filter(Boolean);
 
-      const primeiroIdFilho = indicesFilhos.length > 0
-        ? extrairCampoFlexivel(state.filhos[indicesFilhos[0]], ['ID_Filho', 'id'])
-        : '';
+      const idsFilhos = indicesFilhos
+        .map((idx) => extrairCampoFlexivel(state.filhos[idx], ['ID_Filho', 'id']))
+        .filter(Boolean);
 
       const responsavelFinal = [respManual, ...nomesFilhos].filter(Boolean).join(', ');
 
@@ -1706,7 +1913,8 @@
         status: 'Ativo',
         responsavel: responsavelFinal,
         Observacoes: obsTrab,
-        ID_Filho: primeiroIdFilho,
+        IDs_Filhos: idsFilhos.join(', '),
+        ID_Filho: idsFilhos[0] || '',
         Valor: valor
       });
 
@@ -1726,6 +1934,56 @@
       runtimeDbUrl = DEFAULT_DB_URL;
       if (topoDbUrl) topoDbUrl.value = DEFAULT_DB_URL;
       await sincronizarBanco();
+    });
+
+    document.getElementById('formNovoUsuario')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nome = (document.getElementById('novoUsuarioNome')?.value || '').trim();
+      const email = (document.getElementById('novoUsuarioEmail')?.value || '').trim();
+      const cargo = (document.getElementById('novoUsuarioCargo')?.value || '').trim() || 'Membro';
+      const whatsapp = (document.getElementById('novoUsuarioWhatsApp')?.value || '').trim();
+      const acessoSite = Boolean(document.getElementById('novoUsuarioAcessoSite')?.checked);
+      if (!nome || !email) return;
+
+      state.usuarios.push({
+        id: 'u-' + Date.now(),
+        Nome: nome,
+        Email: email,
+        Cargo: cargo,
+        WhatsApp: whatsapp,
+        acessoSite
+      });
+
+      e.target.reset();
+      document.getElementById('novoUsuarioAcessoSite').checked = true;
+      renderUsuarios();
+      await gravarBanco(state);
+    });
+
+    document.getElementById('btnBaixarBackup')?.addEventListener('click', () => {
+      sincronizarVinculosTrabalhosFilhos();
+      const backupObj = {
+        sistema: 'Instituto 7 Cores',
+        exportadoEm: new Date().toISOString(),
+        filhos: state.filhos || [],
+        trabalhos: state.trabalhos || [],
+        usuarios: state.usuarios || []
+      };
+      const blob = new Blob([JSON.stringify(backupObj, null, 2)], { type: 'application/json;charset=utf-8' });
+      const urlBlob = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const dataStr = new Date().toISOString().slice(0, 10);
+      a.href = urlBlob;
+      a.download = `backup-instituto-7-cores-${dataStr}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(urlBlob);
+      setStatus('Backup baixado com sucesso!');
+    });
+
+    document.getElementById('btnToggleUrlBarra')?.addEventListener('click', () => {
+      document.getElementById('barraConexaoPlanilha')?.classList.toggle('hidden');
     });
 
     document.getElementById('btnSincronizarAgora')?.addEventListener('click', sincronizarBanco);
