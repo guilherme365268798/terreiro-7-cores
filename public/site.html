@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestão do Terreiro — Instituto 7 Cores</title>
+  <title>Instituto 7 Cores • Gestão do Terreiro</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
@@ -24,1661 +24,686 @@
     body {
       font-family: 'Inter', system-ui, sans-serif;
     }
-    .tab-active {
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-      color: #ffffff;
-      box-shadow: 0 8px 20px -6px rgba(79, 70, 229, 0.45);
+    .bg-roxo-preto {
+      background-color: #000000;
+      background-image:
+        radial-gradient(circle at 20% 0%, rgba(124, 58, 237, 0.55) 0%, rgba(76, 29, 149, 0.35) 35%, rgba(0, 0, 0, 0) 70%),
+        linear-gradient(180deg, #5b21b6 0%, #3b0764 26%, #140826 56%, #05020a 80%, #000000 100%);
+      background-attachment: fixed;
     }
   </style>
 </head>
-<body class="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200">
+<body class="min-h-screen bg-roxo-preto text-slate-100 antialiased">
 
-  <!-- ECRÃ DE LOGIN OBRIGATÓRIO NA ENTRADA -->
-  <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4 bg-slate-950 text-slate-100">
-    <div class="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8 shadow-2xl space-y-6">
-      <div class="flex items-center gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-600 via-violet-600 to-fuchsia-600 flex items-center justify-center text-white font-extrabold text-lg shadow-md shrink-0">
-          7C
+  <div class="max-w-6xl mx-auto px-4 py-6 space-y-6">
+    <!-- CABEÇALHO -->
+    <header class="rounded-2xl border border-violet-500/30 bg-black/65 backdrop-blur-md p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4 shadow-xl">
+      <div class="flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-600 via-violet-600 to-fuchsia-600 flex items-center justify-center text-white font-extrabold text-base overflow-hidden border border-violet-400/30 shrink-0">
+          <img
+            src="logo.jpg"
+            alt="Logotipo Instituto 7 Cores"
+            class="w-full h-full object-cover"
+            onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
+          >
+          <span class="hidden">7C</span>
         </div>
         <div>
-          <h1 class="text-lg font-extrabold tracking-tight">Instituto 7 Cores</h1>
-          <p class="text-xs text-slate-400">Acesso restrito — Gestão do Terreiro</p>
+          <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white">Instituto 7 Cores</h1>
+          <p class="text-xs text-violet-200/80">Gestão do Terreiro • Sincronizado com o Banco</p>
         </div>
       </div>
 
-      <form id="formLogin" class="space-y-4">
-        <div>
-          <label for="loginUsuario" class="block text-xs font-semibold mb-1.5 text-slate-300">Utilizador ou E-mail</label>
-          <input id="loginUsuario" type="text" required autocomplete="username" placeholder="Digite o utilizador ou e-mail" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-700 bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
-        </div>
-
-        <div>
-          <label for="loginSenha" class="block text-xs font-semibold mb-1.5 text-slate-300">Palavra-passe</label>
-          <input id="loginSenha" type="password" required autocomplete="current-password" placeholder="Digite a palavra-passe" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-700 bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
-        </div>
-
-        <p id="loginErro" class="hidden text-xs font-semibold text-rose-400 bg-rose-500/10 border border-rose-500/30 rounded-xl px-3.5 py-2.5">
-          Utilizador ou palavra-passe inválidos.
-        </p>
-
-        <button type="submit" class="w-full py-2.5 px-4 rounded-xl text-sm font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition">
-          Entrar no Painel
+      <div class="flex items-center gap-2.5 flex-wrap">
+        <span id="badgeUsuarioAtivo" class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-violet-500/15 border border-violet-500/30 text-violet-200">
+          Sessão ativa
+        </span>
+        <button
+          type="button"
+          id="btnSincronizarAgora"
+          class="px-3.5 py-2 rounded-xl text-xs font-bold bg-violet-600/80 hover:bg-violet-500 text-white border border-violet-400/30 transition"
+        >
+          Sincronizar Banco
         </button>
-      </form>
-
-      <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-3 text-[11px] text-slate-400 space-y-1">
-        <p class="font-semibold text-slate-300">Acesso inicial padrão:</p>
-        <p>Utilizador: <span class="font-mono text-indigo-400">dirigente</span> (ou <span class="font-mono text-indigo-400">guilherme.curto2004@gmail.com</span>)</p>
-        <p>Palavra-passe: <span class="font-mono text-indigo-400">7cores2026</span></p>
-        <p class="text-[10px] text-slate-500 pt-0.5">Podes alterar ou criar utilizadores com palavra-passe na aba Usuários após entrar.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- APLICAÇÃO PRINCIPAL (OCULTA ATÉ VALIDAR LOGIN) -->
-  <div id="appShell" class="hidden">
-    <!-- Barra superior -->
-    <header class="sticky top-0 z-30 border-b border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
-        <div class="flex items-center gap-3 min-w-0">
-          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-600 via-violet-600 to-fuchsia-600 flex items-center justify-center text-white font-extrabold text-base shadow-md shrink-0">
-            7C
-          </div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 flex-wrap">
-              <h1 class="text-base sm:text-lg font-extrabold tracking-tight truncate">
-                Instituto 7 Cores • Gestão do Terreiro
-              </h1>
-              <span id="statusBadge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">
-                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                Planilha Pronta
-              </span>
-            </div>
-            <p class="text-xs text-slate-500 dark:text-slate-400 truncate">
-              Controle de Filhos, Trabalhos, Usuários e Sincronização com Google Sheets
-            </p>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-2 flex-wrap">
-          <button id="btnSyncPull" type="button" title="Sincronizar dados da planilha" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-            </svg>
-            <span>Sincronizar</span>
-          </button>
-
-          <button id="btnSyncPush" type="button" title="Enviar alterações para a planilha" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-violet-600 hover:bg-violet-700 text-white shadow-sm transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-            </svg>
-            <span>Enviar p/ Planilha</span>
-          </button>
-
-          <button id="btnToggleTheme" type="button" aria-label="Alternar tema claro ou escuro" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-            </svg>
-          </button>
-
-          <button id="btnLogout" type="button" class="px-3 py-2 rounded-xl text-xs font-semibold border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 transition">
-            Sair
-          </button>
-        </div>
+        <button
+          type="button"
+          id="btnSair"
+          class="px-3.5 py-2 rounded-xl text-xs font-bold bg-rose-600/80 hover:bg-rose-500 text-white border border-rose-400/30 transition"
+        >
+          Sair
+        </button>
       </div>
     </header>
 
-    <!-- Notificações (toast) -->
-    <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full px-4 sm:px-0 pointer-events-none"></div>
+    <!-- NAVEGAÇÃO PRINCIPAL (ORIXÁS AO LADO DE GUIAS) -->
+    <nav class="rounded-2xl border border-violet-500/25 bg-black/60 backdrop-blur-md p-2 flex flex-wrap gap-2">
+      <button type="button" data-tab="planilha" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-violet-600 text-white transition">
+        Planilha / Visão Geral
+      </button>
+      <button type="button" data-tab="filhos" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:bg-violet-500/15 hover:text-white transition">
+        Filhos
+      </button>
+      <button type="button" data-tab="guias" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:bg-violet-500/15 hover:text-white transition">
+        Guias
+      </button>
+      <button type="button" data-tab="orixas" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:bg-violet-500/15 hover:text-white transition">
+        Orixás
+      </button>
+      <button type="button" data-tab="trabalhos" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:bg-violet-500/15 hover:text-white transition">
+        Trabalhos
+      </button>
+      <button type="button" data-tab="usuarios" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:bg-violet-500/15 hover:text-white transition">
+        Usuários
+      </button>
+    </nav>
 
-    <!-- Conteúdo principal -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
-      <!-- Cartões de resumo -->
-      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
-          <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Filhos Cadastrados</p>
-          <p id="statFilhos" class="mt-1.5 text-2xl font-extrabold text-indigo-600 dark:text-indigo-400">0</p>
-          <p id="statFilhosAtivos" class="mt-1 text-xs text-slate-500 dark:text-slate-400">0 ativo(s) na casa</p>
+    <p id="statusSync" class="hidden text-xs font-semibold px-4 py-2.5 rounded-xl bg-violet-500/15 border border-violet-500/30 text-violet-200"></p>
+
+    <!-- SEÇÃO INICIAL: PLANILHA -->
+    <section id="tab-planilha" class="tab-panel space-y-5">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-4">
+          <p class="text-xs text-violet-200/75 font-semibold">Filhos Cadastrados</p>
+          <p id="statFilhos" class="text-2xl font-extrabold text-white mt-1">0</p>
         </div>
-
-        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
-          <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Trabalhos &amp; Giras</p>
-          <p id="statTrabalhos" class="mt-1.5 text-2xl font-extrabold text-violet-600 dark:text-violet-400">0</p>
-          <p id="statTrabalhosPendentes" class="mt-1 text-xs text-slate-500 dark:text-slate-400">0 aberto(s)/agendado(s)</p>
+        <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-4">
+          <p class="text-xs text-violet-200/75 font-semibold">Trabalhos Registrados</p>
+          <p id="statTrabalhos" class="text-2xl font-extrabold text-white mt-1">0</p>
         </div>
-
-        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
-          <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Usuários da Equipe</p>
-          <p id="statUsuarios" class="mt-1.5 text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">0</p>
-          <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Perfis cadastrados</p>
+        <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-4">
+          <p class="text-xs text-violet-200/75 font-semibold">Usuários no Banco</p>
+          <p id="statUsuarios" class="text-2xl font-extrabold text-white mt-1">0</p>
         </div>
+      </div>
 
-        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
-          <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Última Sincronização</p>
-          <p id="statUltimaSync" class="mt-1.5 text-sm font-bold text-slate-800 dark:text-slate-200">Padrão pronto</p>
-          <p id="lastSyncLabel" class="mt-1 text-xs text-slate-500 dark:text-slate-400 truncate">Clique em Sincronizar</p>
-        </div>
-      </section>
-
-      <!-- Navegação por abas -->
-      <nav class="flex items-center gap-2 overflow-x-auto pb-1" aria-label="Abas do sistema">
-        <button type="button" data-tab="filhos" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition tab-active">
-          Filhos
-        </button>
-        <button type="button" data-tab="trabalhos" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-          Trabalhos
-        </button>
-        <button type="button" data-tab="usuarios" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-          Usuários
-        </button>
-        <button type="button" data-tab="integracao" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-          Integração &amp; Backup
-        </button>
-      </nav>
-
-      <!-- ABA 1: FILHOS -->
-      <section id="panel-filhos" class="tab-panel space-y-6">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <form id="formFilho" class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4 h-fit">
-            <div class="flex items-center justify-between">
-              <h2 id="formFilhoTitle" class="text-base font-bold">Cadastrar Filho(a)</h2>
-              <button id="btnCancelFilho" type="button" class="hidden text-xs font-semibold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
-                Cancelar edição
-              </button>
-            </div>
-
-            <input type="hidden" id="filhoId">
-
-            <div>
-              <label for="filhoNome" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Nome completo *</label>
-              <input id="filhoNome" type="text" required="" placeholder="Digite o nome completo" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label for="filhoStatus" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Situação</label>
-                <select id="filhoStatus" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                  <option value="Ativo">Ativo</option>
-                  <option value="Em observação">Em observação</option>
-                  <option value="Afastado">Afastado</option>
-                </select>
-              </div>
-
-              <div>
-                <label for="filhoCargo" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Cargo na casa</label>
-                <input id="filhoCargo" type="text" list="sugestoesCargo" placeholder="Ex.: Cambono, Ogã, Ekedi..." class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                <datalist id="sugestoesCargo">
-                  <option value="Cambono">
-                  <option value="Ogã">
-                  <option value="Ekedi">
-                  <option value="Médium em desenvolvimento">
-                  <option value="Dirigente">
-                </datalist>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label for="filhoTelefone" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Telefone / WhatsApp</label>
-                <input id="filhoTelefone" type="text" placeholder="(11) 99999-9999" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-              </div>
-              <div>
-                <label for="filhoDataNascimento" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Data de nascimento</label>
-                <input id="filhoDataNascimento" type="date" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-              </div>
-            </div>
-
-            <div class="rounded-xl border border-indigo-500/25 bg-indigo-500/5 p-3.5 space-y-3">
-              <div>
-                <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Orixás (1º ao 7º)</h3>
-                <p class="text-[11px] text-slate-500 dark:text-slate-400">Cada Orixá tem seu próprio espaço logo abaixo do nome para preencher e enviar à planilha.</p>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div class="rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="orixa_1" class="block text-xs font-bold text-slate-800 dark:text-slate-100">1º Orixá <span class="font-normal text-[10px] text-slate-500">(1_Orixa)</span></label>
-                  <input id="orixa_1" type="text" placeholder="Digite o 1º Orixá..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                </div>
-                <div class="rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="orixa_2" class="block text-xs font-bold text-slate-800 dark:text-slate-100">2º Orixá <span class="font-normal text-[10px] text-slate-500">(2_Orixa)</span></label>
-                  <input id="orixa_2" type="text" placeholder="Digite o 2º Orixá..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                </div>
-                <div class="rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="orixa_3" class="block text-xs font-bold text-slate-800 dark:text-slate-100">3º Orixá <span class="font-normal text-[10px] text-slate-500">(3_Orixa)</span></label>
-                  <input id="orixa_3" type="text" placeholder="Digite o 3º Orixá..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                </div>
-                <div class="rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="orixa_4" class="block text-xs font-bold text-slate-800 dark:text-slate-100">4º Orixá <span class="font-normal text-[10px] text-slate-500">(4_Orixa)</span></label>
-                  <input id="orixa_4" type="text" placeholder="Digite o 4º Orixá..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                </div>
-                <div class="rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="orixa_5" class="block text-xs font-bold text-slate-800 dark:text-slate-100">5º Orixá <span class="font-normal text-[10px] text-slate-500">(5_Orixa)</span></label>
-                  <input id="orixa_5" type="text" placeholder="Digite o 5º Orixá..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                </div>
-                <div class="rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="orixa_6" class="block text-xs font-bold text-slate-800 dark:text-slate-100">6º Orixá <span class="font-normal text-[10px] text-slate-500">(6_Orixa)</span></label>
-                  <input id="orixa_6" type="text" placeholder="Digite o 6º Orixá..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                </div>
-                <div class="sm:col-span-2 rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="orixa_7" class="block text-xs font-bold text-slate-800 dark:text-slate-100">7º Orixá <span class="font-normal text-[10px] text-slate-500">(7_Orixa)</span></label>
-                  <input id="orixa_7" type="text" placeholder="Digite o 7º Orixá..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                </div>
-              </div>
-            </div>
-
-            <div class="rounded-xl border border-violet-500/25 bg-violet-500/5 p-3.5 space-y-3">
-              <div>
-                <h3 class="text-xs font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">Guias / Entidades</h3>
-                <p class="text-[11px] text-slate-500 dark:text-slate-400">Cada entidade tem seu próprio espaço logo abaixo do nome para preencher e enviar à planilha.</p>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div class="rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="guia_Baiano" class="block text-xs font-bold text-slate-800 dark:text-slate-100">Baiano</label>
-                  <input id="guia_Baiano" type="text" placeholder="Digite o nome do Baiano..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
-                </div>
-                <div class="rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="guia_Boiadeiro" class="block text-xs font-bold text-slate-800 dark:text-slate-100">Boiadeiro</label>
-                  <input id="guia_Boiadeiro" type="text" placeholder="Digite o nome do Boiadeiro..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
-                </div>
-                <div class="rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="guia_Caboclo" class="block text-xs font-bold text-slate-800 dark:text-slate-100">Caboclo</label>
-                  <input id="guia_Caboclo" type="text" placeholder="Digite o nome do Caboclo..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
-                </div>
-                <div class="rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="guia_Cigano" class="block text-xs font-bold text-slate-800 dark:text-slate-100">Cigano</label>
-                  <input id="guia_Cigano" type="text" placeholder="Digite o nome do Cigano..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
-                </div>
-                <div class="rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="guia_Ere" class="block text-xs font-bold text-slate-800 dark:text-slate-100">Erê <span class="font-normal text-[10px] text-slate-500">(Ere)</span></label>
-                  <input id="guia_Ere" type="text" placeholder="Digite o nome do Erê..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
-                </div>
-                <div class="rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="guia_Exu" class="block text-xs font-bold text-slate-800 dark:text-slate-100">Exu</label>
-                  <input id="guia_Exu" type="text" placeholder="Digite o nome do Exu..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
-                </div>
-                <div class="rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="guia_Malandro" class="block text-xs font-bold text-slate-800 dark:text-slate-100">Malandro</label>
-                  <input id="guia_Malandro" type="text" placeholder="Digite o nome do Malandro..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
-                </div>
-                <div class="rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="guia_Marinheiro" class="block text-xs font-bold text-slate-800 dark:text-slate-100">Marinheiro</label>
-                  <input id="guia_Marinheiro" type="text" placeholder="Digite o nome do Marinheiro..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
-                </div>
-                <div class="rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="guia_P_Gira" class="block text-xs font-bold text-slate-800 dark:text-slate-100">Pomba Gira <span class="font-normal text-[10px] text-slate-500">(P_Gira)</span></label>
-                  <input id="guia_P_Gira" type="text" placeholder="Digite o nome da Pomba Gira..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
-                </div>
-                <div class="rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="guia_P_Velho" class="block text-xs font-bold text-slate-800 dark:text-slate-100">Preto Velho <span class="font-normal text-[10px] text-slate-500">(P_Velho)</span></label>
-                  <input id="guia_P_Velho" type="text" placeholder="Digite o nome do Preto Velho..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
-                </div>
-                <div class="sm:col-span-2 rounded-lg border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                  <label for="guia_Pirata" class="block text-xs font-bold text-slate-800 dark:text-slate-100">Pirata</label>
-                  <input id="guia_Pirata" type="text" placeholder="Digite o nome do Pirata..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <label for="filhoObs" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Observações espirituais / avisos</label>
-              <textarea id="filhoObs" rows="2" placeholder="Anotações importantes do terreiro..." class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
-            </div>
-
-            <button type="submit" class="w-full py-2.5 px-4 rounded-xl text-sm font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition">
-              Salvar Filho(a)
-            </button>
-          </form>
-
-          <div class="lg:col-span-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <h2 class="text-base font-bold">Lista de Filhos</h2>
-              <div class="flex flex-col sm:flex-row gap-2">
-                <input id="searchFilho" type="search" placeholder="Buscar por nome ou guia..." class="px-3.5 py-2 rounded-xl text-xs sm:text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                <input id="filterGuia" type="search" placeholder="Filtrar por Orixá ou guia..." class="px-3.5 py-2 rounded-xl text-xs sm:text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-              </div>
-            </div>
-
-            <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr class="border-b border-slate-200 dark:border-slate-800 text-xs uppercase text-slate-500 dark:text-slate-400">
-                    <th class="py-2.5 pr-3">Nome</th>
-                    <th class="py-2.5 px-3">Orixás &amp; Guias (Separados)</th>
-                    <th class="py-2.5 px-3">Situação</th>
-                    <th class="py-2.5 px-3">Contato</th>
-                    <th class="py-2.5 pl-3 text-right">Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="tbodyFilhos" class="divide-y divide-slate-100 dark:divide-slate-800/70 text-sm"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ABA 2: TRABALHOS -->
-      <section id="panel-trabalhos" class="tab-panel hidden space-y-6">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <form id="formTrabalho" class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4 h-fit">
-            <div class="flex items-center justify-between">
-              <h2 id="formTrabalhoTitle" class="text-base font-bold">Novo Trabalho / Gira</h2>
-              <button id="btnCancelTrabalho" type="button" class="hidden text-xs font-semibold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200">
-                Cancelar edição
-              </button>
-            </div>
-
-            <input type="hidden" id="trabalhoId">
-
-            <div>
-              <label for="trabalhoTitulo" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Título do trabalho *</label>
-              <input id="trabalhoTitulo" type="text" required="" placeholder="Ex.: Gira de Pretos Velhos / Limpeza" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label for="trabalhoData" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Data *</label>
-                <input id="trabalhoData" type="date" required="" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
-              </div>
-
-              <div>
-                <label for="trabalhoStatus" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Status</label>
-                <select id="trabalhoStatus" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
-                  <option value="Agendado">Agendado</option>
-                  <option value="Em andamento">Em andamento</option>
-                  <option value="Concluído">Concluído</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label for="trabalhoResponsavel" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Responsável / Dirigente</label>
-              <input id="trabalhoResponsavel" type="text" placeholder="Ex.: Pai João / Cambono Lucas" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
-            </div>
-
-            <div class="rounded-xl border border-violet-500/25 bg-violet-500/5 p-3 space-y-2">
-              <label for="trabalhoMateriais" class="block text-xs font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">Material da Lista do Trabalho</label>
-              <textarea id="trabalhoMateriais" rows="2" placeholder="Ex.: Velas brancas e amarelas, arruda, guiné, pemba, fumo..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500"></textarea>
-            </div>
-
-            <div class="rounded-xl border border-amber-500/25 bg-amber-500/5 p-3 space-y-2">
-              <label for="trabalhoCompras" class="block text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Lista de Compras do Trabalho</label>
-              <textarea id="trabalhoCompras" rows="2" placeholder="Ex.: Comprar 2 pacotes de vela, 1 maço de ervas, água mineral..." class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
-            </div>
-
-            <div>
-              <label for="trabalhoDetalhes" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Observações gerais</label>
-              <textarea id="trabalhoDetalhes" rows="2" placeholder="Orientações do dirigente, horário de chegada..." class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500"></textarea>
-            </div>
-
-            <button type="submit" class="w-full py-2.5 px-4 rounded-xl text-sm font-bold bg-violet-600 hover:bg-violet-700 text-white shadow-sm transition">
-              Salvar Trabalho
-            </button>
-          </form>
-
-          <div class="lg:col-span-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <h2 class="text-base font-bold">Agenda e Trabalhos</h2>
-              <select id="filterTrabalhoStatus" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-violet-500">
-                <option value="">Todos os status</option>
-                <option value="Agendado">Agendado</option>
-                <option value="Em andamento">Em andamento</option>
-                <option value="Concluído">Concluído</option>
-              </select>
-            </div>
-
-            <div id="listaTrabalhos" class="space-y-3"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ABA 3: USUÁRIOS -->
-      <section id="panel-usuarios" class="tab-panel hidden space-y-6">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <form id="formUsuario" class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4 h-fit">
-            <h2 class="text-base font-bold">Adicionar Usuário da Equipe</h2>
-
-            <div>
-              <label for="usuarioNome" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Nome / Utilizador *</label>
-              <input id="usuarioNome" type="text" required="" placeholder="Ex.: Maria Clara" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-            </div>
-
-            <div>
-              <label for="usuarioEmail" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">E-mail *</label>
-              <input id="usuarioEmail" type="email" required="" placeholder="maria@exemplo.com" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-            </div>
-
-            <div>
-              <label for="usuarioSenha" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Palavra-passe de acesso *</label>
-              <input id="usuarioSenha" type="password" required="" placeholder="Defina a palavra-passe" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-            </div>
-
-            <div>
-              <label for="usuarioPapel" class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Função na casa</label>
-              <select id="usuarioPapel" class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                <option value="Dirigente">Dirigente (Acesso ao site)</option>
-                <option value="Cambono">Cambono</option>
-                <option value="Secretaria">Secretaria</option>
-                <option value="Membro">Membro</option>
-              </select>
-            </div>
-
-            <div id="boxWhatsappDirigente" class="rounded-xl border border-emerald-500/25 bg-emerald-500/5 p-3 space-y-1.5">
-              <label for="usuarioWhatsapp" class="block text-xs font-bold text-emerald-700 dark:text-emerald-300">Número de WhatsApp (opcional)</label>
-              <input id="usuarioWhatsapp" type="tel" placeholder="(11) 99999-9999" class="w-full px-3 py-2 rounded-lg text-xs border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-              <p class="text-[11px] text-slate-500 dark:text-slate-400">Salva o número para a planilha e permite envio direto por WhatsApp apenas para usuários com função <strong>Dirigente</strong> e acesso ao site.</p>
-            </div>
-
-            <button type="submit" class="w-full py-2.5 px-4 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">
-              Salvar Usuário
-            </button>
-          </form>
-
-          <div class="lg:col-span-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4">
-            <h2 class="text-base font-bold">Usuários Cadastrados</h2>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr class="border-b border-slate-200 dark:border-slate-800 text-xs uppercase text-slate-500 dark:text-slate-400">
-                    <th class="py-2.5 pr-3">Nome</th>
-                    <th class="py-2.5 px-3">E-mail</th>
-                    <th class="py-2.5 px-3">Função</th>
-                    <th class="py-2.5 pl-3 text-right">Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="tbodyUsuarios" class="divide-y divide-slate-100 dark:divide-slate-800/70 text-sm"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ABA 4: INTEGRAÇÃO & BACKUP -->
-      <section id="panel-integracao" class="tab-panel space-y-6 hidden">
-        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4">
+      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <h2 class="text-base font-bold">Conexão com Google Apps Script (Planilha)</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              A URL padrão do seu Web App já vem configurada para abrir em qualquer computador.
-            </p>
+            <h2 class="text-base font-extrabold text-white">Planilha de Filhos & Trabalhos</h2>
+            <p class="text-xs text-slate-400">Clique no nome de um filho para abrir o balão com detalhes.</p>
           </div>
-
-          <div class="flex flex-col sm:flex-row gap-2">
-            <input id="gasWebAppUrlInput" type="text" placeholder="https://script.google.com/macros/s/.../exec" class="flex-1 px-3.5 py-2.5 rounded-xl text-sm border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-            <button id="btnSaveGasUrl" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-indigo-600 hover:bg-indigo-700 text-white transition whitespace-nowrap">
-              Salvar URL
-            </button>
-            <button id="btnResetGasUrl" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition whitespace-nowrap">
-              Restaurar Padrão
-            </button>
-          </div>
-
-          <div class="flex flex-wrap gap-2">
-            <button id="btnSyncPullTab" type="button" class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
-              Sincronizar da Planilha
-            </button>
-            <button id="btnSyncPushTab" type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-violet-600 hover:bg-violet-700 text-white transition">
-              Enviar p/ Planilha
-            </button>
-            <button id="btnOpenGasTab" type="button" class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-              Abrir URL em Nova Aba
-            </button>
-          </div>
-
-          <div id="syncDiagnosticBox" class="rounded-xl p-3.5 text-xs font-mono bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">
-            Diagnóstico: pronto para sincronizar com a planilha.
-          </div>
-
-          <div class="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-4 space-y-3">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div>
-                <h3 class="text-sm font-bold text-emerald-700 dark:text-emerald-300">WhatsApp Exclusivo para Dirigentes</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Envie resumos de trabalhos, listas de compras e avisos apenas para dirigentes cadastrados com acesso ao site.</p>
-              </div>
-              <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 w-fit">Somente Dirigentes</span>
-            </div>
-            <div class="flex flex-col sm:flex-row gap-2">
-              <select id="selectDirigenteWhatsapp" class="flex-1 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                <option value="">Selecione um Dirigente com acesso...</option>
-              </select>
-              <button id="btnSendWhatsappDirigente" type="button" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition whitespace-nowrap">
-                Abrir WhatsApp do Dirigente
-              </button>
-            </div>
-          </div>
+          <input
+            id="filtroPlanilha"
+            type="text"
+            placeholder="Buscar filho, orixá ou trabalho..."
+            class="px-3.5 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
+          >
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4">
-            <h3 class="text-base font-bold">Backup &amp; Restauração (JSON)</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">
-              Exporte seus dados locais em JSON ou restaure um arquivo salvo anteriormente.
-            </p>
-            <div class="flex flex-wrap gap-2">
-              <button id="btnExportJson" type="button" class="px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 dark:bg-slate-100 text-white dark:text-slate-900 hover:opacity-90 transition">
-                Exportar JSON
-              </button>
-              <label class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition">
-                <span>Importar JSON</span>
-                <input id="inputImportJson" type="file" accept="application/json" class="hidden">
-              </label>
-            </div>
-          </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="border-b border-violet-500/25 text-violet-200">
+                <th class="py-2.5 px-3 font-bold">Filho</th>
+                <th class="py-2.5 px-3 font-bold">Orixá</th>
+                <th class="py-2.5 px-3 font-bold">Guia</th>
+                <th class="py-2.5 px-3 font-bold">Função</th>
+              </tr>
+            </thead>
+            <tbody id="tabelaPlanilhaBody" class="divide-y divide-violet-500/15"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
 
-          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4">
-            <h3 class="text-base font-bold">Baixar Site Pronto (index.html)</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">
-              Baixe este arquivo completo já com sua URL do Apps Script configurada para publicar no Vercel ou em qualquer servidor.
-            </p>
-            <button id="btnDownloadIndex" type="button" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition">
-              Baixar index.html Pronto
-            </button>
+    <!-- SEÇÃO FILHOS -->
+    <section id="tab-filhos" class="tab-panel hidden space-y-5">
+      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-4">
+        <h2 class="text-base font-extrabold text-white">Cadastrar / Atualizar Filho</h2>
+        <form id="formFilho" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <input id="filhoNome" type="text" required placeholder="Nome do filho *" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+          <input id="filhoOrixa" type="text" placeholder="Orixá de cabeça" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+          <input id="filhoGuia" type="text" placeholder="Guia / Entidade" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+          <input id="filhoFuncao" type="text" placeholder="Função / Cargo" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+          <input id="filhoTelefone" type="text" placeholder="Telefone / WhatsApp" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+          <input id="filhoObs" type="text" placeholder="Observações" class="sm:col-span-2 lg:col-span-2 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+          <button type="submit" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white transition">
+            Salvar no Banco
+          </button>
+        </form>
+      </div>
+
+      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5">
+        <h3 class="text-sm font-bold text-white mb-3">Lista de Filhos (clique no nome para ver o balão)</h3>
+        <div id="listaFilhos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO GUIAS -->
+    <section id="tab-guias" class="tab-panel hidden space-y-5">
+      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 class="text-base font-extrabold text-white">Guias & Entidades</h2>
+            <p class="text-xs text-slate-400">Cadastre novas guias no banco ou veja as vinculadas aos filhos.</p>
           </div>
         </div>
-      </section>
-    </main>
+        <form id="formGuia" class="flex flex-wrap gap-3">
+          <input id="novoGuiaNome" type="text" required placeholder="Nome da guia / entidade *" class="flex-1 min-w-[200px] px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+          <input id="novoGuiaLinha" type="text" placeholder="Linha (ex: Caboclo, Preto Velho, Baiano)" class="flex-1 min-w-[200px] px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+          <button type="submit" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white transition">
+            Salvar Guia
+          </button>
+        </form>
+        <div id="listaGuias" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO ORIXÁS (AO LADO DE GUIAS) -->
+    <section id="tab-orixas" class="tab-panel hidden space-y-5">
+      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-4">
+        <div>
+          <h2 class="text-base font-extrabold text-white">Orixás</h2>
+          <p class="text-xs text-slate-400">Cadastre orixás no banco ou veja os registrados nos cadastros da casa.</p>
+        </div>
+        <form id="formOrixa" class="flex flex-wrap gap-3">
+          <input id="novoOrixaNome" type="text" required placeholder="Nome do Orixá *" class="flex-1 min-w-[200px] px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+          <input id="novoOrixaDia" type="text" placeholder="Dia / Cor / Saudação" class="flex-1 min-w-[200px] px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+          <button type="submit" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white transition">
+            Salvar Orixá
+          </button>
+        </form>
+        <div id="listaOrixas" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO TRABALHOS (VALOR LOGO ABAIXO DA DATA) -->
+    <section id="tab-trabalhos" class="tab-panel hidden space-y-5">
+      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-4">
+        <h2 class="text-base font-extrabold text-white">Novo Trabalho</h2>
+        <form id="formTrabalho" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <input id="trabTitulo" type="text" required placeholder="Nome do trabalho *" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+          <input id="trabData" type="date" required class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white">
+          <input id="trabValor" type="text" placeholder="Valor (ex: R$ 120,00)" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+          <button type="submit" class="sm:col-span-3 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white transition">
+            Adicionar Trabalho ao Banco
+          </button>
+        </form>
+      </div>
+
+      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-3">
+        <h3 class="text-sm font-bold text-white">Trabalhos Cadastrados</h3>
+        <div id="listaTrabalhos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO USUÁRIOS -->
+    <section id="tab-usuarios" class="tab-panel hidden space-y-5">
+      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-3">
+        <h2 class="text-base font-extrabold text-white">Usuários Cadastrados no Banco</h2>
+        <p class="text-xs text-slate-400">Usuários salvos na planilha/banco para acesso entre computadores.</p>
+        <div id="listaUsuarios" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- BALÃO (POPOVER/MODAL) AO CLICAR NO NOME DO FILHO -->
+  <div id="balaoFilhoOverlay" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div id="balaoFilhoCard" class="relative w-full max-w-md rounded-2xl border border-violet-400/40 bg-slate-950/95 p-6 shadow-2xl space-y-3">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <span class="inline-block text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-violet-500/20 text-violet-200 border border-violet-400/30 mb-1">
+            Ficha do Filho
+          </span>
+          <h3 id="balaoFilhoNome" class="text-lg font-extrabold text-white"></h3>
+        </div>
+        <button type="button" id="fecharBalaoFilho" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200">
+          Fechar
+        </button>
+      </div>
+      <div id="balaoFilhoDetalhes" class="space-y-1.5 text-xs sm:text-sm text-slate-200 border-t border-violet-500/20 pt-3"></div>
+    </div>
   </div>
 
   <script>
-    const STORAGE_KEYS = {
-      DATA: 'i7c_gestao_terreiro_data_v1',
-      GAS_URL: 'i7c_gestao_terreiro_gas_url_v1',
-      THEME: 'i7c_gestao_terreiro_theme_v1',
-      LAST_SYNC: 'i7c_gestao_terreiro_last_sync_v1',
-      AUTH_SESSION: 'i7c_gestao_terreiro_auth_v1'
+    const DB_URL = 'https://script.google.com/macros/s/AKfycbydnBQeThbs_D_Ic3N34vA05JGkb8TaZ6F7DUAhDi6pUTouih0q3OfXsxdVCmcgT0ngng/exec';
+    const SESSION_KEY = 'i7c_sessao_ativa';
+
+    const DEFAULT_USERS = [
+      {
+        id: 'u-default-dirigente',
+        nome: 'dirigente',
+        Nome: 'dirigente',
+        email: 'guilherme.curto2004@gmail.com',
+        Email: 'guilherme.curto2004@gmail.com',
+        papel: 'Dirigente',
+        Cargo: 'Dirigente',
+        senha: '7cores2026',
+        acessoSite: true
+      }
+    ];
+
+    let state = {
+      filhos: [],
+      trabalhos: [],
+      usuarios: [...DEFAULT_USERS],
+      guias: [],
+      orixas: []
     };
 
-    const DEFAULT_GAS_URL = 'https://script.google.com/macros/s/AKfycbydnBQeThbs_D_Ic3N34vA05JGkb8TaZ6F7DUAhDi6pUTouih0q3OfXsxdVCmcgT0ngng/exec';
-
-    const CAMPOS_ORIXAS = [
-      '1_Orixa', '2_Orixa', '3_Orixa', '4_Orixa', '5_Orixa', '6_Orixa', '7_Orixa'
-    ];
-
-    const CAMPOS_GUIAS = [
-      { key: 'Baiano', label: 'Baiano' },
-      { key: 'Boiadeiro', label: 'Boiadeiro' },
-      { key: 'Caboclo', label: 'Caboclo' },
-      { key: 'Cigano', label: 'Cigano' },
-      { key: 'Ere', label: 'Erê' },
-      { key: 'Exu', label: 'Exu' },
-      { key: 'Malandro', label: 'Malandro' },
-      { key: 'Marinheiro', label: 'Marinheiro' },
-      { key: 'P_Gira', label: 'Pomba Gira' },
-      { key: 'P_Velho', label: 'Preto Velho' },
-      { key: 'Pirata', label: 'Pirata' }
-    ];
-
-    function extrairOrixasEGuias(raw) {
-      const orixas = [];
-      CAMPOS_ORIXAS.forEach((col, idx) => {
-        const val = String((raw && raw[col]) || '').trim();
-        if (val) orixas.push({ ordem: idx + 1, coluna: col, valor: val });
-      });
-
-      const guias = [];
-      CAMPOS_GUIAS.forEach((item) => {
-        const val = String((raw && raw[item.key]) || '').trim();
-        if (val) guias.push({ coluna: item.key, label: item.label, valor: val });
-      });
-
-      return { orixas, guias };
+    function setStatus(msg) {
+      const el = document.getElementById('statusSync');
+      if (!el) return;
+      el.textContent = msg;
+      el.classList.remove('hidden');
     }
 
-    function normalizarFilho(raw, idx) {
-      const src = raw || {};
-      const { orixas, guias } = extrairOrixasEGuias(src);
-      const nome = String(src.Nome || src.nome || '').trim() || `Filho ${idx + 1}`;
-      const id = String(src.ID_Filho || src.id || `f-${idx + 1}`).trim();
-      const status = String(src.status || src.Status || 'Ativo').trim();
-      const cargo = String(src.cargo || src.Cargo || '').trim();
-      const telefone = String(src.telefone || src.Telefone || '').trim();
-      const dataNascimento = String(
-        src.dataNascimento || src.Data_Nascimento || src.data_nascimento || src.Nascimento || ''
-      ).trim();
-      const obs = String(src.obs || src.Observacoes || '').trim();
-
-      const out = {
-        ...src,
-        id,
-        ID_Filho: id,
-        nome,
-        Nome: nome,
-        status,
-        cargo,
-        Cargo: cargo,
-        telefone,
-        dataNascimento,
-        Data_Nascimento: dataNascimento,
-        obs,
-        orixasDetalhados: orixas,
-        guiasDetalhadas: guias
-      };
-
-      CAMPOS_ORIXAS.forEach((col) => {
-        out[col] = String(src[col] ?? '').trim();
-      });
-      CAMPOS_GUIAS.forEach((item) => {
-        out[item.key] = String(src[item.key] ?? '').trim();
-      });
-
-      return out;
-    }
-
-    function normalizarTrabalho(raw, idx) {
-      const src = raw || {};
-      const id = String(src.ID_Trabalho || src.id || `t-${idx + 1}`).trim();
-      const titulo =
-        String(src.titulo || src.Tipo_Trabalho || src.Observacoes || src.ID_Trabalho || '').trim() ||
-        `Trabalho ${idx + 1}`;
-      const data = String(src.data || src.Data || '').trim();
-      const status = String(src.status || src.Status || (src.Observacoes ? String(src.Observacoes) : 'Agendado')).trim();
-      const responsavel = String(
-        src.responsavel ||
-        (src.ID_Filho ? `ID Filho: ${src.ID_Filho}` : '') ||
-        src.Valor ||
-        ''
-      ).trim();
-      const materiais = String(src.materiais || src.Materiais || '').trim();
-      const compras = String(src.compras || src.Compras || '').trim();
-      const detalhes = [
-        src.detalhes || '',
-        src.Tipo_Trabalho ? `Tipo: ${src.Tipo_Trabalho}` : '',
-        src.Valor ? `Valor: ${src.Valor}` : '',
-        materiais ? `Materiais: ${materiais}` : '',
-        compras ? `Compras: ${compras}` : '',
-        src.Observacoes && src.Observacoes !== status ? `Obs: ${src.Observacoes}` : ''
-      ]
-        .filter(Boolean)
-        .join(' • ');
-
-      return {
-        ...src,
-        id,
-        ID_Trabalho: id,
-        ID_Filho: String(src.ID_Filho || '').trim(),
-        Data: data,
-        data,
-        Valor: String(src.Valor || '').trim(),
-        Tipo_Trabalho: String(src.Tipo_Trabalho || titulo).trim(),
-        Observacoes: String(src.Observacoes || status).trim(),
-        titulo,
-        status,
-        responsavel,
-        materiais,
-        Materiais: materiais,
-        compras,
-        Compras: compras,
-        detalhes
-      };
-    }
-
-    function normalizarUsuario(raw, idx) {
-      const src = raw || {};
-      const nome = String(src.Nome || src.nome || '').trim() || `Usuário ${idx + 1}`;
-      const email = String(src.Email || src.email || '').trim();
-      const papel = String(src.Cargo || src.papel || 'Membro').trim();
-      const senha = String(src.senha || src.Senha || src.password || '').trim();
-      const acessoSite = papel.toLowerCase() === 'dirigente';
-      const whatsapp = String(src.whatsapp || src.WhatsApp || src.Telefone || '').trim();
-
-      return {
-        ...src,
-        id: String(src.id || `u-${idx + 1}`).trim(),
-        nome,
-        Nome: nome,
-        email,
-        Email: email,
-        papel,
-        Cargo: papel,
-        senha,
-        acessoSite,
-        whatsapp,
-        WhatsApp: whatsapp
-      };
-    }
-
-    function createInitialData() {
-      return {
-        filhos: [],
-        trabalhos: [],
-        usuarios: [
-          normalizarUsuario({
-            id: 'u-default-dirigente',
-            nome: 'dirigente',
-            email: 'guilherme.curto2004@gmail.com',
-            papel: 'Dirigente',
-            senha: '7cores2026'
-          }, 0)
-        ]
-      };
-    }
-
-    let stateData = loadData();
-
-    function loadData() {
+    function readSession() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEYS.DATA);
-        if (!raw) return createInitialData();
+        const raw = sessionStorage.getItem(SESSION_KEY);
+        if (!raw) return null;
         const parsed = JSON.parse(raw);
-        const usuarios = Array.isArray(parsed.usuarios) && parsed.usuarios.length > 0
-          ? parsed.usuarios.map((u, i) => normalizarUsuario(u, i))
-          : createInitialData().usuarios;
-
-        return {
-          filhos: Array.isArray(parsed.filhos) ? parsed.filhos.map((f, i) => normalizarFilho(f, i)) : [],
-          trabalhos: Array.isArray(parsed.trabalhos) ? parsed.trabalhos.map((t, i) => normalizarTrabalho(t, i)) : [],
-          usuarios
-        };
-      } catch (err) {
-        console.error('Erro ao ler dados locais:', err);
-        return createInitialData();
-      }
-    }
-
-    function saveData() {
-      try {
-        localStorage.setItem(STORAGE_KEYS.DATA, JSON.stringify(stateData));
-      } catch (err) {
-        console.error('Erro ao salvar dados locais:', err);
-        showToast('Não foi possível salvar no navegador.', 'error');
-      }
-    }
-
-    function hasValidSession() {
-      try {
-        const raw = sessionStorage.getItem(STORAGE_KEYS.AUTH_SESSION);
-        if (!raw) return false;
-        const parsed = JSON.parse(raw);
-        return Boolean(parsed && parsed.authenticated === true);
+        return parsed && parsed.authenticated === true ? parsed : null;
       } catch (_) {
-        return false;
+        return null;
       }
     }
 
-    function setAuthenticatedSession(user) {
-      try {
-        sessionStorage.setItem(STORAGE_KEYS.AUTH_SESSION, JSON.stringify({
-          authenticated: true,
-          user: user.nome || user.email,
-          at: new Date().toISOString()
-        }));
-      } catch (_) {}
+    const sessaoAtual = readSession();
+    if (!sessaoAtual) {
+      window.location.replace('index.html');
+    } else {
+      const badge = document.getElementById('badgeUsuarioAtivo');
+      if (badge) badge.textContent = sessaoAtual.user || sessaoAtual.identifier || 'Usuário';
     }
 
-    function clearAuthenticatedSession() {
-      try {
-        sessionStorage.removeItem(STORAGE_KEYS.AUTH_SESSION);
-      } catch (_) {}
-    }
-
-    function applyAuthGate() {
-      const loginScreen = document.getElementById('loginScreen');
-      const appShell = document.getElementById('appShell');
-      const loggedIn = hasValidSession();
-      if (loggedIn) {
-        loginScreen?.classList.add('hidden');
-        appShell?.classList.remove('hidden');
-      } else {
-        loginScreen?.classList.remove('hidden');
-        appShell?.classList.add('hidden');
-      }
-    }
-
-    function validarCredenciais(identificador, senhaDigitada) {
-      const idLimpo = String(identificador || '').trim().toLowerCase();
-      const senhaLimpa = String(senhaDigitada || '').trim();
-      if (!idLimpo || !senhaLimpa) return null;
-
-      return stateData.usuarios.find((u) => {
-        const matchUser =
-          String(u.nome || '').trim().toLowerCase() === idLimpo ||
-          String(u.email || '').trim().toLowerCase() === idLimpo;
-        const senhaUsuario = String(u.senha || '').trim() || '7cores2026';
-        return matchUser && senhaUsuario === senhaLimpa;
-      }) || null;
-    }
-
-    function getGasUrl() {
-      try {
-        const saved = (localStorage.getItem(STORAGE_KEYS.GAS_URL) || '').trim();
-        return saved || DEFAULT_GAS_URL;
-      } catch (_) {
-        return DEFAULT_GAS_URL;
-      }
-    }
-
-    function setGasUrl(url) {
-      const clean = String(url || '').trim();
-      try {
-        if (clean) {
-          localStorage.setItem(STORAGE_KEYS.GAS_URL, clean);
-        } else {
-          localStorage.removeItem(STORAGE_KEYS.GAS_URL);
-        }
-      } catch (err) {
-        console.error('Erro ao salvar URL:', err);
-      }
-    }
-
-    function showToast(message, type = 'info') {
-      const container = document.getElementById('toastContainer');
-      if (!container) return;
-
-      const palette = {
-        success: 'bg-emerald-600 text-white border-emerald-500',
-        error: 'bg-rose-600 text-white border-rose-500',
-        info: 'bg-slate-900 dark:bg-slate-800 text-white border-slate-700'
-      };
-
-      const toast = document.createElement('div');
-      toast.className = `pointer-events-auto rounded-xl border px-4 py-3 text-xs sm:text-sm font-semibold shadow-lg transition ${palette[type] || palette.info}`;
-      toast.textContent = message;
-      container.appendChild(toast);
-
-      setTimeout(() => {
-        toast.remove();
-      }, 3600);
-    }
-
-    function setDiagnostic(text, isError = false) {
-      const box = document.getElementById('syncDiagnosticBox');
-      if (!box) return;
-      box.textContent = `Diagnóstico: ${text}`;
-      box.className = isError
-        ? 'rounded-xl p-3.5 text-xs font-mono bg-rose-500/10 border border-rose-500/30 text-rose-700 dark:text-rose-300'
-        : 'rounded-xl p-3.5 text-xs font-mono bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300';
-    }
-
-    function recordSyncTimestamp(label) {
-      const nowStr = new Date().toLocaleString('pt-BR');
-      try {
-        localStorage.setItem(STORAGE_KEYS.LAST_SYNC, JSON.stringify({ time: nowStr, label }));
-      } catch (_) {}
-      renderLastSyncLabel();
-    }
-
-    function renderLastSyncLabel() {
-      const statEl = document.getElementById('statUltimaSync');
-      const labelEl = document.getElementById('lastSyncLabel');
-      try {
-        const raw = localStorage.getItem(STORAGE_KEYS.LAST_SYNC);
-        if (!raw) {
-          if (statEl) statEl.textContent = 'Padrão pronto';
-          if (labelEl) labelEl.textContent = 'Clique em Sincronizar';
-          return;
-        }
-        const info = JSON.parse(raw);
-        if (statEl) statEl.textContent = info.time || 'Sincronizado';
-        if (labelEl) labelEl.textContent = info.label || 'Planilha conectada';
-      } catch (_) {}
-    }
-
-    function escapeHtml(value) {
-      return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
-    function renderStatsAndStatus() {
-      const totalFilhos = stateData.filhos.length;
-      const ativos = stateData.filhos.filter((f) => f.status === 'Ativo').length;
-      const totalTrabalhos = stateData.trabalhos.length;
-      const pendentes = stateData.trabalhos.filter((t) => t.status !== 'Concluído').length;
-      const totalUsuarios = stateData.usuarios.length;
-
-      document.getElementById('statFilhos').textContent = String(totalFilhos);
-      document.getElementById('statFilhosAtivos').textContent = `${ativos} ativo(s) na casa`;
-      document.getElementById('statTrabalhos').textContent = String(totalTrabalhos);
-      document.getElementById('statTrabalhosPendentes').textContent = `${pendentes} aberto(s)/agendado(s)`;
-      document.getElementById('statUsuarios').textContent = String(totalUsuarios);
-    }
-
-    function renderFilhos() {
-      const tbody = document.getElementById('tbodyFilhos');
-      if (!tbody) return;
-      const query = (document.getElementById('searchFilho')?.value || '').trim().toLowerCase();
-      const guiaFilter = (document.getElementById('filterGuia')?.value || '').trim().toLowerCase();
-
-      const filtered = stateData.filhos.filter((f) => {
-        const orixaText = (f.orixasDetalhados || []).map((o) => o.valor).join(' ').toLowerCase();
-        const guiaText = (f.guiasDetalhadas || []).map((g) => `${g.label} ${g.valor}`).join(' ').toLowerCase();
-        const baseText = [f.nome, f.cargo, f.telefone, f.dataNascimento, f.obs, f.ID_Filho].join(' ').toLowerCase();
-        const matchesGuia = !guiaFilter || orixaText.includes(guiaFilter) || guiaText.includes(guiaFilter);
-        const matchesQuery = !query || baseText.includes(query) || orixaText.includes(query) || guiaText.includes(query);
-        return matchesGuia && matchesQuery;
-      });
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Nenhum filho encontrado.</td></tr>`;
-        return;
-      }
-
-      tbody.innerHTML = filtered.map((f) => {
-        const statusClasses =
-          f.status === 'Ativo'
-            ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
-            : f.status === 'Em observação'
-            ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300'
-            : 'bg-slate-500/15 text-slate-600 dark:text-slate-300';
-
-        const orixasBadges = (f.orixasDetalhados || [])
-          .map((o) => `<span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-indigo-500/15 text-indigo-700 dark:text-indigo-300">Orixá ${o.ordem}: ${escapeHtml(o.valor)}</span>`)
-          .join('');
-
-        const guiasBadges = (f.guiasDetalhadas || [])
-          .map((g) => `<span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-violet-500/15 text-violet-700 dark:text-violet-300">Guia ${escapeHtml(g.label)}: ${escapeHtml(g.valor)}</span>`)
-          .join('');
-
-        return `
-          <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition align-top">
-            <td class="py-3 pr-3">
-              <p class="font-semibold text-slate-900 dark:text-slate-100">${escapeHtml(f.nome)}</p>
-              ${f.cargo ? `<p class="text-xs font-semibold text-indigo-600 dark:text-indigo-400">Cargo: ${escapeHtml(f.cargo)}</p>` : ''}
-              ${f.dataNascimento ? `<p class="text-[11px] text-slate-500 dark:text-slate-400">Nascimento: ${escapeHtml(f.dataNascimento.split('-').reverse().join('/'))}</p>` : ''}
-              ${f.obs ? `<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">${escapeHtml(f.obs)}</p>` : ''}
-            </td>
-            <td class="py-3 px-3 text-xs min-w-[240px]">
-              <div class="space-y-1.5">
-                <div>
-                  <p class="text-[10px] font-bold uppercase tracking-wider text-indigo-500 dark:text-indigo-400 mb-1">Orixás</p>
-                  ${orixasBadges ? `<div class="flex flex-wrap gap-1">${orixasBadges}</div>` : `<span class="text-slate-400">Nenhum Orixá informado</span>`}
-                </div>
-                <div>
-                  <p class="text-[10px] font-bold uppercase tracking-wider text-violet-500 dark:text-violet-400 mb-1">Guias</p>
-                  ${guiasBadges ? `<div class="flex flex-wrap gap-1">${guiasBadges}</div>` : `<span class="text-slate-400">Nenhuma guia informada</span>`}
-                </div>
-              </div>
-            </td>
-            <td class="py-3 px-3 whitespace-nowrap">
-              <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${statusClasses}">${escapeHtml(f.status || 'Ativo')}</span>
-            </td>
-            <td class="py-3 px-3 whitespace-nowrap text-xs sm:text-sm text-slate-600 dark:text-slate-300">${escapeHtml(f.telefone || f.ID_Filho || '-')}</td>
-            <td class="py-3 pl-3 text-right whitespace-nowrap">
-              <button type="button" data-edit-filho="${escapeHtml(f.id)}" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-500/10 transition">Editar</button>
-              <button type="button" data-del-filho="${escapeHtml(f.id)}" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition">Excluir</button>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function renderTrabalhos() {
-      const container = document.getElementById('listaTrabalhos');
-      if (!container) return;
-      const statusFilter = document.getElementById('filterTrabalhoStatus')?.value || '';
-      const filtered = stateData.trabalhos.filter((t) => !statusFilter || t.status === statusFilter);
-
-      if (filtered.length === 0) {
-        container.innerHTML = `<div class="rounded-xl border border-dashed border-slate-300 dark:border-slate-700 p-6 text-center text-xs sm:text-sm text-slate-500 dark:text-slate-400">Nenhum trabalho encontrado.</div>`;
-        return;
-      }
-
-      container.innerHTML = filtered.map((t) => {
-        const badge =
-          t.status === 'Concluído'
-            ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
-            : t.status === 'Em andamento'
-            ? 'bg-amber-500/15 text-amber-700 dark:text-amber-300'
-            : 'bg-violet-500/15 text-violet-700 dark:text-violet-300';
-
-        return `
-          <div class="rounded-xl border border-slate-200 dark:border-slate-800 p-4 flex flex-col sm:flex-row sm:items-start justify-between gap-3 bg-slate-50/60 dark:bg-slate-800/30">
-            <div class="space-y-2 flex-1">
-              <div class="flex items-center gap-2 flex-wrap">
-                <h3 class="font-bold text-sm text-slate-900 dark:text-slate-100">${escapeHtml(t.titulo)}</h3>
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold ${badge}">${escapeHtml(t.status)}</span>
-              </div>
-              <p class="text-xs text-slate-500 dark:text-slate-400">
-                Data: <strong>${escapeHtml(t.data || '-')}</strong> • Responsável: <strong>${escapeHtml(t.responsavel || 'Não informado')}</strong>
-              </p>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-2 pt-1">
-                <div class="rounded-lg border border-violet-500/20 bg-violet-500/5 p-2.5">
-                  <p class="text-[10px] font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">Material da Lista</p>
-                  <p class="text-xs text-slate-700 dark:text-slate-200 mt-0.5">${escapeHtml(t.materiais || 'Não informado')}</p>
-                </div>
-                <div class="rounded-lg border border-amber-500/20 bg-amber-500/5 p-2.5">
-                  <p class="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">Lista de Compras</p>
-                  <p class="text-xs text-slate-700 dark:text-slate-200 mt-0.5">${escapeHtml(t.compras || 'Nenhuma compra pendente')}</p>
-                </div>
-              </div>
-              ${t.detalhes ? `<p class="text-xs text-slate-600 dark:text-slate-300">${escapeHtml(t.detalhes)}</p>` : ''}
-            </div>
-            <div class="flex items-center gap-2 shrink-0">
-              <button type="button" data-edit-trabalho="${escapeHtml(t.id)}" class="px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Editar</button>
-              <button type="button" data-del-trabalho="${escapeHtml(t.id)}" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition">Excluir</button>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function isDirigenteComAcesso(usuario) {
-      if (!usuario) return false;
-      const papel = String(usuario.papel || usuario.Cargo || '').trim().toLowerCase();
-      return papel === 'dirigente';
-    }
-
-    function atualizarSeletorDirigentesWhatsapp() {
-      const select = document.getElementById('selectDirigenteWhatsapp');
-      if (!select) return;
-      const dirigentes = stateData.usuarios.filter(isDirigenteComAcesso);
-      if (dirigentes.length === 0) {
-        select.innerHTML = `<option value="">Nenhum Dirigente cadastrado com acesso</option>`;
-        return;
-      }
-      select.innerHTML =
-        `<option value="">Selecione um Dirigente com acesso...</option>` +
-        dirigentes
-          .map((d) => {
-            const zap = String(d.whatsapp || d.Telefone || '').trim();
-            return `<option value="${escapeHtml(d.id)}">${escapeHtml(d.nome)} ${zap ? `(${escapeHtml(zap)})` : '(sem WhatsApp)'}</option>`;
-          })
-          .join('');
-    }
-
-    function renderUsuarios() {
-      const tbody = document.getElementById('tbodyUsuarios');
-      if (!tbody) return;
-      atualizarSeletorDirigentesWhatsapp();
-
-      if (stateData.usuarios.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" class="py-6 text-center text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Nenhum usuário cadastrado.</td></tr>`;
-        return;
-      }
-
-      tbody.innerHTML = stateData.usuarios.map((u) => {
-        const isDir = isDirigenteComAcesso(u);
-        const zapDigits = String(u.whatsapp || '').replace(/\D/g, '');
-        const zapLink = isDir && zapDigits
-          ? `https://wa.me/${zapDigits.startsWith('55') ? zapDigits : `55${zapDigits}`}`
-          : '';
-
-        return `
-          <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
-            <td class="py-3 pr-3">
-              <p class="font-semibold">${escapeHtml(u.nome)}</p>
-              ${isDir ? `<span class="inline-block mt-0.5 px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">Acesso ao site (Dirigente)</span>` : `<span class="inline-block mt-0.5 px-2 py-0.5 rounded text-[10px] font-medium bg-slate-500/10 text-slate-500 dark:text-slate-400">Sem acesso ao site</span>`}
-            </td>
-            <td class="py-3 px-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-              <div>${escapeHtml(u.email)}</div>
-              ${u.whatsapp ? `<div class="text-xs text-emerald-600 dark:text-emerald-400">WhatsApp: ${escapeHtml(u.whatsapp)}</div>` : ''}
-            </td>
-            <td class="py-3 px-3 text-xs sm:text-sm">
-              <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/15 text-indigo-700 dark:text-indigo-300">${escapeHtml(u.papel || 'Membro')}</span>
-            </td>
-            <td class="py-3 pl-3 text-right whitespace-nowrap">
-              ${zapLink ? `<a href="${escapeHtml(zapLink)}" target="_blank" rel="noopener noreferrer" class="inline-block px-2.5 py-1 rounded-lg text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10 transition">WhatsApp</a>` : ''}
-              <button type="button" data-del-usuario="${escapeHtml(u.id)}" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition">Remover</button>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function renderAll() {
-      renderStatsAndStatus();
-      renderFilhos();
-      renderTrabalhos();
-      renderUsuarios();
-    }
-
-    function switchTab(tabName) {
-      document.querySelectorAll('.tab-btn').forEach((btn) => {
-        const isTarget = btn.dataset.tab === tabName;
-        btn.classList.toggle('tab-active', isTarget);
-        if (!isTarget) {
-          btn.classList.add('border', 'border-slate-200', 'dark:border-slate-800', 'bg-white', 'dark:bg-slate-900', 'text-slate-700', 'dark:text-slate-300');
-        } else {
-          btn.classList.remove('border', 'border-slate-200', 'dark:border-slate-800', 'bg-white', 'dark:bg-slate-900', 'text-slate-700', 'dark:text-slate-300');
-        }
-      });
-
-      document.querySelectorAll('.tab-panel').forEach((panel) => {
-        panel.classList.toggle('hidden', panel.id !== `panel-${tabName}`);
-      });
-    }
-
-    function fetchJsonp(url, timeoutMs = 12000) {
+    function fetchJsonp(url, timeoutMs = 10000) {
       return new Promise((resolve, reject) => {
-        const callbackName = 'i7cGasCallback_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
-        const separator = url.includes('?') ? '&' : '?';
+        const cbName = 'siteDbCb_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+        const sep = url.includes('?') ? '&' : '?';
         const script = document.createElement('script');
-        script.src = `${url}${separator}callback=${callbackName}`;
+        script.src = `${url}${sep}action=read&callback=${cbName}`;
         script.async = true;
 
         const timer = setTimeout(() => {
           cleanup();
-          reject(new Error('JSONP: Tempo limite esgotado ao carregar script do Google Apps Script.'));
+          reject(new Error('Tempo limite ao ler banco.'));
         }, timeoutMs);
 
         function cleanup() {
           clearTimeout(timer);
           if (script.parentNode) script.parentNode.removeChild(script);
-          try {
-            delete window[callbackName];
-          } catch (_) {
-            window[callbackName] = undefined;
-          }
+          try { delete window[cbName]; } catch (_) { window[cbName] = undefined; }
         }
 
-        window[callbackName] = (payload) => {
+        window[cbName] = (data) => {
           cleanup();
-          resolve(payload);
+          resolve(data);
         };
 
         script.onerror = () => {
           cleanup();
-          reject(new Error('JSONP: Falha ao carregar script do Google Apps Script.'));
+          reject(new Error('Erro de rede ao ler banco.'));
         };
 
         document.body.appendChild(script);
       });
     }
 
-    function normalizeIncomingPayload(payload) {
-      if (!payload || typeof payload !== 'object') return null;
-      const source = payload.data && typeof payload.data === 'object' ? payload.data : payload;
-      const hasArrays =
-        Array.isArray(source.filhos) ||
-        Array.isArray(source.trabalhos) ||
-        Array.isArray(source.usuarios);
-
-      if (!hasArrays) return null;
-
-      const incomingUsers = Array.isArray(source.usuarios) && source.usuarios.length > 0
-        ? source.usuarios.map((item, i) => normalizarUsuario(item, i))
-        : stateData.usuarios;
-
-      return {
-        filhos: Array.isArray(source.filhos)
-          ? source.filhos.map((item, i) => normalizarFilho(item, i))
-          : stateData.filhos,
-        trabalhos: Array.isArray(source.trabalhos)
-          ? source.trabalhos.map((item, i) => normalizarTrabalho(item, i))
-          : stateData.trabalhos,
-        usuarios: incomingUsers
-      };
+    async function lerBanco() {
+      try {
+        const res = await fetch(`${DB_URL}${DB_URL.includes('?') ? '&' : '?'}action=read`, {
+          method: 'GET',
+          mode: 'cors',
+          redirect: 'follow'
+        });
+        const txt = await res.text();
+        if (txt) return JSON.parse(txt);
+      } catch (_) {
+        return await fetchJsonp(DB_URL);
+      }
+      return null;
     }
 
-    async function syncFromSheet() {
-      const url = getGasUrl();
-      if (!url) {
-        showToast('Configure a URL do Google Apps Script primeiro.', 'error');
-        setDiagnostic('URL do Google Apps Script não configurada.', true);
-        return;
-      }
-
-      setDiagnostic('Sincronizando dados da planilha...');
-      try {
-        let data = null;
-        try {
-          const res = await fetch(`${url}${url.includes('?') ? '&' : '?'}action=read`, {
-            method: 'GET',
-            mode: 'cors',
-            redirect: 'follow'
-          });
-          const text = await res.text();
-          if (text) {
-            data = JSON.parse(text);
-          }
-        } catch (_) {
-          data = await fetchJsonp(url);
-        }
-
-        const normalized = normalizeIncomingPayload(data);
-        if (!normalized) {
-          throw new Error('Resposta recebida não contém listas válidas (filhos, trabalhos ou usuários).');
-        }
-
-        stateData = normalized;
-        saveData();
-        renderAll();
-        recordSyncTimestamp('Sincronizado da planilha');
-        setDiagnostic(`Sucesso (${stateData.filhos.length} filhos, ${stateData.trabalhos.length} trabalhos, ${stateData.usuarios.length} usuários).`);
-        showToast('Dados sincronizados da planilha com sucesso.', 'success');
-      } catch (err) {
-        const msg = err && err.message ? err.message : 'Erro desconhecido';
-        setDiagnostic(`Falha ao sincronizar: ${msg}`, true);
-        showToast(`Falha ao sincronizar: ${msg}`, 'error');
-      }
+    async function gravarBanco(nextState) {
+      setStatus('Salvando alterações no banco...');
+      await fetch(DB_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          action: 'write',
+          filhos: nextState.filhos || [],
+          trabalhos: nextState.trabalhos || [],
+          usuarios: nextState.usuarios || [],
+          guias: nextState.guias || [],
+          orixas: nextState.orixas || [],
+          data: nextState,
+          updatedAt: new Date().toISOString()
+        })
+      });
+      setStatus('Salvo no banco com sucesso.');
     }
 
-    async function syncToSheet() {
-      const url = getGasUrl();
-      if (!url) {
-        showToast('Configure a URL do Google Apps Script primeiro.', 'error');
-        setDiagnostic('URL do Google Apps Script não configurada.', true);
-        return;
-      }
-
-      setDiagnostic('Enviando alterações para a planilha...');
+    async function sincronizarBanco() {
+      setStatus('Carregando dados do banco...');
       try {
-        const payloadToSend = {
-          filhos: stateData.filhos.map((f, i) => normalizarFilho(f, i)),
-          trabalhos: stateData.trabalhos.map((t, i) => normalizarTrabalho(t, i)),
-          usuarios: stateData.usuarios.map((u, i) => normalizarUsuario(u, i))
+        const payload = await lerBanco();
+        const src = payload && payload.data && typeof payload.data === 'object' ? payload.data : (payload || {});
+        state = {
+          filhos: Array.isArray(src.filhos) ? src.filhos : [],
+          trabalhos: Array.isArray(src.trabalhos) ? src.trabalhos : [],
+          usuarios: Array.isArray(src.usuarios) && src.usuarios.length > 0 ? src.usuarios : [...DEFAULT_USERS],
+          guias: Array.isArray(src.guias) ? src.guias : [],
+          orixas: Array.isArray(src.orixas) ? src.orixas : []
         };
-
-        await fetch(url, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({
-            action: 'write',
-            ...payloadToSend,
-            data: payloadToSend,
-            updatedAt: new Date().toISOString()
-          })
-        });
-
-        recordSyncTimestamp('Enviado para a planilha');
-        setDiagnostic('Pacote enviado ao Google Apps Script. Confira a planilha para validar.');
-        showToast('Dados enviados para a planilha.', 'success');
-      } catch (err) {
-        const msg = err && err.message ? err.message : 'Erro ao enviar';
-        setDiagnostic(`Falha ao enviar: ${msg}`, true);
-        showToast(`Falha ao enviar: ${msg}`, 'error');
+        renderTudo();
+        setStatus('Banco sincronizado.');
+      } catch (_) {
+        renderTudo();
+        setStatus('Não foi possível ler o banco agora. Tente sincronizar novamente.');
       }
     }
 
-    function initTheme() {
-      let theme = 'dark';
-      try {
-        const saved = localStorage.getItem(STORAGE_KEYS.THEME);
-        if (saved === 'light' || saved === 'dark') theme = saved;
-      } catch (_) {}
-      document.documentElement.classList.toggle('dark', theme === 'dark');
+    function escapeHtml(str) {
+      return String(str ?? '').replace(/[&<>"']/g, (m) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[m]));
     }
 
-    function toggleTheme() {
-      const isDark = document.documentElement.classList.toggle('dark');
-      try {
-        localStorage.setItem(STORAGE_KEYS.THEME, isDark ? 'dark' : 'light');
-      } catch (_) {}
+    function abrirBalaoFilho(filho) {
+      const overlay = document.getElementById('balaoFilhoOverlay');
+      const nomeEl = document.getElementById('balaoFilhoNome');
+      const detEl = document.getElementById('balaoFilhoDetalhes');
+      if (!overlay || !nomeEl || !detEl || !filho) return;
+
+      const nome = filho.nome || filho.Nome || 'Sem nome';
+      const orixa = filho.orixa || filho.Orixa || 'Não informado';
+      const guia = filho.guia || filho.Guia || 'Não informada';
+      const funcao = filho.funcao || filho.Funcao || filho.papel || 'Membro';
+      const telefone = filho.telefone || filho.Telefone || filho.whatsapp || 'Não informado';
+      const obs = filho.obs || filho.Observacao || filho.observacoes || 'Sem observações';
+
+      nomeEl.textContent = nome;
+      detEl.innerHTML = `
+        <p><strong class="text-violet-300">Orixá:</strong> ${escapeHtml(orixa)}</p>
+        <p><strong class="text-violet-300">Guia:</strong> ${escapeHtml(guia)}</p>
+        <p><strong class="text-violet-300">Função:</strong> ${escapeHtml(funcao)}</p>
+        <p><strong class="text-violet-300">Telefone:</strong> ${escapeHtml(telefone)}</p>
+        <p><strong class="text-violet-300">Observações:</strong> ${escapeHtml(obs)}</p>
+      `;
+      overlay.classList.remove('hidden');
     }
 
-    document.getElementById('formLogin').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const userVal = document.getElementById('loginUsuario').value;
-      const passVal = document.getElementById('loginSenha').value;
-      const erroEl = document.getElementById('loginErro');
+    document.getElementById('fecharBalaoFilho')?.addEventListener('click', () => {
+      document.getElementById('balaoFilhoOverlay')?.classList.add('hidden');
+    });
 
-      const matched = validarCredenciais(userVal, passVal);
-      if (!matched) {
-        erroEl.classList.remove('hidden');
+    document.getElementById('balaoFilhoOverlay')?.addEventListener('click', (e) => {
+      if (e.target.id === 'balaoFilhoOverlay') {
+        e.currentTarget.classList.add('hidden');
+      }
+    });
+
+    function renderPlanilha() {
+      const tbody = document.getElementById('tabelaPlanilhaBody');
+      const filtro = (document.getElementById('filtroPlanilha')?.value || '').trim().toLowerCase();
+      if (!tbody) return;
+
+      const linhas = state.filhos.filter((f) => {
+        if (!filtro) return true;
+        const blob = [
+          f.nome || f.Nome || '',
+          f.orixa || f.Orixa || '',
+          f.guia || f.Guia || '',
+          f.funcao || f.Funcao || ''
+        ].join(' ').toLowerCase();
+        return blob.includes(filtro);
+      });
+
+      if (linhas.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="4" class="py-4 px-3 text-slate-400 text-center">Nenhum registro encontrado.</td>
+          </tr>
+        `;
         return;
       }
 
-      erroEl.classList.add('hidden');
-      setAuthenticatedSession(matched);
-      applyAuthGate();
-      renderAll();
-      showToast(`Bem-vindo, ${matched.nome}.`, 'success');
-    });
+      tbody.innerHTML = linhas.map((f, idx) => {
+        const nome = f.nome || f.Nome || 'Sem nome';
+        const orixa = f.orixa || f.Orixa || '—';
+        const guia = f.guia || f.Guia || '—';
+        const funcao = f.funcao || f.Funcao || f.papel || '—';
+        return `
+          <tr class="hover:bg-violet-500/10 transition">
+            <td class="py-2.5 px-3">
+              <button type="button" data-filho-idx="${idx}" class="btn-abrir-balao font-bold text-violet-200 hover:text-white underline underline-offset-4 text-left">
+                ${escapeHtml(nome)}
+              </button>
+            </td>
+            <td class="py-2.5 px-3 text-slate-200">${escapeHtml(orixa)}</td>
+            <td class="py-2.5 px-3 text-slate-200">${escapeHtml(guia)}</td>
+            <td class="py-2.5 px-3 text-slate-300">${escapeHtml(funcao)}</td>
+          </tr>
+        `;
+      }).join('');
 
-    document.getElementById('btnLogout').addEventListener('click', () => {
-      clearAuthenticatedSession();
-      document.getElementById('formLogin').reset();
-      applyAuthGate();
-    });
+      tbody.querySelectorAll('.btn-abrir-balao').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const i = Number(btn.getAttribute('data-filho-idx'));
+          abrirBalaoFilho(linhas[i]);
+        });
+      });
+    }
 
+    function renderFilhos() {
+      const wrap = document.getElementById('listaFilhos');
+      if (!wrap) return;
+      if (state.filhos.length === 0) {
+        wrap.innerHTML = `<p class="text-xs text-slate-400 col-span-full">Nenhum filho cadastrado no banco.</p>`;
+        return;
+      }
+      wrap.innerHTML = state.filhos.map((f, idx) => {
+        const nome = f.nome || f.Nome || 'Sem nome';
+        const orixa = f.orixa || f.Orixa || 'Sem orixá';
+        const guia = f.guia || f.Guia || 'Sem guia';
+        return `
+          <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-1">
+            <button type="button" data-idx="${idx}" class="balao-filho-card-btn text-sm font-extrabold text-violet-200 hover:text-white underline underline-offset-4 text-left">
+              ${escapeHtml(nome)}
+            </button>
+            <p class="text-xs text-slate-300">Orixá: ${escapeHtml(orixa)}</p>
+            <p class="text-xs text-slate-400">Guia: ${escapeHtml(guia)}</p>
+          </div>
+        `;
+      }).join('');
+
+      wrap.querySelectorAll('.balao-filho-card-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const i = Number(btn.getAttribute('data-idx'));
+          abrirBalaoFilho(state.filhos[i]);
+        });
+      });
+    }
+
+    function renderGuiasEOrixas() {
+      const guiasEl = document.getElementById('listaGuias');
+      const orixasEl = document.getElementById('listaOrixas');
+
+      const guiasCad = (state.guias || []).map((g) => typeof g === 'string' ? { nome: g, linha: '' } : g);
+      const guiasDosFilhos = state.filhos
+        .map((f) => (f.guia || f.Guia || '').trim())
+        .filter((nome) => nome && !guiasCad.some((item) => String(item.nome || '').toLowerCase() === nome.toLowerCase()))
+        .map((nome) => ({ nome, linha: 'Vinculada a filho' }));
+      const guiasCombinadas = [...guiasCad, ...guiasDosFilhos];
+
+      const orixasCad = (state.orixas || []).map((o) => typeof o === 'string' ? { nome: o, detalhe: '' } : o);
+      const orixasDosFilhos = state.filhos
+        .map((f) => (f.orixa || f.Orixa || '').trim())
+        .filter((nome) => nome && !orixasCad.some((item) => String(item.nome || '').toLowerCase() === nome.toLowerCase()))
+        .map((nome) => ({ nome, detalhe: 'Registrado em filho' }));
+      const orixasCombinados = [...orixasCad, ...orixasDosFilhos];
+
+      if (guiasEl) {
+        guiasEl.innerHTML = guiasCombinadas.length
+          ? guiasCombinadas.map((g) => `
+              <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-3.5 space-y-1">
+                <p class="text-sm font-bold text-white">${escapeHtml(g.nome || '')}</p>
+                ${g.linha ? `<p class="text-xs text-violet-200/80">${escapeHtml(g.linha)}</p>` : ''}
+              </div>
+            `).join('')
+          : `<p class="text-xs text-slate-400 col-span-full">Nenhuma guia registrada ainda.</p>`;
+      }
+
+      if (orixasEl) {
+        orixasEl.innerHTML = orixasCombinados.length
+          ? orixasCombinados.map((o) => `
+              <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-3.5 space-y-1">
+                <p class="text-sm font-bold text-white">${escapeHtml(o.nome || '')}</p>
+                ${o.detalhe ? `<p class="text-xs text-violet-200/80">${escapeHtml(o.detalhe)}</p>` : ''}
+              </div>
+            `).join('')
+          : `<p class="text-xs text-slate-400 col-span-full">Nenhum orixá registrado ainda.</p>`;
+      }
+    }
+
+    function renderTrabalhos() {
+      const wrap = document.getElementById('listaTrabalhos');
+      if (!wrap) return;
+      if (state.trabalhos.length === 0) {
+        wrap.innerHTML = `<p class="text-xs text-slate-400 col-span-full">Nenhum trabalho cadastrado.</p>`;
+        return;
+      }
+
+      // Valor exibido logo abaixo da data
+      wrap.innerHTML = state.trabalhos.map((t) => {
+        const titulo = t.titulo || t.nome || t.Nome || 'Trabalho';
+        const data = t.data || t.Data || 'Sem data';
+        const valor = t.valor || t.Valor || 'Sem valor';
+        return `
+          <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-1">
+            <h4 class="text-sm font-extrabold text-white">${escapeHtml(titulo)}</h4>
+            <p class="text-xs text-slate-300">Data: ${escapeHtml(data)}</p>
+            <p class="text-xs font-bold text-emerald-300">Valor: ${escapeHtml(valor)}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderUsuarios() {
+      const wrap = document.getElementById('listaUsuarios');
+      if (!wrap) return;
+      wrap.innerHTML = state.usuarios.map((u) => {
+        const nome = u.nome || u.Nome || 'Usuário';
+        const email = u.email || u.Email || '—';
+        const papel = u.papel || u.Cargo || 'Membro';
+        return `
+          <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-1">
+            <p class="text-sm font-bold text-white">${escapeHtml(nome)}</p>
+            <p class="text-xs text-violet-200">${escapeHtml(email)}</p>
+            <p class="text-xs text-slate-400">Função: ${escapeHtml(papel)}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderTudo() {
+      document.getElementById('statFilhos').textContent = String(state.filhos.length);
+      document.getElementById('statTrabalhos').textContent = String(state.trabalhos.length);
+      document.getElementById('statUsuarios').textContent = String(state.usuarios.length);
+      renderPlanilha();
+      renderFilhos();
+      renderGuiasEOrixas();
+      renderTrabalhos();
+      renderUsuarios();
+    }
+
+    // Navegação entre abas
     document.querySelectorAll('.tab-btn').forEach((btn) => {
-      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+      btn.addEventListener('click', () => {
+        const tab = btn.getAttribute('data-tab');
+        document.querySelectorAll('.tab-btn').forEach((b) => {
+          b.className = 'tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:bg-violet-500/15 hover:text-white transition';
+        });
+        btn.className = 'tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-violet-600 text-white transition';
+
+        document.querySelectorAll('.tab-panel').forEach((panel) => {
+          panel.classList.add('hidden');
+        });
+        document.getElementById(`tab-${tab}`)?.classList.remove('hidden');
+      });
     });
 
-    document.getElementById('btnToggleTheme').addEventListener('click', toggleTheme);
-    document.getElementById('btnSyncPull').addEventListener('click', syncFromSheet);
-    document.getElementById('btnSyncPush').addEventListener('click', syncToSheet);
-    document.getElementById('btnSyncPullTab').addEventListener('click', syncFromSheet);
-    document.getElementById('btnSyncPushTab').addEventListener('click', syncToSheet);
+    document.getElementById('filtroPlanilha')?.addEventListener('input', renderPlanilha);
 
-    document.getElementById('btnSaveGasUrl').addEventListener('click', () => {
-      const input = document.getElementById('gasWebAppUrlInput');
-      const val = (input?.value || '').trim();
-      if (!val) {
-        showToast('Digite uma URL válida antes de salvar.', 'error');
-        return;
-      }
-      setGasUrl(val);
-      setDiagnostic(`URL salva: ${val}`);
-      showToast('URL do Google Apps Script salva.', 'success');
-    });
-
-    document.getElementById('btnResetGasUrl').addEventListener('click', () => {
-      setGasUrl('');
-      const input = document.getElementById('gasWebAppUrlInput');
-      if (input) input.value = DEFAULT_GAS_URL;
-      setDiagnostic(`URL restaurada para o padrão: ${DEFAULT_GAS_URL}`);
-      showToast('URL padrão restaurada.', 'info');
-    });
-
-    document.getElementById('btnOpenGasTab').addEventListener('click', () => {
-      const url = getGasUrl();
-      if (!url) {
-        showToast('Nenhuma URL configurada.', 'error');
-        return;
-      }
-      window.open(url, '_blank', 'noopener,noreferrer');
-    });
-
-    const formFilho = document.getElementById('formFilho');
-    const btnCancelFilho = document.getElementById('btnCancelFilho');
-
-    function resetFilhoForm() {
-      formFilho.reset();
-      document.getElementById('filhoId').value = '';
-      document.getElementById('formFilhoTitle').textContent = 'Cadastrar Filho(a)';
-      btnCancelFilho.classList.add('hidden');
-    }
-    btnCancelFilho.addEventListener('click', resetFilhoForm);
-
-    formFilho.addEventListener('submit', (e) => {
+    document.getElementById('formFilho')?.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const idField = document.getElementById('filhoId').value;
-      const existing = idField ? stateData.filhos.find((item) => item.id === idField) : null;
-      const nome = document.getElementById('filhoNome').value.trim();
-      const status = document.getElementById('filhoStatus').value;
-      const cargo = document.getElementById('filhoCargo').value.trim();
-      const telefone = document.getElementById('filhoTelefone').value.trim();
-      const dataNascimento = document.getElementById('filhoDataNascimento').value.trim();
-      const obs = document.getElementById('filhoObs').value.trim();
-
-      if (!nome) {
-        showToast('Informe o nome completo.', 'error');
-        return;
-      }
-
-      const rawFilho = {
-        ...(existing || {}),
-        id: idField || 'f-' + Date.now(),
-        ID_Filho: existing?.ID_Filho || idField || 'f-' + Date.now(),
-        Nome: nome,
+      const nome = (document.getElementById('filhoNome').value || '').trim();
+      if (!nome) return;
+      const novo = {
+        id: 'f-' + Date.now(),
         nome,
-        status,
-        cargo,
-        Cargo: cargo,
-        telefone,
-        dataNascimento,
-        Data_Nascimento: dataNascimento,
-        obs
+        Nome: nome,
+        orixa: (document.getElementById('filhoOrixa').value || '').trim(),
+        guia: (document.getElementById('filhoGuia').value || '').trim(),
+        funcao: (document.getElementById('filhoFuncao').value || '').trim() || 'Membro',
+        telefone: (document.getElementById('filhoTelefone').value || '').trim(),
+        obs: (document.getElementById('filhoObs').value || '').trim()
       };
-
-      CAMPOS_ORIXAS.forEach((col, idx) => {
-        rawFilho[col] = (document.getElementById(`orixa_${idx + 1}`)?.value || '').trim();
-      });
-      CAMPOS_GUIAS.forEach((item) => {
-        rawFilho[item.key] = (document.getElementById(`guia_${item.key}`)?.value || '').trim();
-      });
-
-      const payload = normalizarFilho(rawFilho, 0);
-      if (idField) {
-        stateData.filhos = stateData.filhos.map((item) => (item.id === idField ? payload : item));
-        showToast('Cadastro do filho atualizado.', 'success');
-      } else {
-        stateData.filhos.unshift(payload);
-        showToast('Filho(a) cadastrado(a).', 'success');
-      }
-      saveData();
-      resetFilhoForm();
-      renderAll();
-    });
-
-    document.getElementById('tbodyFilhos').addEventListener('click', (e) => {
-      const editId = e.target.closest('[data-edit-filho]')?.dataset.editFilho;
-      const delId = e.target.closest('[data-del-filho]')?.dataset.delFilho;
-
-      if (editId) {
-        const item = stateData.filhos.find((f) => f.id === editId);
-        if (!item) return;
-        document.getElementById('filhoId').value = item.id;
-        document.getElementById('filhoNome').value = item.nome || item.Nome || '';
-        document.getElementById('filhoStatus').value = item.status || 'Ativo';
-        document.getElementById('filhoCargo').value = item.cargo || item.Cargo || '';
-        document.getElementById('filhoTelefone').value = item.telefone || '';
-        document.getElementById('filhoDataNascimento').value = item.dataNascimento || item.Data_Nascimento || '';
-        document.getElementById('filhoObs').value = item.obs || '';
-
-        CAMPOS_ORIXAS.forEach((col, idx) => {
-          const el = document.getElementById(`orixa_${idx + 1}`);
-          if (el) el.value = item[col] || '';
-        });
-        CAMPOS_GUIAS.forEach((gItem) => {
-          const el = document.getElementById(`guia_${gItem.key}`);
-          if (el) el.value = item[gItem.key] || '';
-        });
-
-        document.getElementById('formFilhoTitle').textContent = 'Editar Filho(a)';
-        btnCancelFilho.classList.remove('hidden');
-      } else if (delId) {
-        stateData.filhos = stateData.filhos.filter((f) => f.id !== delId);
-        saveData();
-        renderAll();
-        showToast('Registro removido.', 'info');
-      }
-    });
-
-    document.getElementById('searchFilho').addEventListener('input', renderFilhos);
-    document.getElementById('filterGuia').addEventListener('input', renderFilhos);
-
-    const formTrabalho = document.getElementById('formTrabalho');
-    const btnCancelTrabalho = document.getElementById('btnCancelTrabalho');
-
-    function resetTrabalhoForm() {
-      formTrabalho.reset();
-      document.getElementById('trabalhoId').value = '';
-      document.getElementById('formTrabalhoTitle').textContent = 'Novo Trabalho / Gira';
-      btnCancelTrabalho.classList.add('hidden');
-    }
-    btnCancelTrabalho.addEventListener('click', resetTrabalhoForm);
-
-    formTrabalho.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const idField = document.getElementById('trabalhoId').value;
-      const existing = idField ? stateData.trabalhos.find((item) => item.id === idField) : null;
-      const titulo = document.getElementById('trabalhoTitulo').value.trim();
-      const data = document.getElementById('trabalhoData').value;
-      const status = document.getElementById('trabalhoStatus').value;
-      const responsavel = document.getElementById('trabalhoResponsavel').value.trim();
-      const materiais = document.getElementById('trabalhoMateriais').value.trim();
-      const compras = document.getElementById('trabalhoCompras').value.trim();
-      const detalhes = document.getElementById('trabalhoDetalhes').value.trim();
-
-      if (!titulo) {
-        showToast('Informe o título do trabalho.', 'error');
-        return;
-      }
-
-      const payload = normalizarTrabalho({
-        ...(existing || {}),
-        id: idField || 't-' + Date.now(),
-        ID_Trabalho: existing?.ID_Trabalho || idField || 't-' + Date.now(),
-        Tipo_Trabalho: titulo,
-        titulo,
-        Data: data,
-        data,
-        status,
-        Observacoes: detalhes || status,
-        responsavel,
-        materiais,
-        Materiais: materiais,
-        compras,
-        Compras: compras,
-        detalhes
-      }, 0);
-
-      if (idField) {
-        stateData.trabalhos = stateData.trabalhos.map((item) => (item.id === idField ? payload : item));
-        showToast('Trabalho atualizado.', 'success');
-      } else {
-        stateData.trabalhos.unshift(payload);
-        showToast('Trabalho cadastrado.', 'success');
-      }
-      saveData();
-      resetTrabalhoForm();
-      renderAll();
-    });
-
-    document.getElementById('listaTrabalhos').addEventListener('click', (e) => {
-      const editId = e.target.closest('[data-edit-trabalho]')?.dataset.editTrabalho;
-      const delId = e.target.closest('[data-del-trabalho]')?.dataset.delTrabalho;
-
-      if (editId) {
-        const item = stateData.trabalhos.find((t) => t.id === editId);
-        if (!item) return;
-        document.getElementById('trabalhoId').value = item.id;
-        document.getElementById('trabalhoTitulo').value = item.titulo || item.Tipo_Trabalho || '';
-        document.getElementById('trabalhoData').value = item.data || item.Data || '';
-        document.getElementById('trabalhoStatus').value = item.status || 'Agendado';
-        document.getElementById('trabalhoResponsavel').value = item.responsavel || '';
-        document.getElementById('trabalhoMateriais').value = item.materiais || '';
-        document.getElementById('trabalhoCompras').value = item.compras || '';
-        document.getElementById('trabalhoDetalhes').value = item.detalhes || item.Observacoes || '';
-        document.getElementById('formTrabalhoTitle').textContent = 'Editar Trabalho / Gira';
-        btnCancelTrabalho.classList.remove('hidden');
-      } else if (delId) {
-        stateData.trabalhos = stateData.trabalhos.filter((t) => t.id !== delId);
-        saveData();
-        renderAll();
-        showToast('Trabalho excluído.', 'info');
-      }
-    });
-
-    document.getElementById('filterTrabalhoStatus').addEventListener('change', renderTrabalhos);
-
-    document.getElementById('formUsuario').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const nome = document.getElementById('usuarioNome').value.trim();
-      const email = document.getElementById('usuarioEmail').value.trim();
-      const senha = document.getElementById('usuarioSenha').value.trim();
-      const papel = document.getElementById('usuarioPapel').value;
-      const whatsapp = (document.getElementById('usuarioWhatsapp')?.value || '').trim();
-
-      if (!nome || !email || !senha) {
-        showToast('Preencha nome, e-mail e palavra-passe.', 'error');
-        return;
-      }
-
-      stateData.usuarios.push(normalizarUsuario({
-        id: 'u-' + Date.now(),
-        Nome: nome,
-        nome,
-        Email: email,
-        email,
-        senha,
-        Cargo: papel,
-        papel,
-        whatsapp,
-        WhatsApp: whatsapp
-      }, stateData.usuarios.length));
-
-      saveData();
+      state.filhos.push(novo);
+      renderTudo();
       e.target.reset();
-      renderAll();
-      showToast('Usuário adicionado.', 'success');
+      await gravarBanco(state);
     });
 
-    document.getElementById('tbodyUsuarios').addEventListener('click', (e) => {
-      const delId = e.target.closest('[data-del-usuario]')?.dataset.delUsuario;
-      if (!delId) return;
-      stateData.usuarios = stateData.usuarios.filter((u) => u.id !== delId);
-      saveData();
-      renderAll();
-      showToast('Usuário removido.', 'info');
+    document.getElementById('formGuia')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nome = (document.getElementById('novoGuiaNome').value || '').trim();
+      const linha = (document.getElementById('novoGuiaLinha').value || '').trim();
+      if (!nome) return;
+      state.guias.push({ id: 'g-' + Date.now(), nome, linha });
+      renderTudo();
+      e.target.reset();
+      await gravarBanco(state);
     });
 
-    document.getElementById('btnSendWhatsappDirigente')?.addEventListener('click', () => {
-      const select = document.getElementById('selectDirigenteWhatsapp');
-      const selectedId = select?.value || '';
-      const dirigente = stateData.usuarios.find((u) => u.id === selectedId);
-      if (!dirigente || !isDirigenteComAcesso(dirigente)) {
-        showToast('O envio por WhatsApp é permitido apenas para usuários com função Dirigente.', 'error');
-        return;
-      }
-      const digits = String(dirigente.whatsapp || dirigente.Telefone || '').replace(/\D/g, '');
-      if (!digits) {
-        showToast('Cadastre o número de WhatsApp desse Dirigente na aba Usuários.', 'error');
-        return;
-      }
-      const formattedPhone = digits.startsWith('55') ? digits : `55${digits}`;
-      const proximoTrabalho = stateData.trabalhos[0];
-      const msgLines = [
-        `Olá ${dirigente.nome}, resumo do Instituto 7 Cores:`,
-        `Filhos cadastrados: ${stateData.filhos.length}`,
-        proximoTrabalho
-          ? `Próximo trabalho: ${proximoTrabalho.titulo} (${proximoTrabalho.data || 'sem data'})`
-          : 'Sem trabalhos agendados no momento.'
-      ];
-      if (proximoTrabalho?.materiais) {
-        msgLines.push(`Material da lista: ${proximoTrabalho.materiais}`);
-      }
-      if (proximoTrabalho?.compras) {
-        msgLines.push(`Lista de compras: ${proximoTrabalho.compras}`);
-      }
-      const url = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(msgLines.join('\n'))}`;
-      window.open(url, '_blank', 'noopener,noreferrer');
+    document.getElementById('formOrixa')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nome = (document.getElementById('novoOrixaNome').value || '').trim();
+      const detalhe = (document.getElementById('novoOrixaDia').value || '').trim();
+      if (!nome) return;
+      state.orixas.push({ id: 'o-' + Date.now(), nome, detalhe });
+      renderTudo();
+      e.target.reset();
+      await gravarBanco(state);
     });
 
-    document.getElementById('btnExportJson').addEventListener('click', () => {
-      const blob = new Blob([JSON.stringify(stateData, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `backup-terreiro-${new Date().toISOString().slice(0, 10)}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-      showToast('Backup JSON exportado.', 'success');
+    document.getElementById('formTrabalho')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const titulo = (document.getElementById('trabTitulo').value || '').trim();
+      const data = (document.getElementById('trabData').value || '').trim();
+      const valor = (document.getElementById('trabValor').value || '').trim();
+      if (!titulo || !data) return;
+      state.trabalhos.push({
+        id: 't-' + Date.now(),
+        titulo,
+        data,
+        valor
+      });
+      renderTudo();
+      e.target.reset();
+      await gravarBanco(state);
     });
 
-    document.getElementById('inputImportJson').addEventListener('change', (e) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        try {
-          const parsed = JSON.parse(String(reader.result || '{}'));
-          const normalized = normalizeIncomingPayload(parsed);
-          if (!normalized) {
-            showToast('Arquivo JSON inválido.', 'error');
-            return;
-          }
-          stateData = normalized;
-          saveData();
-          renderAll();
-          showToast('Backup JSON importado com sucesso.', 'success');
-        } catch (_) {
-          showToast('Não foi possível ler o arquivo JSON.', 'error');
-        } finally {
-          e.target.value = '';
-        }
-      };
-      reader.readAsText(file);
+    document.getElementById('btnSincronizarAgora')?.addEventListener('click', sincronizarBanco);
+
+    document.getElementById('btnSair')?.addEventListener('click', () => {
+      try { sessionStorage.removeItem(SESSION_KEY); } catch (_) {}
+      window.location.replace('index.html');
     });
 
-    document.getElementById('btnDownloadIndex').addEventListener('click', () => {
-      const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-      const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'index.html';
-      a.click();
-      URL.revokeObjectURL(url);
-      showToast('Arquivo index.html baixado.', 'success');
-    });
-
-    function initIntegrationTab() {
-      const input = document.getElementById('gasWebAppUrlInput');
-      if (input) {
-        input.value = getGasUrl();
-      }
-      renderLastSyncLabel();
-    }
-
-    initTheme();
-    initIntegrationTab();
-    applyAuthGate();
-    renderAll();
+    sincronizarBanco();
   </script>
 </body>
 </html>
+"""
+
+with open("site_atualizado-v2.html", "w", encoding="utf-8") as f:
+    f.write(site_v2)
+
+print("Generated site_atualizado-v2.html")
