@@ -257,4 +257,191 @@ function updateModeUI() {
     nameGroup?.classList.add('hidden');
     if (nameInput) nameInput.required = false;
     if (passwordInput) passwordInput.autocomplete = 'current-password';
-    forgot
+    forgotPasswordBtn?.classList.remove('hidden');
+    if (submitBtn) submitBtn.textContent = 'Continuar';
+    if (toggleText) toggleText.textContent = 'Primeiro acesso por aqui?';
+    if (toggleLink) toggleLink.textContent = 'Criar acesso';
+  } else {
+    if (formTitle) formTitle.textContent = 'Criar seu acesso';
+    if (formSubtitle) formSubtitle.textContent = 'Preencha os dados abaixo para começar.';
+    nameGroup?.classList.remove('hidden');
+    if (nameInput) nameInput.required = true;
+    if (passwordInput) passwordInput.autocomplete = 'new-password';
+    forgotPasswordBtn?.classList.add('hidden');
+    if (submitBtn) submitBtn.textContent = 'Concluir cadastro';
+    if (toggleText) toggleText.textContent = 'Já tem acesso?';
+    if (toggleLink) toggleLink.textContent = 'Entrar';
+  }
+}
+
+navTabs.forEach((btn) => {
+  btn.addEventListener('click', () => switchSection(btn.dataset.section));
+});
+
+goGirasBtn?.addEventListener('click', () => switchSection('giras'));
+goRecadosBtn?.addEventListener('click', () => switchSection('recados'));
+
+toggleLink?.addEventListener('click', (e) => {
+  e.preventDefault();
+  isLogin = !isLogin;
+  updateModeUI();
+});
+
+togglePasswordBtn?.addEventListener('click', () => {
+  if (!passwordInput) return;
+  const isPass = passwordInput.type === 'password';
+  passwordInput.type = isPass ? 'text' : 'password';
+  togglePasswordBtn.textContent = isPass ? '🙈' : '👁️';
+});
+
+passwordInput?.addEventListener('input', () => {
+  passwordInput.classList.remove('invalid');
+  updatePasswordHint();
+});
+
+emailInput?.addEventListener('input', () => emailInput.classList.remove('invalid'));
+nameInput?.addEventListener('input', () => nameInput.classList.remove('invalid'));
+
+forgotPasswordBtn?.addEventListener('click', () => {
+  const email = emailInput?.value.trim() || '';
+  if (email) {
+    setFeedback(`Esqueceu a senha de ${email}? Fale com quem cuida do acesso na casa.`, 'info');
+  } else {
+    setFeedback('Esqueceu sua senha? Peça para quem cuida do acesso redefinir.', 'info');
+  }
+});
+
+terreiroLogoutBtn?.addEventListener('click', () => {
+  const previousEmail = getSavedSession()?.user?.email || getLastEmail();
+  clearSession();
+  isLogin = true;
+  if (passwordInput) passwordInput.value = '';
+  updatePasswordHint();
+  showLoginScreen(previousEmail);
+  setFeedback('Você saiu desta conta neste aparelho.', 'info');
+});
+
+agendaForm?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const day = agendaDayInput?.value.trim() || '';
+  const title = agendaTitleInput?.value.trim() || '';
+  if (!day || !title) return;
+
+  const items = readJsonList(AGENDA_KEY);
+  items.unshift({ day, title });
+  writeJsonList(AGENDA_KEY, items);
+  if (agendaDayInput) agendaDayInput.value = '';
+  if (agendaTitleInput) agendaTitleInput.value = '';
+  renderAgenda();
+});
+
+noticeForm?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const text = noticeInput?.value.trim() || '';
+  if (!text) return;
+
+  const items = readJsonList(NOTICES_KEY);
+  items.unshift(text);
+  writeJsonList(NOTICES_KEY, items);
+  if (noticeInput) noticeInput.value = '';
+  renderNotices();
+});
+
+form?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  setFeedback('');
+
+  const name = nameInput?.value.trim() || '';
+  const email = emailInput?.value.trim() || '';
+  const password = passwordInput?.value || '';
+  const persistLocally = keepLoggedCheckbox ? keepLoggedCheckbox.checked : true;
+
+  if (!isLogin && name.length < 2) {
+    nameInput?.classList.add('invalid');
+    setFeedback('Digite seu nome para criar o acesso.', 'error');
+    nameInput?.focus();
+    return;
+  }
+
+  if (!email || !email.includes('@')) {
+    emailInput?.classList.add('invalid');
+    setFeedback('Digite um e-mail válido.', 'error');
+    emailInput?.focus();
+    return;
+  }
+
+  if (password.length < 6) {
+    passwordInput?.classList.add('invalid');
+    setFeedback('A senha precisa ter pelo menos 6 caracteres.', 'error');
+    passwordInput?.focus();
+    return;
+  }
+
+  const endpoint = isLogin ? '/api/login' : '/api/register';
+  const payload = isLogin ? { email, password } : { name, email, password };
+
+  if (submitBtn) submitBtn.disabled = true;
+  const defaultLabel = isLogin ? 'Continuar' : 'Concluir cadastro';
+  if (submitBtn) submitBtn.textContent = isLogin ? 'Entrando...' : 'Salvando...';
+  setFeedback('Conferindo seus dados...', 'info');
+
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      setFeedback(data.error || 'Não foi possível entrar agora.', 'error');
+      return;
+    }
+
+    const userInfo = {
+      name: data.user?.name || name || email.split('@')[0],
+      email: data.user?.email || email
+    };
+
+    if (data.token) {
+      saveSession(data.token, userInfo, persistLocally);
+      irParaSite();
+    } else if (!isLogin) {
+      isLogin = true;
+      updateModeUI();
+      if (emailInput) emailInput.value = email;
+      if (passwordInput) passwordInput.value = '';
+      updatePasswordHint();
+      setFeedback('Acesso criado! Agora é só entrar com sua senha.', 'success');
+    }
+  } catch (_) {
+    setFeedback('Não consegui falar com o servidor de login. Verifique as rotas /api na Vercel.', 'error');
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = defaultLabel;
+    }
+  }
+});
+
+if (form) {
+  const activeSession = getSavedSession();
+  if (activeSession) {
+    irParaSite();
+  } else {
+    const lastEmail = getLastEmail();
+    if (lastEmail && emailInput) {
+      emailInput.value = lastEmail;
+    }
+    showLoginScreen(lastEmail);
+    updatePasswordHint();
+  }
+} else if (terreiroScreen) {
+  const activeSession = getSavedSession();
+  if (!activeSession) {
+    window.location.replace('/');
+  } else {
+    openTerreiroSite(activeSession.user);
+  }
+}
