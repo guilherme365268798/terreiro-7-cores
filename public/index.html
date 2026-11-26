@@ -1,172 +1,223 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instituto Sete Cores • Casa de axé e caridade</title>
+  <title>Instituto 7 Cores • Login</title>
+  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=hyMLVtAgd4eg9xtK6THqDSN4-aCOwCV7852UnflGZ5HYm4MDGKm2R7P0aeFNG9Px3gXPBc3yEpi6MbfGy_fkogXbpRNRzjNgrNxcURbuw-M_q3PUt7wIXShiNehIw51BSiW6YBmYkSEPvJssttEm1GorFxUFxcIHupj7H7gtDB0_GUjfNzZNQelxndiofUyHYXiin6EECVljeRVF0QVQ53-jBpBY3w3AjJO_Wab9MdaHhGC1I6prHrNanhVo9Wud1KJwysjfeQ2ybHlQM75G7oeGkHEtVpgyz5pOKY2G2_Y5JZYeyMWrXm5wev98U5_dH2mhGUisR5JvzEWVduukww" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pCaVpUVmpZalZrTVRnek1XVm1Oemd5TURBd05qWXhNbVJtWTJVeE16TTVOekF4TXpBM01qUm1NR1F3WlROaU1UUVNDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPWluZGV4X2F0dWFsaXphZG8tdjIuaHRtbCZvcGk9MTAzMTM1MDUw"/><script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .bg-roxo-preto {
+      background-color: #000000;
+      background-image:
+        radial-gradient(circle at 20% 0%, rgba(124, 58, 237, 0.55) 0%, rgba(76, 29, 149, 0.35) 35%, rgba(0, 0, 0, 0) 70%),
+        linear-gradient(180deg, #5b21b6 0%, #3b0764 26%, #140826 56%, #05020a 80%, #000000 100%);
+      background-attachment: fixed;
+    }
+  </style>
 </head>
-<body class="mode-auth">
-  <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
-  <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+<body class="min-h-screen bg-roxo-preto text-slate-100 flex items-center justify-center p-4">
 
-  <!-- TELA DE ENTRADA -->
-  <main id="auth-screen" class="container">
-    <section class="form-box" aria-labelledby="form-title">
-      <div class="brand-header">
-        <div class="logo-frame">
-          <img
-            id="brand-logo"
-            src="logo.jpg"
-            alt="Logotipo Instituto Sete Cores"
-            class="brand-logo-img"
-            onerror="this.style.display='none'; document.getElementById('logo-fallback').classList.remove('hidden');"
+  <main id="auth-screen" class="w-full max-w-md rounded-2xl border border-violet-500/30 bg-black/65 backdrop-blur-md p-6 sm:p-8 shadow-2xl space-y-6">
+    <div class="flex items-center gap-3.5">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-600 via-violet-600 to-fuchsia-600 flex items-center justify-center text-white font-extrabold text-lg shadow-md shrink-0 overflow-hidden">
+        <img
+          src="logo.jpg"
+          alt="Logo Instituto 7 Cores"
+          class="w-full h-full object-cover"
+          onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+        >
+        <span class="hidden">7C</span>
+      </div>
+      <div>
+        <h1 class="text-lg font-extrabold tracking-tight text-white">Instituto 7 Cores</h1>
+        <p class="text-xs text-violet-200/80">Acesso restrito — Gestão do Terreiro</p>
+      </div>
+    </div>
+
+    <form id="auth-form" class="space-y-4" novalidate>
+      <div>
+        <label for="loginUsuario" class="block text-xs font-semibold mb-1.5 text-slate-200">Utilizador ou E-mail</label>
+        <input
+          id="loginUsuario"
+          name="username"
+          type="text"
+          required
+          autocomplete="username"
+          placeholder="Digite o utilizador ou e-mail"
+          class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
+        >
+      </div>
+
+      <div>
+        <label for="loginSenha" class="block text-xs font-semibold mb-1.5 text-slate-200">Palavra-passe</label>
+        <input
+          id="loginSenha"
+          name="password"
+          type="password"
+          required
+          autocomplete="current-password"
+          placeholder="Digite a palavra-passe"
+          class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
+        >
+      </div>
+
+      <div class="flex items-center justify-between gap-2 pt-0.5">
+        <label class="inline-flex items-center gap-2 cursor-pointer select-none text-xs text-slate-300">
+          <input
+            id="loginManterConectado"
+            type="checkbox"
+            checked
+            class="w-4 h-4 rounded border-violet-500/40 bg-slate-900 text-violet-600 focus:ring-violet-500"
           >
-          <span id="logo-fallback" class="brand-badge hidden" aria-hidden="true">7C</span>
-        </div>
-        <div class="brand-text">
-          <span class="brand-tag">Instituto Sete Cores</span>
-          <p class="brand-caption">Casa de axé e caridade</p>
-        </div>
+          <span>Manter login e salvar acesso neste navegador</span>
+        </label>
       </div>
 
-      <div id="auth-view">
-        <h1 id="form-title">Que bom te ver por aqui</h1>
-        <p id="form-subtitle">Informe seu e-mail e senha para continuar.</p>
+      <p id="loginErro" class="hidden text-xs font-semibold text-rose-300 bg-rose-500/15 border border-rose-500/30 rounded-xl px-3.5 py-2.5">
+        Utilizador ou palavra-passe inválidos.
+      </p>
 
-        <form id="auth-form" novalidate>
-          <div class="input-group hidden" id="name-group">
-            <label for="name">Como podemos te chamar?</label>
-            <input type="text" id="name" name="name" placeholder="Seu nome" autocomplete="name">
-          </div>
-
-          <div class="input-group">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" placeholder="voce@exemplo.com" required autocomplete="email">
-          </div>
-
-          <div class="input-group">
-            <div class="label-row">
-              <label for="password">Senha</label>
-              <button type="button" id="forgot-password-btn" class="link-mini">Esqueci minha senha</button>
-            </div>
-            <div class="password-wrapper">
-              <input type="password" id="password" name="password" placeholder="Pelo menos 6 caracteres" required minlength="6" autocomplete="current-password">
-              <button type="button" id="toggle-password" title="Mostrar ou ocultar senha" aria-label="Mostrar ou ocultar senha">👁️</button>
-            </div>
-            <small id="password-hint" class="input-hint">Mínimo de 6 caracteres.</small>
-          </div>
-
-          <div class="remember-row">
-            <label class="checkbox-label">
-              <input type="checkbox" id="keep-logged" checked>
-              <span>Manter conectado neste aparelho</span>
-            </label>
-          </div>
-
-          <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
-
-          <button type="submit" class="btn-submit" id="submit-btn">Continuar</button>
-        </form>
-
-        <div class="toggle-mode">
-          <span id="toggle-text">Primeiro acesso por aqui?</span>
-          <a href="#" id="toggle-link">Criar acesso</a>
-        </div>
-      </div>
-    </section>
+      <button
+        type="submit"
+        class="w-full py-2.5 px-4 rounded-xl text-sm font-bold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-lg shadow-violet-950/50 transition"
+      >
+        Entrar no Painel
+      </button>
+    </form>
   </main>
 
-  <!-- SITE DO INSTITUTO SETE CORES -->
-  <div id="terreiro-screen" class="terreiro-shell hidden" aria-label="Site do Instituto Sete Cores">
-    <header class="terreiro-topbar">
-      <div class="terreiro-brand">
-        <div class="logo-frame logo-frame-sm">
-          <img
-            src="logo.jpg"
-            alt="Logotipo Instituto Sete Cores"
-            class="brand-logo-img"
-            onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
-          >
-          <span class="brand-badge hidden" aria-hidden="true">7C</span>
-        </div>
-        <div>
-          <strong>Instituto Sete Cores</strong>
-          <p>Casa de axé e caridade</p>
-        </div>
-      </div>
+  <script>
+    const STORAGE_KEYS = {
+      DATA: 'i7c_gestao_terreiro_data_v1',
+      AUTH_SESSION: 'i7c_gestao_terreiro_auth_v1',
+      AUTH_REMEMBER: 'i7c_gestao_terreiro_auth_remember_v1'
+    };
 
-      <nav class="site-nav" aria-label="Navegação do site">
-        <button type="button" class="nav-tab active" data-section="inicio">Início</button>
-        <button type="button" class="nav-tab" data-section="giras">Giras e agenda</button>
-        <button type="button" class="nav-tab" data-section="recados">Recados</button>
-      </nav>
+    const DEFAULT_USERS = [
+      {
+        nome: 'dirigente',
+        email: 'guilherme.curto2004@gmail.com',
+        papel: 'Dirigente',
+        senha: '7cores2026'
+      }
+    ];
 
-      <div class="terreiro-actions">
-        <span id="header-user-pill" class="user-pill">Conectado</span>
-        <button type="button" id="terreiro-logout-btn" class="btn-ghost-sm">Sair</button>
-      </div>
-    </header>
+    function getUsers() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEYS.DATA);
+        if (!raw) return DEFAULT_USERS;
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed.usuarios) && parsed.usuarios.length > 0) {
+          return parsed.usuarios;
+        }
+        return DEFAULT_USERS;
+      } catch (_) {
+        return DEFAULT_USERS;
+      }
+    }
 
-    <main class="terreiro-content">
-      <section id="sec-inicio" class="site-section">
-        <div class="hero-card">
-          <span class="welcome-badge">Acesso salvo neste aparelho</span>
-          <h1 id="terreiro-greeting">Bem-vindo ao Instituto Sete Cores</h1>
-          <p>Casa de axé e caridade. Seu acesso fica salvo neste aparelho para você entrar direto nas próximas visitas sem precisar digitar login e senha toda hora.</p>
-        </div>
+    function validarCredenciais(identificador, senhaDigitada) {
+      const idLimpo = String(identificador || '').trim().toLowerCase();
+      const senhaLimpa = String(senhaDigitada || '').trim();
+      if (!idLimpo || !senhaLimpa) return null;
 
-        <div class="grid-two">
-          <article class="panel-card">
-            <h2>Nossa casa</h2>
-            <p class="panel-desc">Espaço de axé, acolhimento espiritual e caridade, reunindo trabalhos, giras e avisos da comunidade.</p>
-          </article>
+      const users = getUsers();
+      return users.find((u) => {
+        const matchUser =
+          String(u.nome || u.Nome || '').trim().toLowerCase() === idLimpo ||
+          String(u.email || u.Email || '').trim().toLowerCase() === idLimpo;
+        const senhaUsuario = String(u.senha || u.Senha || u.password || '').trim() || '7cores2026';
+        return matchUser && senhaUsuario === senhaLimpa;
+      }) || null;
+    }
 
-          <article class="panel-card">
-            <h2>Atalhos rápidos</h2>
-            <p class="panel-desc">Acesse a agenda de giras ou deixe recados rápidos da casa.</p>
-            <div class="quick-btns">
-              <button type="button" id="go-giras-btn" class="btn-submit">Abrir giras e agenda</button>
-              <button type="button" id="go-recados-btn" class="btn-ghost">Abrir recados</button>
-            </div>
-          </article>
-        </div>
-      </section>
+    function salvarSessao(user, remember) {
+      const payload = JSON.stringify({
+        authenticated: true,
+        user: user.nome || user.Nome || user.email || user.Email,
+        identifier: user.email || user.Email || user.nome || user.Nome,
+        at: new Date().toISOString()
+      });
+      try {
+        sessionStorage.setItem(STORAGE_KEYS.AUTH_SESSION, payload);
+        if (remember) {
+          localStorage.setItem(STORAGE_KEYS.AUTH_REMEMBER, payload);
+        } else {
+          localStorage.removeItem(STORAGE_KEYS.AUTH_REMEMBER);
+        }
+      } catch (_) {}
+    }
 
-      <section id="sec-giras" class="site-section hidden">
-        <div class="panel-card">
-          <h2>Giras e agenda</h2>
-          <p class="panel-desc">Registre os dias e horários de trabalho da casa.</p>
+    function jaTemSessaoSalva() {
+      try {
+        const s = sessionStorage.getItem(STORAGE_KEYS.AUTH_SESSION);
+        if (s && JSON.parse(s)?.authenticated === true) return true;
+        const r = localStorage.getItem(STORAGE_KEYS.AUTH_REMEMBER);
+        if (r && JSON.parse(r)?.authenticated === true) {
+          sessionStorage.setItem(STORAGE_KEYS.AUTH_SESSION, r);
+          return true;
+        }
+        return false;
+      } catch (_) {
+        return false;
+      }
+    }
 
-          <form id="agenda-form" class="inline-form">
-            <input type="text" id="agenda-day" placeholder="Dia (Ex.: Sábado)" required>
-            <input type="text" id="agenda-title" placeholder="Atividade (Ex.: Gira - 19h)" required>
-            <button type="submit" class="btn-submit btn-inline">Adicionar</button>
-          </form>
+    function irParaSite() {
+      window.location.replace('site.html');
+    }
 
-          <ul id="agenda-list" class="item-list"></ul>
-        </div>
-      </section>
+    // Se já estiver marcado para manter conectado, entra direto no site.html
+    if (jaTemSessaoSalva()) {
+      irParaSite();
+    } else {
+      try {
+        const savedRemember = localStorage.getItem(STORAGE_KEYS.AUTH_REMEMBER);
+        if (savedRemember) {
+          const parsed = JSON.parse(savedRemember);
+          const inputUser = document.getElementById('loginUsuario');
+          if (inputUser && parsed.identifier) {
+            inputUser.value = parsed.identifier;
+          }
+        }
+      } catch (_) {}
+    }
 
-      <section id="sec-recados" class="site-section hidden">
-        <div class="panel-card">
-          <h2>Avisos e recados</h2>
-          <p class="panel-desc">Deixe lembretes rápidos para o dia a dia da casa.</p>
+    document.getElementById('auth-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const userVal = document.getElementById('loginUsuario').value;
+      const passVal = document.getElementById('loginSenha').value;
+      const rememberVal = document.getElementById('loginManterConectado')?.checked ?? true;
+      const erroEl = document.getElementById('loginErro');
 
-          <form id="notice-form" class="inline-form">
-            <input type="text" id="notice-input" placeholder="Escreva um recado..." required>
-            <button type="submit" class="btn-submit btn-inline">Salvar</button>
-          </form>
+      const matched = validarCredenciais(userVal, passVal);
+      if (!matched) {
+        erroEl.classList.remove('hidden');
+        return;
+      }
 
-          <ul id="notice-list" class="item-list"></ul>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <script src="script.js"></script>
+      erroEl.classList.add('hidden');
+      salvarSessao(matched, rememberVal);
+      irParaSite();
+    });
+  </script>
 </body>
 </html>
