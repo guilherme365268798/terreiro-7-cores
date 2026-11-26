@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instituto Sete Cores • Casa de axé e caridade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="mode-auth">
+  <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+
+  <!-- TELA DE ENTRADA -->
+  <main id="auth-screen" class="container">
+    <section class="form-box" aria-labelledby="form-title">
+      <div class="brand-header">
+        <div class="logo-frame">
+          <img
+            id="brand-logo"
+            src="logo.jpg"
+            alt="Logotipo Instituto Sete Cores"
+            class="brand-logo-img"
+            onerror="this.style.display='none'; document.getElementById('logo-fallback').classList.remove('hidden');"
+          >
+          <span id="logo-fallback" class="brand-badge hidden" aria-hidden="true">7C</span>
+        </div>
+        <div class="brand-text">
+          <span class="brand-tag">Instituto Sete Cores</span>
+          <p class="brand-caption">Casa de axé e caridade</p>
+        </div>
+      </div>
+
+      <div id="auth-view">
+        <h1 id="form-title">Que bom te ver por aqui</h1>
+        <p id="form-subtitle">Informe seu e-mail e senha para continuar.</p>
+
+        <form id="auth-form" novalidate>
+          <div class="input-group hidden" id="name-group">
+            <label for="name">Como podemos te chamar?</label>
+            <input type="text" id="name" name="name" placeholder="Seu nome" autocomplete="name">
+          </div>
+
+          <div class="input-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="voce@exemplo.com" required autocomplete="email">
+          </div>
+
+          <div class="input-group">
+            <div class="label-row">
+              <label for="password">Senha</label>
+              <button type="button" id="forgot-password-btn" class="link-mini">Esqueci minha senha</button>
+            </div>
+            <div class="password-wrapper">
+              <input type="password" id="password" name="password" placeholder="Pelo menos 6 caracteres" required minlength="6" autocomplete="current-password">
+              <button type="button" id="toggle-password" title="Mostrar ou ocultar senha" aria-label="Mostrar ou ocultar senha">👁️</button>
+            </div>
+            <small id="password-hint" class="input-hint">Mínimo de 6 caracteres.</small>
+          </div>
+
+          <div class="remember-row">
+            <label class="checkbox-label">
+              <input type="checkbox" id="keep-logged" checked>
+              <span>Manter conectado neste aparelho</span>
+            </label>
+          </div>
+
+          <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+
+          <button type="submit" class="btn-submit" id="submit-btn">Continuar</button>
+        </form>
+
+        <div class="toggle-mode">
+          <span id="toggle-text">Primeiro acesso por aqui?</span>
+          <a href="#" id="toggle-link">Criar acesso</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- SITE DO INSTITUTO SETE CORES -->
+  <div id="terreiro-screen" class="terreiro-shell hidden" aria-label="Site do Instituto Sete Cores">
+    <header class="terreiro-topbar">
+      <div class="terreiro-brand">
+        <div class="logo-frame logo-frame-sm">
+          <img
+            src="logo.jpg"
+            alt="Logotipo Instituto Sete Cores"
+            class="brand-logo-img"
+            onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+          >
+          <span class="brand-badge hidden" aria-hidden="true">7C</span>
+        </div>
+        <div>
+          <strong>Instituto Sete Cores</strong>
+          <p>Casa de axé e caridade</p>
+        </div>
+      </div>
+
+      <nav class="site-nav" aria-label="Navegação do site">
+        <button type="button" class="nav-tab active" data-section="inicio">Início</button>
+        <button type="button" class="nav-tab" data-section="giras">Giras e agenda</button>
+        <button type="button" class="nav-tab" data-section="recados">Recados</button>
+      </nav>
+
+      <div class="terreiro-actions">
+        <span id="header-user-pill" class="user-pill">Conectado</span>
+        <button type="button" id="terreiro-logout-btn" class="btn-ghost-sm">Sair</button>
+      </div>
+    </header>
+
+    <main class="terreiro-content">
+      <section id="sec-inicio" class="site-section">
+        <div class="hero-card">
+          <span class="welcome-badge">Acesso salvo neste aparelho</span>
+          <h1 id="terreiro-greeting">Bem-vindo ao Instituto Sete Cores</h1>
+          <p>Casa de axé e caridade. Seu acesso fica salvo neste aparelho para você entrar direto nas próximas visitas sem precisar digitar login e senha toda hora.</p>
+        </div>
+
+        <div class="grid-two">
+          <article class="panel-card">
+            <h2>Nossa casa</h2>
+            <p class="panel-desc">Espaço de axé, acolhimento espiritual e caridade, reunindo trabalhos, giras e avisos da comunidade.</p>
+          </article>
+
+          <article class="panel-card">
+            <h2>Atalhos rápidos</h2>
+            <p class="panel-desc">Acesse a agenda de giras ou deixe recados rápidos da casa.</p>
+            <div class="quick-btns">
+              <button type="button" id="go-giras-btn" class="btn-submit">Abrir giras e agenda</button>
+              <button type="button" id="go-recados-btn" class="btn-ghost">Abrir recados</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="sec-giras" class="site-section hidden">
+        <div class="panel-card">
+          <h2>Giras e agenda</h2>
+          <p class="panel-desc">Registre os dias e horários de trabalho da casa.</p>
+
+          <form id="agenda-form" class="inline-form">
+            <input type="text" id="agenda-day" placeholder="Dia (Ex.: Sábado)" required>
+            <input type="text" id="agenda-title" placeholder="Atividade (Ex.: Gira - 19h)" required>
+            <button type="submit" class="btn-submit btn-inline">Adicionar</button>
+          </form>
+
+          <ul id="agenda-list" class="item-list"></ul>
+        </div>
+      </section>
+
+      <section id="sec-recados" class="site-section hidden">
+        <div class="panel-card">
+          <h2>Avisos e recados</h2>
+          <p class="panel-desc">Deixe lembretes rápidos para o dia a dia da casa.</p>
+
+          <form id="notice-form" class="inline-form">
+            <input type="text" id="notice-input" placeholder="Escreva um recado..." required>
+            <button type="submit" class="btn-submit btn-inline">Salvar</button>
+          </form>
+
+          <ul id="notice-list" class="item-list"></ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
