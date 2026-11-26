@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instituto 7 Cores • Gestão do Terreiro</title>
-  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=I7Ky4xd9UIWQ0vgt2UoWrBKr29aPJXhMT2WAD82tLdzEAmV41fUdWVdV0f4xIODkoFxhkOFa7TCL-G66kvKiJCabav6RleyFuKO-EqiPZR-EQaDOaVZSxmAoh1G8VrKqGmMhISjBqoiZC5hoPxzp9EBMzgF0s5BDIUtoHOCrYndW1MkKjZhMWD3f1WBAgfQiUsKzsPUFERqVtjPz5PSFyRazj-qCuuKvpINIpU9g-2N71HvRkUkMKT4bDEvKniW0F1UkC9uuK3nNPshrcpliNwmLj0PAOXEeANWI3B3TyJIoq8_EurzrU9OqAX0WuSOUrp5nJoAPwaLkCpT_9Is8zQ" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pBMFpqRmtNV1JrTnpaaU5qTmtNakkwTURBd05qWXhNbVU1T0dRMFlUUTBaVEE0T0RSaE1ESm1OR0V5TjJFME5XSVNDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPXNpdGVfYXR1YWxpemFkby12OS5odG1sJm9waT0xMDMxMzUwNTA"/><script src="https://cdn.tailwindcss.com"></script>
+  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=eNPFN7tBahKbfOBattkx7DXgGAHR1VD_jfe7PioHcKTsGSGxEeAxD2IsjqzEybOI8KiaZGfCLVWIVpUqVM_NnXaY34cjC8mv268w0xI7G3mTdAGa4C7D7SXSOKUCCFO7R1wfdZo3_-Olhi_28nb2ncV6BQOzVwcUkvro7x9xRmdmn1rfJSWYmoxqU-JYEY1FRR1F6AD6rl8Xq59nJv343AvJ_j0XW8bmp68D9_2k1jsSlbseG0KjwZ45OrrzmDxAE5FolXfd-5A6SuxpkSooYb9XiRD7CLkOqF_8kVYdRoZmfJ2_OVdvAGYv7q0Ae_JaX4gf5iiv5n-KyFyMRn-3FA" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pCbE9URXlOamRpWkdVek9UZGhZVEE1TURBd05qWXhNbVZoWWpBeFpqVm1ZekE0T0RRNVlUSXdZbU13T0RjNU16a1NDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPXNpdGVfYXR1YWxpemFkby12MTAuaHRtbCZvcGk9MTAzMTM1MDUw"/><script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -173,76 +173,63 @@
       </div>
     </section>
 
-    <!-- SEÇÃO CADASTRO DE FILHOS -->
+    <!-- SEÇÃO CADASTRO DE FILHOS (UNIFORME, TUDO JUNTO NO MESMO SALVAR) -->
     <section id="tab-filhos" class="tab-panel hidden space-y-5">
       <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-5">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h2 class="text-base font-extrabold text-white">Cadastro de Filho</h2>
-            <p class="text-xs text-slate-400">Cada filho tem seus próprios campos livres de Orixá, Guia e Trabalhos conforme sua planilha.</p>
-          </div>
-
-          <div class="flex flex-wrap gap-1.5 bg-slate-900/90 p-1 rounded-xl border border-violet-500/25">
-            <button type="button" data-cad-subtab="dados" class="cad-subtab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-violet-600 text-white transition">
-              Dados & Trabalhos
-            </button>
-            <button type="button" data-cad-subtab="orixa" class="cad-subtab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition">
-              Orixá
-            </button>
-            <button type="button" data-cad-subtab="guia" class="cad-subtab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition">
-              Guia
-            </button>
-          </div>
+        <div>
+          <h2 class="text-base font-extrabold text-white">Cadastro de Filho</h2>
+          <p class="text-xs text-slate-400">Preencha os dados, trabalhos, Orixá e Guia e salve tudo de uma vez na planilha.</p>
         </div>
 
         <form id="formFilho" class="space-y-4">
-          <!-- ABA DADOS & TRABALHOS (SEM ORIXÁ E SEM GUIA REPETIDOS AQUI) -->
-          <div id="cad-panel-dados" class="cad-subpanel space-y-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              <div>
-                <label for="filhoNome" class="block text-xs font-semibold mb-1 text-slate-300">Nome do filho *</label>
-                <input id="filhoNome" type="text" required placeholder="Nome completo *" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-              </div>
-              <div>
-                <label for="filhoFuncao" class="block text-xs font-semibold mb-1 text-slate-300">Função / Cargo</label>
-                <input id="filhoFuncao" type="text" placeholder="Ex: Médium, Cambono" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-              </div>
-              <div>
-                <label for="filhoTelefone" class="block text-xs font-semibold mb-1 text-slate-300">Telefone / WhatsApp</label>
-                <input id="filhoTelefone" type="text" placeholder="(11) 99999-9999" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-              </div>
-              <div class="sm:col-span-2 lg:col-span-3">
-                <label for="filhoObs" class="block text-xs font-semibold mb-1 text-slate-300">Observações</label>
-                <input id="filhoObs" type="text" placeholder="Observações gerais do filho" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-              </div>
+          <!-- DADOS PRINCIPAIS DO FILHO -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div>
+              <label for="filhoNome" class="block text-xs font-semibold mb-1 text-slate-300">Nome do filho *</label>
+              <input id="filhoNome" type="text" required placeholder="Nome completo *" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
             </div>
-
-            <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-3">
-              <div>
-                <h3 class="text-xs sm:text-sm font-bold text-white">Trabalhos vinculáveis ao filho (marque 1 ou vários)</h3>
-                <p class="text-[11px] text-slate-400">Você também pode adicionar um trabalho novo na hora abaixo.</p>
-              </div>
-
-              <div id="checkboxTrabalhosCadastro" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2"></div>
-
-              <div class="flex flex-col sm:flex-row gap-2 pt-2 border-t border-violet-500/15">
-                <input id="novoTrabalhoRapidoTitulo" type="text" placeholder="Nome de novo trabalho..." class="flex-1 px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-                <input id="novoTrabalhoRapidoData" type="date" class="px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white">
-                <input id="novoTrabalhoRapidoValor" type="text" placeholder="Valor (ex: R$ 80,00)" class="px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-                <button type="button" id="btnAddTrabalhoRapido" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-violet-600 hover:bg-violet-500 text-white transition shrink-0">
-                  + Adicionar e Marcar
-                </button>
-              </div>
+            <div>
+              <label for="filhoFuncao" class="block text-xs font-semibold mb-1 text-slate-300">Função / Cargo</label>
+              <input id="filhoFuncao" type="text" placeholder="Ex: Médium, Cambono" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+            </div>
+            <div>
+              <label for="filhoTelefone" class="block text-xs font-semibold mb-1 text-slate-300">Telefone / WhatsApp</label>
+              <input id="filhoTelefone" type="text" placeholder="(11) 99999-9999" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+            </div>
+            <div class="sm:col-span-2 lg:col-span-3">
+              <label for="filhoObs" class="block text-xs font-semibold mb-1 text-slate-300">Observações</label>
+              <input id="filhoObs" type="text" placeholder="Observações gerais do filho" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
             </div>
           </div>
 
-          <!-- ABA ORIXÁ -->
-          <div id="cad-panel-orixa" class="cad-subpanel hidden rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-3">
-            <h3 class="text-sm font-bold text-white">Orixá do Filho</h3>
-            <p class="text-xs text-slate-400">Informe livremente o Orixá deste filho conforme o seu cadastro e a planilha.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- TRABALHOS DO FILHO -->
+          <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-3">
+            <div>
+              <h3 class="text-xs sm:text-sm font-bold text-white">Trabalhos vinculáveis ao filho (marque 1 ou vários)</h3>
+              <p class="text-[11px] text-slate-400">Você também pode adicionar um trabalho novo na hora abaixo.</p>
+            </div>
+
+            <div id="checkboxTrabalhosCadastro" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2"></div>
+
+            <div class="flex flex-col sm:flex-row gap-2 pt-2 border-t border-violet-500/15">
+              <input id="novoTrabalhoRapidoTitulo" type="text" placeholder="Nome de novo trabalho..." class="flex-1 px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+              <input id="novoTrabalhoRapidoData" type="date" class="px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white">
+              <input id="novoTrabalhoRapidoValor" type="text" placeholder="Valor (ex: R$ 80,00)" class="px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+              <button type="button" id="btnAddTrabalhoRapido" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-violet-600 hover:bg-violet-500 text-white transition shrink-0">
+                + Adicionar e Marcar
+              </button>
+            </div>
+          </div>
+
+          <!-- ORIXÁ E GUIAS LADO A LADO EMBAIXO -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-3">
               <div>
-                <label for="filhoOrixaDetalhe" class="block text-xs font-semibold mb-1 text-slate-300">Orixá</label>
+                <h3 class="text-xs sm:text-sm font-bold text-white">Orixá</h3>
+                <p class="text-[11px] text-slate-400">Orixá do filho conforme a planilha.</p>
+              </div>
+              <div>
+                <label for="filhoOrixaDetalhe" class="block text-xs font-semibold mb-1 text-slate-300">Orixá do Filho</label>
                 <input id="filhoOrixaDetalhe" type="text" list="sugestoesOrixasPlanilha" placeholder="Digite o Orixá do filho" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
               </div>
               <div>
@@ -250,20 +237,19 @@
                 <input id="filhoOrixaObs" type="text" placeholder="Detalhes ou observações do Orixá" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
               </div>
             </div>
-          </div>
 
-          <!-- ABA GUIA -->
-          <div id="cad-panel-guia" class="cad-subpanel hidden rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-3">
-            <h3 class="text-sm font-bold text-white">Guia / Entidade do Filho</h3>
-            <p class="text-xs text-slate-400">Informe livremente a Guia ou Entidade deste filho conforme a planilha.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-3">
               <div>
-                <label for="filhoGuiaDetalhe" class="block text-xs font-semibold mb-1 text-slate-300">Guia / Entidade</label>
+                <h3 class="text-xs sm:text-sm font-bold text-white">Guias / Entidades</h3>
+                <p class="text-[11px] text-slate-400">Guias ou entidades do filho conforme a planilha.</p>
+              </div>
+              <div>
+                <label for="filhoGuiaDetalhe" class="block text-xs font-semibold mb-1 text-slate-300">Guia / Entidade do Filho</label>
                 <input id="filhoGuiaDetalhe" type="text" list="sugestoesGuiasPlanilha" placeholder="Digite a Guia do filho" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
               </div>
               <div>
-                <label for="filhoGuiaLinha" class="block text-xs font-semibold mb-1 text-slate-300">Observação / Linha da Guia</label>
-                <input id="filhoGuiaLinha" type="text" placeholder="Detalhes ou linha da Guia" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+                <label for="filhoGuiaLinha" class="block text-xs font-semibold mb-1 text-slate-300">Observação / Linha das Guias</label>
+                <input id="filhoGuiaLinha" type="text" placeholder="Detalhes ou outras guias/linhas" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
               </div>
             </div>
           </div>
@@ -451,20 +437,26 @@
       return [];
     }
 
+    function stringifyValor(val) {
+      if (val === undefined || val === null) return '';
+      if (Array.isArray(val)) return val.map(stringifyValor).filter(Boolean).join(', ');
+      if (typeof val === 'object') {
+        return String(val.nome || val.Nome || val.titulo || val.Titulo || val.valor || val.Valor || '').trim();
+      }
+      return String(val).trim();
+    }
+
     function extrairCampoFlexivel(obj, chaves) {
       if (!obj || typeof obj !== 'object') return '';
       for (const k of chaves) {
-        if (obj[k] !== undefined && obj[k] !== null && String(obj[k]).trim() !== '') {
-          return String(obj[k]).trim();
-        }
+        const txt = stringifyValor(obj[k]);
+        if (txt) return txt;
       }
       for (const prop of Object.keys(obj)) {
         const norm = prop.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
         if (chaves.some((c) => c.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '') === norm)) {
-          const val = obj[prop];
-          if (val !== undefined && val !== null && String(val).trim() !== '') {
-            return String(val).trim();
-          }
+          const txt = stringifyValor(obj[prop]);
+          if (txt) return txt;
         }
       }
       return '';
@@ -473,9 +465,16 @@
     function normalizeTrabalhosFilho(f) {
       if (!f || typeof f !== 'object') return [];
       const raw = f.trabalhos ?? f.Trabalhos ?? f.trabalho ?? f.Trabalho ?? f['Trabalhos do Filho'] ?? [];
-      if (Array.isArray(raw)) return raw.map((x) => String(x || '').trim()).filter(Boolean);
+      if (Array.isArray(raw)) return raw.map(stringifyValor).filter(Boolean);
       if (typeof raw === 'string' && raw.trim()) {
-        return raw.split(/[,;|]/).map((s) => s.trim()).filter(Boolean);
+        const trimmed = raw.trim();
+        if (trimmed.startsWith('[')) {
+          try {
+            const parsed = JSON.parse(trimmed);
+            if (Array.isArray(parsed)) return parsed.map(stringifyValor).filter(Boolean);
+          } catch (_) {}
+        }
+        return trimmed.split(/[,;|]/).map((s) => s.trim()).filter(Boolean);
       }
       return [];
     }
@@ -571,11 +570,11 @@
     }
 
     function getFilhoOrixa(f) {
-      return extrairCampoFlexivel(f, ['orixa', 'orixaCabeca', 'orixaPrincipal', 'orixa de frente', 'coroa']);
+      return extrairCampoFlexivel(f, ['orixa', 'orixas', 'orixaCabeca', 'orixaPrincipal', 'orixa de frente', 'coroa']);
     }
 
     function getFilhoGuia(f) {
-      return extrairCampoFlexivel(f, ['guia', 'guiaPrincipal', 'entidade', 'guia de trabalho', 'linha']);
+      return extrairCampoFlexivel(f, ['guia', 'guias', 'guiaPrincipal', 'entidade', 'entidades', 'guia de trabalho', 'linha']);
     }
 
     function getFilhoFuncao(f) {
@@ -730,7 +729,7 @@
       alvo.orixa = novoOrixa;
       alvo.Orixa = novoOrixa;
       alvo.guia = novaGuia;
-      alvo.Guia = novaGuia;
+      alvo.Guia = novoGuia;
       alvo.funcao = novaFuncao;
       alvo.Funcao = novaFuncao;
       alvo.trabalhos = marcados;
@@ -908,19 +907,6 @@
           panel.classList.add('hidden');
         });
         document.getElementById(`tab-${tab}`)?.classList.remove('hidden');
-      });
-    });
-
-    document.querySelectorAll('.cad-subtab-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const sub = btn.getAttribute('data-cad-subtab');
-        document.querySelectorAll('.cad-subtab-btn').forEach((b) => {
-          b.className = 'cad-subtab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition';
-        });
-        btn.className = 'cad-subtab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-violet-600 text-white transition';
-
-        document.querySelectorAll('.cad-subpanel').forEach((p) => p.classList.add('hidden'));
-        document.getElementById(`cad-panel-${sub}`)?.classList.remove('hidden');
       });
     });
 
