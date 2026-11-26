@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instituto 7 Cores • Acesso</title>
-  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=0R6Oo3pF5o4VU_xVN4_6ZU-qV0RQkjWIQXO226LpP6QZX7CcvTBu1WrxcpLGTAMCM46mQQcfGFu2xgwqV8FF2s4V1uPxMxA_B1_WcwCXto2ASrkQXZcNcwhNRohur858Tz-AHs5tDsMAq0FWQQVwKZfKgJpsH0FPeuj3Yp-8VmlWk020pmcDK4f6KNya1E_9x6Ytjvr83Csz7l7RLPrB6wdQFKY_OW3xW_i4Qssco55EWcxSctVG0YH5PsdDYEXDq3amG7ql9pYcIwo1sC2yPjibWGOn-ZE6m5vsbSpERRcL1CJ-f_DSr3JyZg6cBpD32S6Uw-4t8EHqUrj03NKmgg" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pCbU5EUXhZMkZqTjJZMVpEQTNOekJqTURBd05qWXhNbVV4WlRreE5HRmtNekE0T0RRNFlqTXdOekV3TVRBM01UZ1NDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPWluZGV4X2F0dWFsaXphZG8tdjYuaHRtbCZvcGk9MTAzMTM1MDUw"/><script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -53,7 +53,7 @@
       </div>
     </div>
 
-    <!-- CADASTRO INICIAL DE NOVO USUÁRIO (ABERTO POR PADRÃO PARA OUTRA PESSOA CADASTRAR) -->
+    <!-- CADASTRO INICIAL DE NOVO USUÁRIO (SALVA NO BANCO / PLANILHA PARA USAR EM QUALQUER PC) -->
     <form id="register-form" class="space-y-4" novalidate>
       <div>
         <label for="regNome" class="block text-xs font-semibold mb-1.5 text-slate-200">Nome / Utilizador *</label>
@@ -61,7 +61,7 @@
           id="regNome"
           type="text"
           required
-          autocomplete="off"
+          autocomplete="name"
           placeholder="Digite o nome da pessoa"
           class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
         >
@@ -73,7 +73,7 @@
           id="regEmail"
           type="email"
           required
-          autocomplete="off"
+          autocomplete="email"
           placeholder="novo.usuario@exemplo.com"
           class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
         >
@@ -124,35 +124,27 @@
           <input
             id="regWhatsapp"
             type="tel"
-            autocomplete="off"
+            autocomplete="tel"
             placeholder="(11) 99999-9999"
             class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
           >
         </div>
       </div>
 
-      <label class="inline-flex items-center gap-2 cursor-pointer select-none text-xs text-slate-300 pt-0.5">
-        <input
-          id="regManterConectado"
-          type="checkbox"
-          class="w-4 h-4 rounded border-violet-500/40 bg-slate-900 text-emerald-600 focus:ring-emerald-500"
-        >
-        <span>Manter conectado após cadastrar neste aparelho</span>
-      </label>
-
       <p id="regErro" class="hidden text-xs font-semibold text-rose-300 bg-rose-500/15 border border-rose-500/30 rounded-xl px-3.5 py-2.5">
         Erro ao cadastrar.
       </p>
 
-      <p id="regSucesso" class="hidden text-xs font-semibold text-emerald-300 bg-emerald-500/15 border border-emerald-500/30 rounded-xl px-3.5 py-2.5">
-        Novo usuário salvo! Agora você já pode entrar com o e-mail e senha cadastrados.
+      <p id="regStatus" class="hidden text-xs font-semibold text-emerald-300 bg-emerald-500/15 border border-emerald-500/30 rounded-xl px-3.5 py-2.5">
+        Salvo no banco!
       </p>
 
       <button
         type="submit"
+        id="btnSubmitRegister"
         class="w-full py-2.5 px-4 rounded-xl text-sm font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg transition"
       >
-        Cadastrar e Salvar em Usuários
+        Cadastrar no Banco e Entrar
       </button>
 
       <div class="pt-2 border-t border-violet-500/20 text-center">
@@ -166,7 +158,7 @@
       </div>
     </form>
 
-    <!-- FORMULÁRIO DE LOGIN (PARA QUEM JÁ TEM CADASTRO) -->
+    <!-- FORMULÁRIO DE LOGIN (CONSULTA NO BANCO / PLANILHA) -->
     <form id="auth-form" class="hidden space-y-4" novalidate>
       <div>
         <label for="loginUsuario" class="block text-xs font-semibold mb-1.5 text-slate-200">Utilizador ou E-mail</label>
@@ -175,7 +167,7 @@
           name="username"
           type="text"
           required
-          autocomplete="off"
+          autocomplete="username"
           placeholder="Digite o utilizador ou e-mail"
           class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
         >
@@ -188,29 +180,23 @@
           name="password"
           type="password"
           required
-          autocomplete="new-password"
+          autocomplete="current-password"
           placeholder="Digite a palavra-passe"
           class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
         >
-      </div>
-
-      <div class="flex items-center justify-between gap-2 pt-0.5">
-        <label class="inline-flex items-center gap-2 cursor-pointer select-none text-xs text-slate-300">
-          <input
-            id="loginManterConectado"
-            type="checkbox"
-            class="w-4 h-4 rounded border-violet-500/40 bg-slate-900 text-violet-600 focus:ring-violet-500"
-          >
-          <span>Manter login e salvar acesso neste navegador</span>
-        </label>
       </div>
 
       <p id="loginErro" class="hidden text-xs font-semibold text-rose-300 bg-rose-500/15 border border-rose-500/30 rounded-xl px-3.5 py-2.5">
         Utilizador ou palavra-passe inválidos.
       </p>
 
+      <p id="loginStatus" class="hidden text-xs font-semibold text-violet-200 bg-violet-500/15 border border-violet-500/30 rounded-xl px-3.5 py-2.5">
+        Verificando no banco...
+      </p>
+
       <button
         type="submit"
+        id="btnSubmitLogin"
         class="w-full py-2.5 px-4 rounded-xl text-sm font-bold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-lg shadow-violet-950/50 transition"
       >
         Entrar no Painel
@@ -229,11 +215,9 @@
   </main>
 
   <script>
-    const STORAGE_KEYS = {
-      DATA: 'i7c_gestao_terreiro_data_v1',
-      AUTH_SESSION: 'i7c_gestao_terreiro_auth_v1',
-      AUTH_REMEMBER: 'i7c_gestao_terreiro_auth_remember_v1'
-    };
+    // URL do banco/planilha (Google Apps Script Web App) usada para ler e salvar usuários entre PCs
+    const DEFAULT_DB_URL = 'https://script.google.com/macros/s/AKfycbydnBQeThbs_D_Ic3N34vA05JGkb8TaZ6F7DUAhDi6pUTouih0q3OfXsxdVCmcgT0ngng/exec';
+    const SESSION_KEY = 'i7c_sessao_ativa';
 
     const DEFAULT_USERS = [
       {
@@ -249,72 +233,97 @@
       }
     ];
 
-    function loadStateData() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEYS.DATA);
-        if (!raw) {
-          return { filhos: [], trabalhos: [], usuarios: [...DEFAULT_USERS] };
+    function fetchJsonp(url, timeoutMs = 10000) {
+      return new Promise((resolve, reject) => {
+        const cbName = 'dbAuthCb_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+        const sep = url.includes('?') ? '&' : '?';
+        const script = document.createElement('script');
+        script.src = `${url}${sep}action=read&callback=${cbName}`;
+        script.async = true;
+
+        const timer = setTimeout(() => {
+          cleanup();
+          reject(new Error('Tempo limite ao consultar o banco.'));
+        }, timeoutMs);
+
+        function cleanup() {
+          clearTimeout(timer);
+          if (script.parentNode) script.parentNode.removeChild(script);
+          try { delete window[cbName]; } catch (_) { window[cbName] = undefined; }
         }
-        const parsed = JSON.parse(raw);
-        return {
-          filhos: Array.isArray(parsed.filhos) ? parsed.filhos : [],
-          trabalhos: Array.isArray(parsed.trabalhos) ? parsed.trabalhos : [],
-          usuarios: Array.isArray(parsed.usuarios) && parsed.usuarios.length > 0
-            ? parsed.usuarios
-            : [...DEFAULT_USERS]
+
+        window[cbName] = (data) => {
+          cleanup();
+          resolve(data);
         };
-      } catch (_) {
-        return { filhos: [], trabalhos: [], usuarios: [...DEFAULT_USERS] };
-      }
-    }
 
-    function saveStateData(data) {
-      try {
-        localStorage.setItem(STORAGE_KEYS.DATA, JSON.stringify(data));
-      } catch (_) {}
-    }
+        script.onerror = () => {
+          cleanup();
+          reject(new Error('Falha de rede ao consultar o banco.'));
+        };
 
-    function validarCredenciais(identificador, senhaDigitada) {
-      const idLimpo = String(identificador || '').trim().toLowerCase();
-      const senhaLimpa = String(senhaDigitada || '').trim();
-      if (!idLimpo || !senhaLimpa) return null;
-
-      const users = loadStateData().usuarios;
-      return users.find((u) => {
-        const matchUser =
-          String(u.nome || u.Nome || '').trim().toLowerCase() === idLimpo ||
-          String(u.email || u.Email || '').trim().toLowerCase() === idLimpo;
-        const senhaUsuario = String(u.senha || u.Senha || u.password || '').trim() || '7cores2026';
-        return matchUser && senhaUsuario === senhaLimpa;
-      }) || null;
-    }
-
-    function salvarSessao(user, remember) {
-      const payload = JSON.stringify({
-        authenticated: true,
-        user: user.nome || user.Nome || user.email || user.Email,
-        identifier: user.email || user.Email || user.nome || user.Nome,
-        at: new Date().toISOString()
+        document.body.appendChild(script);
       });
-      try {
-        sessionStorage.setItem(STORAGE_KEYS.AUTH_SESSION, payload);
-        if (remember) {
-          localStorage.setItem(STORAGE_KEYS.AUTH_REMEMBER, payload);
-        } else {
-          localStorage.removeItem(STORAGE_KEYS.AUTH_REMEMBER);
-        }
-      } catch (_) {}
     }
 
-    function limparSessaoAutomatica() {
-      // Evita redirecionamento automático indesejado ao abrir index.html
+    async function buscarDadosDoBanco() {
       try {
-        sessionStorage.removeItem(STORAGE_KEYS.AUTH_SESSION);
+        const res = await fetch(`${DEFAULT_DB_URL}${DEFAULT_DB_URL.includes('?') ? '&' : '?'}action=read`, {
+          method: 'GET',
+          mode: 'cors',
+          redirect: 'follow'
+        });
+        const text = await res.text();
+        if (text) {
+          return JSON.parse(text);
+        }
+      } catch (_) {
+        return await fetchJsonp(DEFAULT_DB_URL);
+      }
+      return null;
+    }
+
+    function extrairListasBanco(payload) {
+      const src = payload && payload.data && typeof payload.data === 'object' ? payload.data : (payload || {});
+      const usuariosBanco = Array.isArray(src.usuarios) && src.usuarios.length > 0
+        ? src.usuarios
+        : DEFAULT_USERS;
+      return {
+        filhos: Array.isArray(src.filhos) ? src.filhos : [],
+        trabalhos: Array.isArray(src.trabalhos) ? src.trabalhos : [],
+        usuarios: usuariosBanco
+      };
+    }
+
+    async function salvarDadosNoBanco(fullData) {
+      await fetch(DEFAULT_DB_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          action: 'write',
+          filhos: fullData.filhos || [],
+          trabalhos: fullData.trabalhos || [],
+          usuarios: fullData.usuarios || [],
+          data: fullData,
+          updatedAt: new Date().toISOString()
+        })
+      });
+    }
+
+    function marcarSessaoTemporaria(user) {
+      try {
+        sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+          authenticated: true,
+          user: user.nome || user.Nome || user.email || user.Email,
+          identifier: user.email || user.Email || user.nome || user.Nome,
+          at: new Date().toISOString()
+        }));
       } catch (_) {}
     }
 
     function irParaSite() {
-      window.location.href = 'site.html';
+      window.location.replace('site.html');
     }
 
     const authForm = document.getElementById('auth-form');
@@ -328,24 +337,15 @@
     const regSenhaConfirmInput = document.getElementById('regSenhaConfirm');
     const regWhatsappInput = document.getElementById('regWhatsapp');
 
-    function limparCamposVisiveis() {
-      if (loginUsuarioInput) loginUsuarioInput.value = '';
-      if (loginSenhaInput) loginSenhaInput.value = '';
-      if (regNomeInput) regNomeInput.value = '';
-      if (regEmailInput) regEmailInput.value = '';
-      if (regSenhaInput) regSenhaInput.value = '';
-      if (regSenhaConfirmInput) regSenhaConfirmInput.value = '';
-      if (regWhatsappInput) regWhatsappInput.value = '';
-    }
-
     function alternarModo(modo) {
       document.getElementById('loginErro').classList.add('hidden');
+      document.getElementById('loginStatus').classList.add('hidden');
       document.getElementById('regErro').classList.add('hidden');
-      limparCamposVisiveis();
+      document.getElementById('regStatus').classList.add('hidden');
       if (modo === 'login') {
         registerForm.classList.add('hidden');
         authForm.classList.remove('hidden');
-        authSubtitle.textContent = 'Entrar com cadastro existente — Gestão do Terreiro';
+        authSubtitle.textContent = 'Entrar com usuário do banco — Gestão do Terreiro';
       } else {
         authForm.classList.add('hidden');
         registerForm.classList.remove('hidden');
@@ -356,109 +356,143 @@
     document.getElementById('btnMostrarLogin').addEventListener('click', () => alternarModo('login'));
     document.getElementById('btnMostrarCadastro').addEventListener('click', () => alternarModo('cadastro'));
 
-    // Garante que ao abrir index.html NÃO vá direto para site.html nem preencha seu e-mail
-    limparSessaoAutomatica();
-    limparCamposVisiveis();
-    window.addEventListener('DOMContentLoaded', limparCamposVisiveis);
-    window.addEventListener('pageshow', () => {
-      limparSessaoAutomatica();
-      limparCamposVisiveis();
-    });
-
-    authForm.addEventListener('submit', (e) => {
+    authForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const userVal = loginUsuarioInput.value;
-      const passVal = loginSenhaInput.value;
-      const rememberVal = document.getElementById('loginManterConectado')?.checked ?? false;
+      const idLimpo = (loginUsuarioInput.value || '').trim().toLowerCase();
+      const senhaLimpa = (loginSenhaInput.value || '').trim();
       const erroEl = document.getElementById('loginErro');
+      const statusEl = document.getElementById('loginStatus');
+      const btnSubmit = document.getElementById('btnSubmitLogin');
 
-      const matched = validarCredenciais(userVal, passVal);
-      if (!matched) {
+      erroEl.classList.add('hidden');
+      if (!idLimpo || !senhaLimpa) {
+        erroEl.textContent = 'Preencha utilizador/e-mail e palavra-passe.';
         erroEl.classList.remove('hidden');
         return;
       }
 
-      erroEl.classList.add('hidden');
-      salvarSessao(matched, rememberVal);
-      irParaSite();
+      btnSubmit.disabled = true;
+      statusEl.textContent = 'Consultando usuários no banco...';
+      statusEl.classList.remove('hidden');
+
+      try {
+        const rawDb = await buscarDadosDoBanco().catch(() => null);
+        const { usuarios } = extrairListasBanco(rawDb);
+
+        const matched = usuarios.find((u) => {
+          const matchUser =
+            String(u.nome || u.Nome || '').trim().toLowerCase() === idLimpo ||
+            String(u.email || u.Email || '').trim().toLowerCase() === idLimpo;
+          const senhaUsuario = String(u.senha || u.Senha || u.password || '').trim() || '7cores2026';
+          return matchUser && senhaUsuario === senhaLimpa;
+        }) || null;
+
+        if (!matched) {
+          statusEl.classList.add('hidden');
+          erroEl.textContent = 'Utilizador ou palavra-passe inválidos no banco.';
+          erroEl.classList.remove('hidden');
+          btnSubmit.disabled = false;
+          return;
+        }
+
+        marcarSessaoTemporaria(matched);
+        irParaSite();
+      } catch (err) {
+        statusEl.classList.add('hidden');
+        erroEl.textContent = 'Não foi possível consultar o banco agora.';
+        erroEl.classList.remove('hidden');
+        btnSubmit.disabled = false;
+      }
     });
 
-    registerForm.addEventListener('submit', (e) => {
+    registerForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const nome = regNomeInput.value.trim();
-      const email = regEmailInput.value.trim();
-      const senha = regSenhaInput.value.trim();
-      const senhaConfirm = regSenhaConfirmInput.value.trim();
+      const nome = (regNomeInput.value || '').trim();
+      const email = (regEmailInput.value || '').trim();
+      const senha = (regSenhaInput.value || '').trim();
+      const senhaConfirm = (regSenhaConfirmInput.value || '').trim();
       const papel = document.getElementById('regPapel').value;
-      const whatsapp = regWhatsappInput.value.trim();
-      const rememberVal = document.getElementById('regManterConectado')?.checked ?? false;
+      const whatsapp = (regWhatsappInput.value || '').trim();
       const regErroEl = document.getElementById('regErro');
-      const regSucessoEl = document.getElementById('regSucesso');
+      const regStatusEl = document.getElementById('regStatus');
+      const btnSubmit = document.getElementById('btnSubmitRegister');
+
+      regErroEl.classList.add('hidden');
+      regStatusEl.classList.add('hidden');
 
       if (!nome || !email || !senha) {
-        regSucessoEl.classList.add('hidden');
         regErroEl.textContent = 'Preencha nome, novo e-mail e nova senha.';
         regErroEl.classList.remove('hidden');
         return;
       }
 
       if (senha.length < 4) {
-        regSucessoEl.classList.add('hidden');
         regErroEl.textContent = 'A nova senha deve ter pelo menos 4 caracteres.';
         regErroEl.classList.remove('hidden');
         return;
       }
 
       if (senha !== senhaConfirm) {
-        regSucessoEl.classList.add('hidden');
         regErroEl.textContent = 'As senhas não coincidem.';
         regErroEl.classList.remove('hidden');
         return;
       }
 
-      const data = loadStateData();
-      const jaExiste = data.usuarios.some(
-        (u) =>
-          String(u.email || u.Email || '').trim().toLowerCase() === email.toLowerCase() ||
-          String(u.nome || u.Nome || '').trim().toLowerCase() === nome.toLowerCase()
-      );
+      btnSubmit.disabled = true;
+      regStatusEl.textContent = 'Salvando novo usuário no banco...';
+      regStatusEl.classList.remove('hidden');
 
-      if (jaExiste) {
-        regSucessoEl.classList.add('hidden');
-        regErroEl.textContent = 'Já existe um usuário salvo com este nome ou e-mail.';
-        regErroEl.classList.remove('hidden');
-        return;
-      }
+      try {
+        const rawDb = await buscarDadosDoBanco().catch(() => null);
+        const bancoAtual = extrairListasBanco(rawDb);
 
-      const novoUsuario = {
-        id: 'u-' + Date.now(),
-        nome,
-        Nome: nome,
-        email,
-        Email: email,
-        papel,
-        Cargo: papel,
-        senha,
-        acessoSite: papel.toLowerCase() === 'dirigente',
-        whatsapp,
-        WhatsApp: whatsapp
-      };
+        const jaExiste = bancoAtual.usuarios.some(
+          (u) =>
+            String(u.email || u.Email || '').trim().toLowerCase() === email.toLowerCase() ||
+            String(u.nome || u.Nome || '').trim().toLowerCase() === nome.toLowerCase()
+        );
 
-      data.usuarios.push(novoUsuario);
-      saveStateData(data);
+        if (jaExiste) {
+          regStatusEl.classList.add('hidden');
+          regErroEl.textContent = 'Já existe um usuário com este nome ou e-mail no banco.';
+          regErroEl.classList.remove('hidden');
+          btnSubmit.disabled = false;
+          return;
+        }
 
-      regErroEl.classList.add('hidden');
-      regSucessoEl.classList.remove('hidden');
-      salvarSessao(novoUsuario, rememberVal);
+        const novoUsuario = {
+          id: 'u-' + Date.now(),
+          nome,
+          Nome: nome,
+          email,
+          Email: email,
+          papel,
+          Cargo: papel,
+          senha,
+          acessoSite: papel.toLowerCase() === 'dirigente',
+          whatsapp,
+          WhatsApp: whatsapp
+        };
 
-      // Leva para a tela de login com o novo e-mail preenchido ou entra direto se marcado
-      if (rememberVal) {
+        bancoAtual.usuarios.push(novoUsuario);
+        await salvarDadosNoBanco(bancoAtual);
+
+        marcarSessaoTemporaria(novoUsuario);
+        regStatusEl.textContent = 'Usuário salvo no banco! Entrando...';
         irParaSite();
-      } else {
-        alternarModo('login');
-        loginUsuarioInput.value = email;
+      } catch (err) {
+        regStatusEl.classList.add('hidden');
+        regErroEl.textContent = 'Erro ao salvar usuário no banco.';
+        regErroEl.classList.remove('hidden');
+        btnSubmit.disabled = false;
       }
     });
   </script>
 </body>
 </html>
+"""
+
+with open("index_atualizado-v8.html", "w", encoding="utf-8") as f:
+    f.write(index_v8)
+
+print("Generated index_atualizado-v8.html")
