@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instituto 7 Cores • Login</title>
-  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=hyMLVtAgd4eg9xtK6THqDSN4-aCOwCV7852UnflGZ5HYm4MDGKm2R7P0aeFNG9Px3gXPBc3yEpi6MbfGy_fkogXbpRNRzjNgrNxcURbuw-M_q3PUt7wIXShiNehIw51BSiW6YBmYkSEPvJssttEm1GorFxUFxcIHupj7H7gtDB0_GUjfNzZNQelxndiofUyHYXiin6EECVljeRVF0QVQ53-jBpBY3w3AjJO_Wab9MdaHhGC1I6prHrNanhVo9Wud1KJwysjfeQ2ybHlQM75G7oeGkHEtVpgyz5pOKY2G2_Y5JZYeyMWrXm5wev98U5_dH2mhGUisR5JvzEWVduukww" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pCaVpUVmpZalZrTVRnek1XVm1Oemd5TURBd05qWXhNbVJtWTJVeE16TTVOekF4TXpBM01qUm1NR1F3WlROaU1UUVNDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPWluZGV4X2F0dWFsaXphZG8tdjIuaHRtbCZvcGk9MTAzMTM1MDUw"/><script src="https://cdn.tailwindcss.com"></script>
+  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=cUhfISMhuYrDLhxm-PsZ4HjON5s0HV4iomRxTefAEVYGgWQqRqTON4cJMJ9sNdm78tsAqiXwSJFl4JaBLSpAM0cOH7auvfXau5nuwSVaxf6NLmrJpw3T-Vh1uiaGZ85Q0NQ0phhv_vilGJKgaqUHhdT5vapNzedXu5TsM2ksAVAD7ly-tohJXP0kjwqapssfXjTBwkqFVih6vD2MfXdQv0bYhTb4AAM79E0ui2cdk9yk7aSntiontJxKqjt04CMax34YVQY5hMNAnva-hjfqDlOQVt6yTf3nErK_oupauC3_2nJVWg-aZV3OUJ2vROXFkW02BuSb_B1PLQZe--7O9w" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pCbE0yRTBOelJtT1RsbU1UQmhOV0poTURBd05qWXhNbVV3T0dNek5qTXlZVEE0T0RRNU16STJNMk13T1dZNE1qWVNDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPWluZGV4X2F0dWFsaXphZG8tdjMuaHRtbCZvcGk9MTAzMTM1MDUw"/><script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -48,10 +48,11 @@
       </div>
       <div>
         <h1 class="text-lg font-extrabold tracking-tight text-white">Instituto 7 Cores</h1>
-        <p class="text-xs text-violet-200/80">Acesso restrito — Gestão do Terreiro</p>
+        <p id="authSubtitle" class="text-xs text-violet-200/80">Acesso restrito — Gestão do Terreiro</p>
       </div>
     </div>
 
+    <!-- FORMULÁRIO DE LOGIN -->
     <form id="auth-form" class="space-y-4" novalidate>
       <div>
         <label for="loginUsuario" class="block text-xs font-semibold mb-1.5 text-slate-200">Utilizador ou E-mail</label>
@@ -95,12 +96,125 @@
         Utilizador ou palavra-passe inválidos.
       </p>
 
+      <p id="loginSucesso" class="hidden text-xs font-semibold text-emerald-300 bg-emerald-500/15 border border-emerald-500/30 rounded-xl px-3.5 py-2.5">
+        Usuário cadastrado com sucesso!
+      </p>
+
       <button
         type="submit"
         class="w-full py-2.5 px-4 rounded-xl text-sm font-bold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-lg shadow-violet-950/50 transition"
       >
         Entrar no Painel
       </button>
+
+      <div class="pt-2 border-t border-violet-500/20 text-center">
+        <button
+          type="button"
+          id="btnMostrarCadastro"
+          class="text-xs font-semibold text-violet-300 hover:text-white underline underline-offset-4 transition"
+        >
+          Primeiro acesso? Cadastrar novo usuário
+        </button>
+      </div>
+    </form>
+
+    <!-- FORMULÁRIO DE CADASTRO DE NOVO USUÁRIO -->
+    <form id="register-form" class="hidden space-y-4" novalidate>
+      <div>
+        <label for="regNome" class="block text-xs font-semibold mb-1.5 text-slate-200">Nome / Utilizador *</label>
+        <input
+          id="regNome"
+          type="text"
+          required
+          autocomplete="name"
+          placeholder="Ex.: Guilherme ou Maria Clara"
+          class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
+        >
+      </div>
+
+      <div>
+        <label for="regEmail" class="block text-xs font-semibold mb-1.5 text-slate-200">E-mail *</label>
+        <input
+          id="regEmail"
+          type="email"
+          required
+          autocomplete="email"
+          placeholder="voce@exemplo.com"
+          class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
+        >
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label for="regPapel" class="block text-xs font-semibold mb-1.5 text-slate-200">Função na casa</label>
+          <select
+            id="regPapel"
+            class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-violet-500/30 bg-slate-900/90 text-white focus:outline-none focus:ring-2 focus:ring-violet-500"
+          >
+            <option value="Dirigente">Dirigente</option>
+            <option value="Cambono">Cambono</option>
+            <option value="Secretaria">Secretaria</option>
+            <option value="Membro">Membro</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="regWhatsapp" class="block text-xs font-semibold mb-1.5 text-slate-200">WhatsApp (opcional)</label>
+          <input
+            id="regWhatsapp"
+            type="tel"
+            placeholder="(11) 99999-9999"
+            class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
+          >
+        </div>
+      </div>
+
+      <div>
+        <label for="regSenha" class="block text-xs font-semibold mb-1.5 text-slate-200">Criar palavra-passe *</label>
+        <input
+          id="regSenha"
+          type="password"
+          required
+          minlength="4"
+          autocomplete="new-password"
+          placeholder="Mínimo 4 caracteres"
+          class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
+        >
+      </div>
+
+      <div>
+        <label for="regSenhaConfirm" class="block text-xs font-semibold mb-1.5 text-slate-200">Confirmar palavra-passe *</label>
+        <input
+          id="regSenhaConfirm"
+          type="password"
+          required
+          minlength="4"
+          autocomplete="new-password"
+          placeholder="Repita a palavra-passe"
+          class="w-full px-3.5 py-2.5 rounded-xl text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
+        >
+      </div>
+
+      <p id="regErro" class="hidden text-xs font-semibold text-rose-300 bg-rose-500/15 border border-rose-500/30 rounded-xl px-3.5 py-2.5">
+        Erro ao cadastrar.
+      </p>
+
+      <button
+        type="submit"
+        class="w-full py-2.5 px-4 rounded-xl text-sm font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg transition"
+      >
+        Cadastrar e Entrar
+      </button>
+
+      <div class="pt-2 border-t border-violet-500/20 text-center">
+        <button
+          type="button"
+          id="btnVoltarLogin"
+          class="text-xs font-semibold text-violet-300 hover:text-white underline underline-offset-4 transition"
+        >
+          Já tenho cadastro • Voltar para o login
+        </button>
+      </div>
     </form>
   </main>
 
@@ -113,25 +227,45 @@
 
     const DEFAULT_USERS = [
       {
+        id: 'u-default-dirigente',
         nome: 'dirigente',
+        Nome: 'dirigente',
         email: 'guilherme.curto2004@gmail.com',
+        Email: 'guilherme.curto2004@gmail.com',
         papel: 'Dirigente',
-        senha: '7cores2026'
+        Cargo: 'Dirigente',
+        senha: '7cores2026',
+        acessoSite: true
       }
     ];
 
-    function getUsers() {
+    function loadStateData() {
       try {
         const raw = localStorage.getItem(STORAGE_KEYS.DATA);
-        if (!raw) return DEFAULT_USERS;
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed.usuarios) && parsed.usuarios.length > 0) {
-          return parsed.usuarios;
+        if (!raw) {
+          return { filhos: [], trabalhos: [], usuarios: [...DEFAULT_USERS] };
         }
-        return DEFAULT_USERS;
+        const parsed = JSON.parse(raw);
+        return {
+          filhos: Array.isArray(parsed.filhos) ? parsed.filhos : [],
+          trabalhos: Array.isArray(parsed.trabalhos) ? parsed.trabalhos : [],
+          usuarios: Array.isArray(parsed.usuarios) && parsed.usuarios.length > 0
+            ? parsed.usuarios
+            : [...DEFAULT_USERS]
+        };
       } catch (_) {
-        return DEFAULT_USERS;
+        return { filhos: [], trabalhos: [], usuarios: [...DEFAULT_USERS] };
       }
+    }
+
+    function saveStateData(data) {
+      try {
+        localStorage.setItem(STORAGE_KEYS.DATA, JSON.stringify(data));
+      } catch (_) {}
+    }
+
+    function getUsers() {
+      return loadStateData().usuarios;
     }
 
     function validarCredenciais(identificador, senhaDigitada) {
@@ -185,7 +319,27 @@
       window.location.replace('site.html');
     }
 
-    // Se já estiver marcado para manter conectado, entra direto no site.html
+    const authForm = document.getElementById('auth-form');
+    const registerForm = document.getElementById('register-form');
+    const authSubtitle = document.getElementById('authSubtitle');
+
+    function alternarModo(modo) {
+      document.getElementById('loginErro').classList.add('hidden');
+      document.getElementById('regErro').classList.add('hidden');
+      if (modo === 'cadastro') {
+        authForm.classList.add('hidden');
+        registerForm.classList.remove('hidden');
+        authSubtitle.textContent = 'Criar novo acesso — Gestão do Terreiro';
+      } else {
+        registerForm.classList.add('hidden');
+        authForm.classList.remove('hidden');
+        authSubtitle.textContent = 'Acesso restrito — Gestão do Terreiro';
+      }
+    }
+
+    document.getElementById('btnMostrarCadastro').addEventListener('click', () => alternarModo('cadastro'));
+    document.getElementById('btnVoltarLogin').addEventListener('click', () => alternarModo('login'));
+
     if (jaTemSessaoSalva()) {
       irParaSite();
     } else {
@@ -201,7 +355,7 @@
       } catch (_) {}
     }
 
-    document.getElementById('auth-form').addEventListener('submit', (e) => {
+    authForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const userVal = document.getElementById('loginUsuario').value;
       const passVal = document.getElementById('loginSenha').value;
@@ -216,6 +370,69 @@
 
       erroEl.classList.add('hidden');
       salvarSessao(matched, rememberVal);
+      irParaSite();
+    });
+
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nome = document.getElementById('regNome').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const papel = document.getElementById('regPapel').value;
+      const whatsapp = document.getElementById('regWhatsapp').value.trim();
+      const senha = document.getElementById('regSenha').value.trim();
+      const senhaConfirm = document.getElementById('regSenhaConfirm').value.trim();
+      const regErroEl = document.getElementById('regErro');
+
+      if (!nome || !email || !senha) {
+        regErroEl.textContent = 'Preencha nome, e-mail e palavra-passe.';
+        regErroEl.classList.remove('hidden');
+        return;
+      }
+
+      if (senha.length < 4) {
+        regErroEl.textContent = 'A palavra-passe deve ter pelo menos 4 caracteres.';
+        regErroEl.classList.remove('hidden');
+        return;
+      }
+
+      if (senha !== senhaConfirm) {
+        regErroEl.textContent = 'As palavras-passe não coincidem.';
+        regErroEl.classList.remove('hidden');
+        return;
+      }
+
+      const data = loadStateData();
+      const jaExiste = data.usuarios.some(
+        (u) =>
+          String(u.email || u.Email || '').trim().toLowerCase() === email.toLowerCase() ||
+          String(u.nome || u.Nome || '').trim().toLowerCase() === nome.toLowerCase()
+      );
+
+      if (jaExiste) {
+        regErroEl.textContent = 'Já existe um usuário cadastrado com este nome ou e-mail.';
+        regErroEl.classList.remove('hidden');
+        return;
+      }
+
+      const novoUsuario = {
+        id: 'u-' + Date.now(),
+        nome,
+        Nome: nome,
+        email,
+        Email: email,
+        papel,
+        Cargo: papel,
+        senha,
+        acessoSite: papel.toLowerCase() === 'dirigente',
+        whatsapp,
+        WhatsApp: whatsapp
+      };
+
+      data.usuarios.push(novoUsuario);
+      saveStateData(data);
+
+      regErroEl.classList.add('hidden');
+      salvarSessao(novoUsuario, true);
       irParaSite();
     });
   </script>
