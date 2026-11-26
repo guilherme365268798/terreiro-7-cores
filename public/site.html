@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instituto 7 Cores • Gestão do Terreiro</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=6khXUVOVDDN4_A2Hcbb0MmqqW8zDzCOAesMF_dnGForz94_S3kqZKNrLFwm1X_v0K4efgrC7rvMKJ4JLZKqoaMw7-9L9cLoNMWIpKU_m3T7D78RC5Ork8RAmZAvYfNTQ69M74bGw-VIslIqDRUdDe1h4vZCZdKnZ00T73hY0Ggudhl8ztOL60P1zdAparCCjsCf6QrN9b6NZJjJjiwxKzNnq_PFP9PoOLag8kNswX3uddPzrUAKebALjJ16pURcAepC961Ln9c8S1kveuXSdkNKLKlEKxAj0VgojjWO3Neiqi2hKQTkZoKolDNPiRM7idi_bAUgH_toUs-r9sVJSAw" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pBNVpHVmhZV1EyTVdVek4yUmpOV1EzTURBd05qWXhNbVUyWkdObFl6SXpaREF4TXpBM01HSTNaalV3TlRKbFpUSVNDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPXNpdGVfYXR1YWxpemFkby12Ny5odG1sJm9waT0xMDMxMzUwNTA"/><script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -50,13 +50,13 @@
         </div>
         <div>
           <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white">Instituto 7 Cores</h1>
-          <p class="text-xs text-violet-200/80">Gestão do Terreiro • Sincronizado com o Banco</p>
+          <p class="text-xs text-violet-200/80">Gestão do Terreiro • Banco de Dados Compartilhado</p>
         </div>
       </div>
 
       <div class="flex items-center gap-2.5 flex-wrap">
         <span id="badgeUsuarioAtivo" class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-violet-500/15 border border-violet-500/30 text-violet-200">
-          Sessão ativa
+          Conectado ao Banco
         </span>
         <button
           type="button"
@@ -75,39 +75,65 @@
       </div>
     </header>
 
-    <!-- NAVEGAÇÃO PRINCIPAL (ORIXÁS AO LADO DE GUIAS) -->
+    <!-- BARRA DE URL & SINCRONIZAÇÃO COM O BANCO DE DADOS SEMPRE VISÍVEL NO TOPO -->
+    <section id="barraConexaoPlanilha" class="rounded-2xl border border-violet-500/30 bg-black/65 backdrop-blur-md p-4 space-y-2.5 shadow-lg">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <label for="topoDbUrl" class="text-xs font-bold text-violet-200">
+          URL do Banco de Dados / Google Apps Script (/exec)
+        </label>
+        <span id="statusSync" class="text-xs font-semibold text-violet-200 bg-violet-500/15 border border-violet-500/30 rounded-lg px-3 py-1">
+          Conectando ao banco de dados...
+        </span>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-2">
+        <input
+          id="topoDbUrl"
+          type="url"
+          placeholder="https://script.google.com/macros/s/.../exec"
+          class="flex-1 px-3.5 py-2 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
+        >
+        <button
+          type="button"
+          id="btnSalvarUrlTopo"
+          class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white transition shrink-0"
+        >
+          Aplicar URL e Sincronizar
+        </button>
+        <button
+          type="button"
+          id="btnResetUrlTopo"
+          class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 transition shrink-0"
+        >
+          Padrão
+        </button>
+      </div>
+    </section>
+
+    <!-- NAVEGAÇÃO PRINCIPAL -->
     <nav class="rounded-2xl border border-violet-500/25 bg-black/60 backdrop-blur-md p-2 flex flex-wrap gap-2">
       <button type="button" data-tab="planilha" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-violet-600 text-white transition">
         Planilha / Visão Geral
       </button>
       <button type="button" data-tab="filhos" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:bg-violet-500/15 hover:text-white transition">
-        Filhos
-      </button>
-      <button type="button" data-tab="guias" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:bg-violet-500/15 hover:text-white transition">
-        Guias
-      </button>
-      <button type="button" data-tab="orixas" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:bg-violet-500/15 hover:text-white transition">
-        Orixás
+        Cadastro de Filhos
       </button>
       <button type="button" data-tab="trabalhos" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:bg-violet-500/15 hover:text-white transition">
-        Trabalhos
+        Trabalhos & Vínculos
       </button>
       <button type="button" data-tab="usuarios" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:bg-violet-500/15 hover:text-white transition">
         Usuários
       </button>
     </nav>
 
-    <p id="statusSync" class="hidden text-xs font-semibold px-4 py-2.5 rounded-xl bg-violet-500/15 border border-violet-500/30 text-violet-200"></p>
-
     <!-- SEÇÃO INICIAL: PLANILHA -->
     <section id="tab-planilha" class="tab-panel space-y-5">
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-4">
-          <p class="text-xs text-violet-200/75 font-semibold">Filhos Cadastrados</p>
+          <p class="text-xs text-violet-200/75 font-semibold">Filhos no Banco</p>
           <p id="statFilhos" class="text-2xl font-extrabold text-white mt-1">0</p>
         </div>
         <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-4">
-          <p class="text-xs text-violet-200/75 font-semibold">Trabalhos Registrados</p>
+          <p class="text-xs text-violet-200/75 font-semibold">Trabalhos no Banco</p>
           <p id="statTrabalhos" class="text-2xl font-extrabold text-white mt-1">0</p>
         </div>
         <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-4">
@@ -119,13 +145,13 @@
       <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <h2 class="text-base font-extrabold text-white">Planilha de Filhos & Trabalhos</h2>
-            <p class="text-xs text-slate-400">Clique no nome de um filho para abrir o balão com detalhes.</p>
+            <h2 class="text-base font-extrabold text-white">Dados Compartilhados do Banco de Dados</h2>
+            <p class="text-xs text-slate-400">Tudo lido e gravado diretamente no banco para aparecer em todos os PCs conectados.</p>
           </div>
           <input
             id="filtroPlanilha"
             type="text"
-            placeholder="Buscar filho, orixá ou trabalho..."
+            placeholder="Buscar filho, orixá, guia ou trabalho..."
             class="px-3.5 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
           >
         </div>
@@ -137,6 +163,7 @@
                 <th class="py-2.5 px-3 font-bold">Filho</th>
                 <th class="py-2.5 px-3 font-bold">Orixá</th>
                 <th class="py-2.5 px-3 font-bold">Guia</th>
+                <th class="py-2.5 px-3 font-bold">Trabalhos do Filho</th>
                 <th class="py-2.5 px-3 font-bold">Função</th>
               </tr>
             </thead>
@@ -146,77 +173,136 @@
       </div>
     </section>
 
-    <!-- SEÇÃO FILHOS -->
+    <!-- SEÇÃO CADASTRO DE FILHOS -->
     <section id="tab-filhos" class="tab-panel hidden space-y-5">
-      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-4">
-        <h2 class="text-base font-extrabold text-white">Cadastrar / Atualizar Filho</h2>
-        <form id="formFilho" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <input id="filhoNome" type="text" required placeholder="Nome do filho *" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-          <input id="filhoOrixa" type="text" placeholder="Orixá de cabeça" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-          <input id="filhoGuia" type="text" placeholder="Guia / Entidade" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-          <input id="filhoFuncao" type="text" placeholder="Função / Cargo" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-          <input id="filhoTelefone" type="text" placeholder="Telefone / WhatsApp" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-          <input id="filhoObs" type="text" placeholder="Observações" class="sm:col-span-2 lg:col-span-2 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-          <button type="submit" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white transition">
-            Salvar no Banco
+      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 class="text-base font-extrabold text-white">Cadastro de Filho</h2>
+            <p class="text-xs text-slate-400">Dados principais, abas internas de Orixá e Guia junto ao cadastro e seleção de 1 ou vários trabalhos.</p>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5 bg-slate-900/90 p-1 rounded-xl border border-violet-500/25">
+            <button type="button" data-cad-subtab="dados" class="cad-subtab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-violet-600 text-white transition">
+              Dados & Trabalhos
+            </button>
+            <button type="button" data-cad-subtab="orixa" class="cad-subtab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition">
+              Aba Orixá
+            </button>
+            <button type="button" data-cad-subtab="guia" class="cad-subtab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition">
+              Aba Guia
+            </button>
+          </div>
+        </div>
+
+        <form id="formFilho" class="space-y-4">
+          <div id="cad-panel-dados" class="cad-subpanel space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div>
+                <label for="filhoNome" class="block text-xs font-semibold mb-1 text-slate-300">Nome do filho *</label>
+                <input id="filhoNome" type="text" required placeholder="Nome completo *" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+              </div>
+              <div>
+                <label for="filhoOrixaDireto" class="block text-xs font-semibold mb-1 text-slate-300">Orixá</label>
+                <input id="filhoOrixaDireto" type="text" placeholder="Ex: Oxóssi, Iansã, Ogum" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+              </div>
+              <div>
+                <label for="filhoGuiaDireto" class="block text-xs font-semibold mb-1 text-slate-300">Guia / Entidade</label>
+                <input id="filhoGuiaDireto" type="text" placeholder="Ex: Caboclo Sete Flechas" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+              </div>
+              <div>
+                <label for="filhoFuncao" class="block text-xs font-semibold mb-1 text-slate-300">Função / Cargo</label>
+                <input id="filhoFuncao" type="text" placeholder="Ex: Médium, Cambono" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+              </div>
+              <div>
+                <label for="filhoTelefone" class="block text-xs font-semibold mb-1 text-slate-300">Telefone / WhatsApp</label>
+                <input id="filhoTelefone" type="text" placeholder="(11) 99999-9999" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+              </div>
+              <div class="sm:col-span-2 lg:col-span-3">
+                <label for="filhoObs" class="block text-xs font-semibold mb-1 text-slate-300">Observações</label>
+                <input id="filhoObs" type="text" placeholder="Observações gerais do filho" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+              </div>
+            </div>
+
+            <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <h3 class="text-xs sm:text-sm font-bold text-white">Trabalhos vinculáveis ao filho (marque 1 ou vários)</h3>
+                  <p class="text-[11px] text-slate-400">Você também pode adicionar um trabalho novo na hora abaixo.</p>
+                </div>
+              </div>
+
+              <div id="checkboxTrabalhosCadastro" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2"></div>
+
+              <div class="flex flex-col sm:flex-row gap-2 pt-2 border-t border-violet-500/15">
+                <input id="novoTrabalhoRapidoTitulo" type="text" placeholder="Nome de novo trabalho..." class="flex-1 px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+                <input id="novoTrabalhoRapidoData" type="date" class="px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white">
+                <input id="novoTrabalhoRapidoValor" type="text" placeholder="Valor (ex: R$ 80,00)" class="px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+                <button type="button" id="btnAddTrabalhoRapido" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-violet-600 hover:bg-violet-500 text-white transition shrink-0">
+                  + Adicionar e Marcar
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="cad-panel-orixa" class="cad-subpanel hidden rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-3">
+            <h3 class="text-sm font-bold text-white">Detalhes de Orixá no Cadastro</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label for="filhoOrixaDetalhe" class="block text-xs font-semibold mb-1 text-slate-300">Orixá de Cabeça / Frente</label>
+                <input id="filhoOrixaDetalhe" type="text" placeholder="Ex: Xangô / Oxum" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+              </div>
+              <div>
+                <label for="filhoOrixaObs" class="block text-xs font-semibold mb-1 text-slate-300">Cor / Dia / Observação de Orixá</label>
+                <input id="filhoOrixaObs" type="text" placeholder="Ex: Quarta-feira, marrom/branco" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+              </div>
+            </div>
+          </div>
+
+          <div id="cad-panel-guia" class="cad-subpanel hidden rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-3">
+            <h3 class="text-sm font-bold text-white">Detalhes de Guia / Entidade no Cadastro</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label for="filhoGuiaDetalhe" class="block text-xs font-semibold mb-1 text-slate-300">Guia / Entidade Principal</label>
+                <input id="filhoGuiaDetalhe" type="text" placeholder="Ex: Preto Velho Pai Joaquim" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+              </div>
+              <div>
+                <label for="filhoGuiaLinha" class="block text-xs font-semibold mb-1 text-slate-300">Linha / Outras Guias</label>
+                <input id="filhoGuiaLinha" type="text" placeholder="Ex: Linha das Almas, Baiano, Malandro" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white transition">
+            Salvar Filho no Banco de Dados
           </button>
         </form>
       </div>
 
       <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5">
-        <h3 class="text-sm font-bold text-white mb-3">Lista de Filhos (clique no nome para ver o balão)</h3>
+        <h3 class="text-sm font-bold text-white mb-3">Lista de Filhos (clique no nome para ver/editar no balão)</h3>
         <div id="listaFilhos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
       </div>
     </section>
 
-    <!-- SEÇÃO GUIAS -->
-    <section id="tab-guias" class="tab-panel hidden space-y-5">
-      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <div>
-            <h2 class="text-base font-extrabold text-white">Guias & Entidades</h2>
-            <p class="text-xs text-slate-400">Cadastre novas guias no banco ou veja as vinculadas aos filhos.</p>
-          </div>
-        </div>
-        <form id="formGuia" class="flex flex-wrap gap-3">
-          <input id="novoGuiaNome" type="text" required placeholder="Nome da guia / entidade *" class="flex-1 min-w-[200px] px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-          <input id="novoGuiaLinha" type="text" placeholder="Linha (ex: Caboclo, Preto Velho, Baiano)" class="flex-1 min-w-[200px] px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-          <button type="submit" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white transition">
-            Salvar Guia
-          </button>
-        </form>
-        <div id="listaGuias" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
-      </div>
-    </section>
-
-    <!-- SEÇÃO ORIXÁS (AO LADO DE GUIAS) -->
-    <section id="tab-orixas" class="tab-panel hidden space-y-5">
-      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-4">
-        <div>
-          <h2 class="text-base font-extrabold text-white">Orixás</h2>
-          <p class="text-xs text-slate-400">Cadastre orixás no banco ou veja os registrados nos cadastros da casa.</p>
-        </div>
-        <form id="formOrixa" class="flex flex-wrap gap-3">
-          <input id="novoOrixaNome" type="text" required placeholder="Nome do Orixá *" class="flex-1 min-w-[200px] px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-          <input id="novoOrixaDia" type="text" placeholder="Dia / Cor / Saudação" class="flex-1 min-w-[200px] px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-          <button type="submit" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white transition">
-            Salvar Orixá
-          </button>
-        </form>
-        <div id="listaOrixas" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
-      </div>
-    </section>
-
-    <!-- SEÇÃO TRABALHOS (VALOR LOGO ABAIXO DA DATA) -->
+    <!-- SEÇÃO TRABALHOS & VÍNCULOS COM FILHOS -->
     <section id="tab-trabalhos" class="tab-panel hidden space-y-5">
       <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-4">
-        <h2 class="text-base font-extrabold text-white">Novo Trabalho</h2>
-        <form id="formTrabalho" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <input id="trabTitulo" type="text" required placeholder="Nome do trabalho *" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-          <input id="trabData" type="date" required class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white">
-          <input id="trabValor" type="text" placeholder="Valor (ex: R$ 120,00)" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
-          <button type="submit" class="sm:col-span-3 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white transition">
-            Adicionar Trabalho ao Banco
+        <h2 class="text-base font-extrabold text-white">Novo Trabalho & Atribuição aos Filhos</h2>
+        <form id="formTrabalho" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <input id="trabTitulo" type="text" required placeholder="Nome do trabalho *" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+            <input id="trabData" type="date" required class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white">
+            <input id="trabValor" type="text" placeholder="Valor (ex: R$ 120,00)" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+          </div>
+
+          <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-3.5 space-y-2">
+            <p class="text-xs font-bold text-violet-200">Colocar este trabalho em quais filhos? (opcional, 1 ou vários)</p>
+            <div id="checkboxFilhosTrabalho" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2"></div>
+          </div>
+
+          <button type="submit" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white transition">
+            Salvar Trabalho no Banco de Dados
           </button>
         </form>
       </div>
@@ -230,20 +316,20 @@
     <!-- SEÇÃO USUÁRIOS -->
     <section id="tab-usuarios" class="tab-panel hidden space-y-5">
       <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-3">
-        <h2 class="text-base font-extrabold text-white">Usuários Cadastrados no Banco</h2>
-        <p class="text-xs text-slate-400">Usuários salvos na planilha/banco para acesso entre computadores.</p>
+        <h2 class="text-base font-extrabold text-white">Usuários Cadastrados no Banco de Dados</h2>
+        <p class="text-xs text-slate-400">Usuários carregados diretamente do banco para todos os PCs conectados.</p>
         <div id="listaUsuarios" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
       </div>
     </section>
   </div>
 
-  <!-- BALÃO (POPOVER/MODAL) AO CLICAR NO NOME DO FILHO -->
-  <div id="balaoFilhoOverlay" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-    <div id="balaoFilhoCard" class="relative w-full max-w-md rounded-2xl border border-violet-400/40 bg-slate-950/95 p-6 shadow-2xl space-y-3">
+  <!-- BALÃO (MODAL) AO CLICAR NO NOME DO FILHO -->
+  <div id="balaoFilhoOverlay" class="hidden fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div id="balaoFilhoCard" class="relative w-full max-w-lg rounded-2xl border border-violet-400/40 bg-slate-950/95 p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-start justify-between gap-3">
         <div>
           <span class="inline-block text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-violet-500/20 text-violet-200 border border-violet-400/30 mb-1">
-            Ficha do Filho
+            Ficha & Trabalhos do Filho
           </span>
           <h3 id="balaoFilhoNome" class="text-lg font-extrabold text-white"></h3>
         </div>
@@ -251,13 +337,39 @@
           Fechar
         </button>
       </div>
-      <div id="balaoFilhoDetalhes" class="space-y-1.5 text-xs sm:text-sm text-slate-200 border-t border-violet-500/20 pt-3"></div>
+
+      <div id="balaoFilhoDetalhes" class="space-y-1 text-xs sm:text-sm text-slate-200 border-t border-violet-500/20 pt-3"></div>
+
+      <div class="border-t border-violet-500/20 pt-3 space-y-3">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-violet-300">Editar Orixá, Guia, Função e Trabalhos deste Filho</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div>
+            <label for="editFilhoOrixa" class="block text-xs font-semibold mb-1 text-slate-300">Orixá</label>
+            <input id="editFilhoOrixa" type="text" class="w-full px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900 text-white">
+          </div>
+          <div>
+            <label for="editFilhoGuia" class="block text-xs font-semibold mb-1 text-slate-300">Guia</label>
+            <input id="editFilhoGuia" type="text" class="w-full px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900 text-white">
+          </div>
+          <div class="sm:col-span-2">
+            <label for="editFilhoFuncao" class="block text-xs font-semibold mb-1 text-slate-300">Função / Cargo</label>
+            <input id="editFilhoFuncao" type="text" class="w-full px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900 text-white">
+          </div>
+        </div>
+        <div>
+          <p class="text-xs font-semibold mb-1.5 text-slate-300">Trabalhos vinculados (1 ou vários):</p>
+          <div id="balaoTrabalhosCheckboxes" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+        </div>
+        <button type="button" id="btnSalvarBalaoFilho" class="w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white transition">
+          Salvar Alterações no Banco de Dados
+        </button>
+      </div>
     </div>
   </div>
 
   <script>
-    const DB_URL = 'https://script.google.com/macros/s/AKfycbydnBQeThbs_D_Ic3N34vA05JGkb8TaZ6F7DUAhDi6pUTouih0q3OfXsxdVCmcgT0ngng/exec';
-    const SESSION_KEY = 'i7c_sessao_ativa';
+    const DEFAULT_DB_URL = 'https://script.google.com/macros/s/AKfycbydnBQeThbs_D_Ic3N34vA05JGkb8TaZ6F7DUAhDi6pUTouih0q3OfXsxdVCmcgT0ngng/exec';
+    let runtimeDbUrl = DEFAULT_DB_URL;
 
     const DEFAULT_USERS = [
       {
@@ -276,48 +388,35 @@
     let state = {
       filhos: [],
       trabalhos: [],
-      usuarios: [...DEFAULT_USERS],
-      guias: [],
-      orixas: []
+      usuarios: [...DEFAULT_USERS]
     };
+
+    let filhoEditIndex = null;
+
+    function getDbUrl() {
+      return (runtimeDbUrl || DEFAULT_DB_URL).trim();
+    }
 
     function setStatus(msg) {
       const el = document.getElementById('statusSync');
       if (!el) return;
       el.textContent = msg;
-      el.classList.remove('hidden');
     }
 
-    function readSession() {
-      try {
-        const raw = sessionStorage.getItem(SESSION_KEY);
-        if (!raw) return null;
-        const parsed = JSON.parse(raw);
-        return parsed && parsed.authenticated === true ? parsed : null;
-      } catch (_) {
-        return null;
-      }
-    }
+    const topoDbUrl = document.getElementById('topoDbUrl');
+    if (topoDbUrl) topoDbUrl.value = getDbUrl();
 
-    const sessaoAtual = readSession();
-    if (!sessaoAtual) {
-      window.location.replace('index.html');
-    } else {
-      const badge = document.getElementById('badgeUsuarioAtivo');
-      if (badge) badge.textContent = sessaoAtual.user || sessaoAtual.identifier || 'Usuário';
-    }
-
-    function fetchJsonp(url, timeoutMs = 10000) {
+    function fetchJsonp(url, timeoutMs = 12000) {
       return new Promise((resolve, reject) => {
         const cbName = 'siteDbCb_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
         const sep = url.includes('?') ? '&' : '?';
         const script = document.createElement('script');
-        script.src = `${url}${sep}action=read&callback=${cbName}`;
+        script.src = `${url}${sep}action=read&callback=${cbName}&_t=${Date.now()}`;
         script.async = true;
 
         const timer = setTimeout(() => {
           cleanup();
-          reject(new Error('Tempo limite ao ler banco.'));
+          reject(new Error('Tempo limite ao ler banco de dados.'));
         }, timeoutMs);
 
         function cleanup() {
@@ -333,65 +432,98 @@
 
         script.onerror = () => {
           cleanup();
-          reject(new Error('Erro de rede ao ler banco.'));
+          reject(new Error('Erro de rede ao ler banco de dados.'));
         };
 
         document.body.appendChild(script);
       });
     }
 
+    function pickArray(src, keys) {
+      for (const k of keys) {
+        if (Array.isArray(src[k])) return src[k];
+      }
+      return [];
+    }
+
+    function normalizeTrabalhosFilho(f) {
+      const raw = f.trabalhos || f.Trabalhos || f.trabalho || f.Trabalho || [];
+      if (Array.isArray(raw)) return raw.map((x) => String(x || '').trim()).filter(Boolean);
+      if (typeof raw === 'string' && raw.trim()) {
+        return raw.split(/[,;|]/).map((s) => s.trim()).filter(Boolean);
+      }
+      return [];
+    }
+
+    function extrairDadosBanco(payload) {
+      const root = payload && typeof payload === 'object' ? payload : {};
+      const src = root.data && typeof root.data === 'object' ? root.data : root;
+
+      const filhos = pickArray(src, ['filhos', 'Filhos', 'mediuns', 'Mediuns', 'membros', 'Membros']).map((f) => ({
+        ...f,
+        trabalhos: normalizeTrabalhosFilho(f)
+      }));
+      const trabalhos = pickArray(src, ['trabalhos', 'Trabalhos', 'giras', 'Giras']);
+      const usuariosRaw = pickArray(src, ['usuarios', 'Usuarios', 'usuários', 'Usuários', 'users', 'Users']);
+
+      return {
+        filhos,
+        trabalhos,
+        usuarios: usuariosRaw.length > 0 ? usuariosRaw : [...DEFAULT_USERS]
+      };
+    }
+
     async function lerBanco() {
+      const url = getDbUrl();
       try {
-        const res = await fetch(`${DB_URL}${DB_URL.includes('?') ? '&' : '?'}action=read`, {
+        const res = await fetch(`${url}${url.includes('?') ? '&' : '?'}action=read&_t=${Date.now()}`, {
           method: 'GET',
           mode: 'cors',
           redirect: 'follow'
         });
         const txt = await res.text();
-        if (txt) return JSON.parse(txt);
+        if (txt && txt.trim().startsWith('{')) {
+          return JSON.parse(txt);
+        }
+        return await fetchJsonp(url);
       } catch (_) {
-        return await fetchJsonp(DB_URL);
+        return await fetchJsonp(url);
       }
-      return null;
     }
 
     async function gravarBanco(nextState) {
-      setStatus('Salvando alterações no banco...');
-      await fetch(DB_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({
-          action: 'write',
-          filhos: nextState.filhos || [],
-          trabalhos: nextState.trabalhos || [],
-          usuarios: nextState.usuarios || [],
-          guias: nextState.guias || [],
-          orixas: nextState.orixas || [],
-          data: nextState,
-          updatedAt: new Date().toISOString()
-        })
-      });
-      setStatus('Salvo no banco com sucesso.');
+      const url = getDbUrl();
+      setStatus('Gravando no banco de dados...');
+      try {
+        await fetch(url, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            action: 'write',
+            filhos: nextState.filhos || [],
+            trabalhos: nextState.trabalhos || [],
+            usuarios: nextState.usuarios || [],
+            data: nextState,
+            updatedAt: new Date().toISOString()
+          })
+        });
+        setStatus('Salvo no banco para todos os PCs.');
+      } catch (_) {
+        setStatus('Falha ao gravar no banco — confira a URL.');
+      }
     }
 
     async function sincronizarBanco() {
-      setStatus('Carregando dados do banco...');
+      setStatus('Sincronizando com o banco de dados...');
       try {
         const payload = await lerBanco();
-        const src = payload && payload.data && typeof payload.data === 'object' ? payload.data : (payload || {});
-        state = {
-          filhos: Array.isArray(src.filhos) ? src.filhos : [],
-          trabalhos: Array.isArray(src.trabalhos) ? src.trabalhos : [],
-          usuarios: Array.isArray(src.usuarios) && src.usuarios.length > 0 ? src.usuarios : [...DEFAULT_USERS],
-          guias: Array.isArray(src.guias) ? src.guias : [],
-          orixas: Array.isArray(src.orixas) ? src.orixas : []
-        };
+        state = extrairDadosBanco(payload);
         renderTudo();
-        setStatus('Banco sincronizado.');
+        setStatus(`Banco sincronizado (${state.filhos.length} filho(s), ${state.trabalhos.length} trabalho(s))`);
       } catch (_) {
         renderTudo();
-        setStatus('Não foi possível ler o banco agora. Tente sincronizar novamente.');
+        setStatus('Erro ao conectar no banco — confira a URL acima');
       }
     }
 
@@ -405,29 +537,142 @@
       }[m]));
     }
 
-    function abrirBalaoFilho(filho) {
+    function getFilhoOrixa(f) {
+      return f.orixa || f.Orixa || f['Orixá'] || f['orixá'] || f.orixaCabeca || '';
+    }
+
+    function getFilhoGuia(f) {
+      return f.guia || f.Guia || f.entidade || f.Entidade || '';
+    }
+
+    function getFilhoFuncao(f) {
+      return f.funcao || f.Funcao || f['Função'] || f['função'] || f.cargo || f.Cargo || f.papel || '';
+    }
+
+    function getTrabalhoNome(t) {
+      return typeof t === 'string' ? t : (t.titulo || t.nome || t.Nome || 'Trabalho');
+    }
+
+    function getListaOpcoesTrabalhos() {
+      const nomes = new Set();
+      (state.trabalhos || []).forEach((t) => {
+        const n = getTrabalhoNome(t).trim();
+        if (n) nomes.add(n);
+      });
+      (state.filhos || []).forEach((f) => {
+        normalizeTrabalhosFilho(f).forEach((n) => nomes.add(n));
+      });
+      return [...nomes];
+    }
+
+    function renderCheckboxesTrabalhosCadastro(marcados = []) {
+      const wrap = document.getElementById('checkboxTrabalhosCadastro');
+      if (!wrap) return;
+      const opcoes = getListaOpcoesTrabalhos();
+      if (opcoes.length === 0) {
+        wrap.innerHTML = `<p class="text-xs text-slate-400 col-span-full">Nenhum trabalho cadastrado ainda. Adicione um abaixo ou na aba Trabalhos.</p>`;
+        return;
+      }
+      wrap.innerHTML = opcoes.map((nome) => {
+        const checked = marcados.some((m) => m.toLowerCase() === nome.toLowerCase()) ? 'checked' : '';
+        return `
+          <label class="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900/90 border border-violet-500/20 text-xs text-slate-200 cursor-pointer hover:border-violet-400/50">
+            <input type="checkbox" class="cad-trab-check rounded accent-violet-500" value="${escapeHtml(nome)}" ${checked}>
+            <span class="truncate">${escapeHtml(nome)}</span>
+          </label>
+        `;
+      }).join('');
+    }
+
+    function renderCheckboxesFilhosTrabalho() {
+      const wrap = document.getElementById('checkboxFilhosTrabalho');
+      if (!wrap) return;
+      if (state.filhos.length === 0) {
+        wrap.innerHTML = `<p class="text-xs text-slate-400 col-span-full">Nenhum filho cadastrado ainda.</p>`;
+        return;
+      }
+      wrap.innerHTML = state.filhos.map((f, idx) => {
+        const nome = f.nome || f.Nome || 'Sem nome';
+        return `
+          <label class="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900/90 border border-violet-500/20 text-xs text-slate-200 cursor-pointer hover:border-violet-400/50">
+            <input type="checkbox" class="trab-filho-check rounded accent-violet-500" data-filho-idx="${idx}">
+            <span class="truncate">${escapeHtml(nome)}</span>
+          </label>
+        `;
+      }).join('');
+    }
+
+    function abrirBalaoFilho(filho, idxReal) {
       const overlay = document.getElementById('balaoFilhoOverlay');
       const nomeEl = document.getElementById('balaoFilhoNome');
       const detEl = document.getElementById('balaoFilhoDetalhes');
+      const editOrixaEl = document.getElementById('editFilhoOrixa');
+      const editGuiaEl = document.getElementById('editFilhoGuia');
+      const editFuncaoEl = document.getElementById('editFilhoFuncao');
+      const checksWrap = document.getElementById('balaoTrabalhosCheckboxes');
       if (!overlay || !nomeEl || !detEl || !filho) return;
 
+      filhoEditIndex = idxReal;
       const nome = filho.nome || filho.Nome || 'Sem nome';
-      const orixa = filho.orixa || filho.Orixa || 'Não informado';
-      const guia = filho.guia || filho.Guia || 'Não informada';
-      const funcao = filho.funcao || filho.Funcao || filho.papel || 'Membro';
-      const telefone = filho.telefone || filho.Telefone || filho.whatsapp || 'Não informado';
-      const obs = filho.obs || filho.Observacao || filho.observacoes || 'Sem observações';
+      const orixa = getFilhoOrixa(filho) || '';
+      const guia = getFilhoGuia(filho) || '';
+      const funcao = getFilhoFuncao(filho) || 'Membro';
+      const telefone = filho.telefone || filho.Telefone || filho.whatsapp || filho.WhatsApp || 'Não informado';
+      const obs = filho.obs || filho.Observacao || filho.observacoes || filho['Observações'] || 'Sem observações';
+      const trabFilho = normalizeTrabalhosFilho(filho);
 
       nomeEl.textContent = nome;
       detEl.innerHTML = `
-        <p><strong class="text-violet-300">Orixá:</strong> ${escapeHtml(orixa)}</p>
-        <p><strong class="text-violet-300">Guia:</strong> ${escapeHtml(guia)}</p>
+        <p><strong class="text-violet-300">Orixá:</strong> ${escapeHtml(orixa || 'Não informado')}</p>
+        <p><strong class="text-violet-300">Guia:</strong> ${escapeHtml(guia || 'Não informada')}</p>
         <p><strong class="text-violet-300">Função:</strong> ${escapeHtml(funcao)}</p>
         <p><strong class="text-violet-300">Telefone:</strong> ${escapeHtml(telefone)}</p>
         <p><strong class="text-violet-300">Observações:</strong> ${escapeHtml(obs)}</p>
+        <p><strong class="text-violet-300">Trabalhos:</strong> ${trabFilho.length ? escapeHtml(trabFilho.join(', ')) : 'Nenhum trabalho vinculado'}</p>
       `;
+
+      if (editOrixaEl) editOrixaEl.value = orixa;
+      if (editGuiaEl) editGuiaEl.value = guia;
+      if (editFuncaoEl) editFuncaoEl.value = funcao;
+
+      const opcoesTrab = getListaOpcoesTrabalhos();
+      if (checksWrap) {
+        checksWrap.innerHTML = opcoesTrab.length
+          ? opcoesTrab.map((tNome) => {
+              const checked = trabFilho.some((x) => x.toLowerCase() === tNome.toLowerCase()) ? 'checked' : '';
+              return `
+                <label class="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900 border border-violet-500/20 text-xs text-slate-200 cursor-pointer">
+                  <input type="checkbox" class="balao-trab-check rounded accent-violet-500" value="${escapeHtml(tNome)}" ${checked}>
+                  <span class="truncate">${escapeHtml(tNome)}</span>
+                </label>
+              `;
+            }).join('')
+          : `<p class="text-xs text-slate-400 col-span-full">Cadastre trabalhos na aba "Trabalhos & Vínculos" para marcar aqui.</p>`;
+      }
+
       overlay.classList.remove('hidden');
     }
+
+    document.getElementById('btnSalvarBalaoFilho')?.addEventListener('click', async () => {
+      if (filhoEditIndex === null || !state.filhos[filhoEditIndex]) return;
+      const novoOrixa = (document.getElementById('editFilhoOrixa')?.value || '').trim();
+      const novaGuia = (document.getElementById('editFilhoGuia')?.value || '').trim();
+      const novaFuncao = (document.getElementById('editFilhoFuncao')?.value || '').trim() || 'Membro';
+      const marcados = [...document.querySelectorAll('.balao-trab-check:checked')].map((el) => el.value);
+
+      const alvo = state.filhos[filhoEditIndex];
+      alvo.orixa = novoOrixa;
+      alvo.Orixa = novoOrixa;
+      alvo.guia = novaGuia;
+      alvo.Guia = novaGuia;
+      alvo.funcao = novaFuncao;
+      alvo.Funcao = novaFuncao;
+      alvo.trabalhos = marcados;
+
+      document.getElementById('balaoFilhoOverlay')?.classList.add('hidden');
+      renderTudo();
+      await gravarBanco(state);
+    });
 
     document.getElementById('fecharBalaoFilho')?.addEventListener('click', () => {
       document.getElementById('balaoFilhoOverlay')?.classList.add('hidden');
@@ -444,40 +689,45 @@
       const filtro = (document.getElementById('filtroPlanilha')?.value || '').trim().toLowerCase();
       if (!tbody) return;
 
-      const linhas = state.filhos.filter((f) => {
-        if (!filtro) return true;
-        const blob = [
-          f.nome || f.Nome || '',
-          f.orixa || f.Orixa || '',
-          f.guia || f.Guia || '',
-          f.funcao || f.Funcao || ''
-        ].join(' ').toLowerCase();
-        return blob.includes(filtro);
-      });
+      const linhas = state.filhos
+        .map((f, realIdx) => ({ f, realIdx }))
+        .filter(({ f }) => {
+          if (!filtro) return true;
+          const blob = [
+            f.nome || f.Nome || '',
+            getFilhoOrixa(f),
+            getFilhoGuia(f),
+            getFilhoFuncao(f),
+            normalizeTrabalhosFilho(f).join(' ')
+          ].join(' ').toLowerCase();
+          return blob.includes(filtro);
+        });
 
       if (linhas.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="4" class="py-4 px-3 text-slate-400 text-center">Nenhum registro encontrado.</td>
+            <td colspan="5" class="py-4 px-3 text-slate-400 text-center">Nenhum registro no banco de dados.</td>
           </tr>
         `;
         return;
       }
 
-      tbody.innerHTML = linhas.map((f, idx) => {
+      tbody.innerHTML = linhas.map(({ f, realIdx }) => {
         const nome = f.nome || f.Nome || 'Sem nome';
-        const orixa = f.orixa || f.Orixa || '—';
-        const guia = f.guia || f.Guia || '—';
-        const funcao = f.funcao || f.Funcao || f.papel || '—';
+        const orixa = getFilhoOrixa(f) || '—';
+        const guia = getFilhoGuia(f) || '—';
+        const trabTexto = normalizeTrabalhosFilho(f).join(', ') || '—';
+        const funcao = getFilhoFuncao(f) || '—';
         return `
           <tr class="hover:bg-violet-500/10 transition">
             <td class="py-2.5 px-3">
-              <button type="button" data-filho-idx="${idx}" class="btn-abrir-balao font-bold text-violet-200 hover:text-white underline underline-offset-4 text-left">
+              <button type="button" data-real-idx="${realIdx}" class="btn-abrir-balao font-bold text-violet-200 hover:text-white underline underline-offset-4 text-left">
                 ${escapeHtml(nome)}
               </button>
             </td>
             <td class="py-2.5 px-3 text-slate-200">${escapeHtml(orixa)}</td>
             <td class="py-2.5 px-3 text-slate-200">${escapeHtml(guia)}</td>
+            <td class="py-2.5 px-3 text-violet-200">${escapeHtml(trabTexto)}</td>
             <td class="py-2.5 px-3 text-slate-300">${escapeHtml(funcao)}</td>
           </tr>
         `;
@@ -485,8 +735,8 @@
 
       tbody.querySelectorAll('.btn-abrir-balao').forEach((btn) => {
         btn.addEventListener('click', () => {
-          const i = Number(btn.getAttribute('data-filho-idx'));
-          abrirBalaoFilho(linhas[i]);
+          const i = Number(btn.getAttribute('data-real-idx'));
+          abrirBalaoFilho(state.filhos[i], i);
         });
       });
     }
@@ -495,13 +745,14 @@
       const wrap = document.getElementById('listaFilhos');
       if (!wrap) return;
       if (state.filhos.length === 0) {
-        wrap.innerHTML = `<p class="text-xs text-slate-400 col-span-full">Nenhum filho cadastrado no banco.</p>`;
+        wrap.innerHTML = `<p class="text-xs text-slate-400 col-span-full">Nenhum filho cadastrado no banco de dados.</p>`;
         return;
       }
       wrap.innerHTML = state.filhos.map((f, idx) => {
         const nome = f.nome || f.Nome || 'Sem nome';
-        const orixa = f.orixa || f.Orixa || 'Sem orixá';
-        const guia = f.guia || f.Guia || 'Sem guia';
+        const orixa = getFilhoOrixa(f) || 'Sem orixá';
+        const guia = getFilhoGuia(f) || 'Sem guia';
+        const trabArr = normalizeTrabalhosFilho(f);
         return `
           <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-1">
             <button type="button" data-idx="${idx}" class="balao-filho-card-btn text-sm font-extrabold text-violet-200 hover:text-white underline underline-offset-4 text-left">
@@ -509,6 +760,7 @@
             </button>
             <p class="text-xs text-slate-300">Orixá: ${escapeHtml(orixa)}</p>
             <p class="text-xs text-slate-400">Guia: ${escapeHtml(guia)}</p>
+            <p class="text-xs text-violet-200/90">Trabalhos: ${trabArr.length ? escapeHtml(trabArr.join(', ')) : 'Nenhum'}</p>
           </div>
         `;
       }).join('');
@@ -516,70 +768,33 @@
       wrap.querySelectorAll('.balao-filho-card-btn').forEach((btn) => {
         btn.addEventListener('click', () => {
           const i = Number(btn.getAttribute('data-idx'));
-          abrirBalaoFilho(state.filhos[i]);
+          abrirBalaoFilho(state.filhos[i], i);
         });
       });
-    }
-
-    function renderGuiasEOrixas() {
-      const guiasEl = document.getElementById('listaGuias');
-      const orixasEl = document.getElementById('listaOrixas');
-
-      const guiasCad = (state.guias || []).map((g) => typeof g === 'string' ? { nome: g, linha: '' } : g);
-      const guiasDosFilhos = state.filhos
-        .map((f) => (f.guia || f.Guia || '').trim())
-        .filter((nome) => nome && !guiasCad.some((item) => String(item.nome || '').toLowerCase() === nome.toLowerCase()))
-        .map((nome) => ({ nome, linha: 'Vinculada a filho' }));
-      const guiasCombinadas = [...guiasCad, ...guiasDosFilhos];
-
-      const orixasCad = (state.orixas || []).map((o) => typeof o === 'string' ? { nome: o, detalhe: '' } : o);
-      const orixasDosFilhos = state.filhos
-        .map((f) => (f.orixa || f.Orixa || '').trim())
-        .filter((nome) => nome && !orixasCad.some((item) => String(item.nome || '').toLowerCase() === nome.toLowerCase()))
-        .map((nome) => ({ nome, detalhe: 'Registrado em filho' }));
-      const orixasCombinados = [...orixasCad, ...orixasDosFilhos];
-
-      if (guiasEl) {
-        guiasEl.innerHTML = guiasCombinadas.length
-          ? guiasCombinadas.map((g) => `
-              <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-3.5 space-y-1">
-                <p class="text-sm font-bold text-white">${escapeHtml(g.nome || '')}</p>
-                ${g.linha ? `<p class="text-xs text-violet-200/80">${escapeHtml(g.linha)}</p>` : ''}
-              </div>
-            `).join('')
-          : `<p class="text-xs text-slate-400 col-span-full">Nenhuma guia registrada ainda.</p>`;
-      }
-
-      if (orixasEl) {
-        orixasEl.innerHTML = orixasCombinados.length
-          ? orixasCombinados.map((o) => `
-              <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-3.5 space-y-1">
-                <p class="text-sm font-bold text-white">${escapeHtml(o.nome || '')}</p>
-                ${o.detalhe ? `<p class="text-xs text-violet-200/80">${escapeHtml(o.detalhe)}</p>` : ''}
-              </div>
-            `).join('')
-          : `<p class="text-xs text-slate-400 col-span-full">Nenhum orixá registrado ainda.</p>`;
-      }
     }
 
     function renderTrabalhos() {
       const wrap = document.getElementById('listaTrabalhos');
       if (!wrap) return;
       if (state.trabalhos.length === 0) {
-        wrap.innerHTML = `<p class="text-xs text-slate-400 col-span-full">Nenhum trabalho cadastrado.</p>`;
+        wrap.innerHTML = `<p class="text-xs text-slate-400 col-span-full">Nenhum trabalho cadastrado no banco de dados.</p>`;
         return;
       }
 
-      // Valor exibido logo abaixo da data
       wrap.innerHTML = state.trabalhos.map((t) => {
-        const titulo = t.titulo || t.nome || t.Nome || 'Trabalho';
+        const titulo = getTrabalhoNome(t);
         const data = t.data || t.Data || 'Sem data';
         const valor = t.valor || t.Valor || 'Sem valor';
+        const filhosVinculados = state.filhos
+          .filter((f) => normalizeTrabalhosFilho(f).some((x) => x.toLowerCase() === titulo.toLowerCase()))
+          .map((f) => f.nome || f.Nome || 'Sem nome');
+
         return `
           <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-1">
             <h4 class="text-sm font-extrabold text-white">${escapeHtml(titulo)}</h4>
             <p class="text-xs text-slate-300">Data: ${escapeHtml(data)}</p>
             <p class="text-xs font-bold text-emerald-300">Valor: ${escapeHtml(valor)}</p>
+            <p class="text-xs text-violet-200/85 pt-1">Filhos: ${filhosVinculados.length ? escapeHtml(filhosVinculados.join(', ')) : 'Nenhum vinculado'}</p>
           </div>
         `;
       }).join('');
@@ -608,12 +823,12 @@
       document.getElementById('statUsuarios').textContent = String(state.usuarios.length);
       renderPlanilha();
       renderFilhos();
-      renderGuiasEOrixas();
       renderTrabalhos();
       renderUsuarios();
+      renderCheckboxesTrabalhosCadastro();
+      renderCheckboxesFilhosTrabalho();
     }
 
-    // Navegação entre abas
     document.querySelectorAll('.tab-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
         const tab = btn.getAttribute('data-tab');
@@ -629,45 +844,79 @@
       });
     });
 
+    document.querySelectorAll('.cad-subtab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const sub = btn.getAttribute('data-cad-subtab');
+        document.querySelectorAll('.cad-subtab-btn').forEach((b) => {
+          b.className = 'cad-subtab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition';
+        });
+        btn.className = 'cad-subtab-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-violet-600 text-white transition';
+
+        document.querySelectorAll('.cad-subpanel').forEach((p) => p.classList.add('hidden'));
+        document.getElementById(`cad-panel-${sub}`)?.classList.remove('hidden');
+      });
+    });
+
     document.getElementById('filtroPlanilha')?.addEventListener('input', renderPlanilha);
+
+    document.getElementById('btnAddTrabalhoRapido')?.addEventListener('click', async () => {
+      const titulo = (document.getElementById('novoTrabalhoRapidoTitulo')?.value || '').trim();
+      const data = (document.getElementById('novoTrabalhoRapidoData')?.value || '').trim() || new Date().toISOString().slice(0, 10);
+      const valor = (document.getElementById('novoTrabalhoRapidoValor')?.value || '').trim();
+      if (!titulo) return;
+
+      const atuaisMarcados = [...document.querySelectorAll('.cad-trab-check:checked')].map((el) => el.value);
+      if (!state.trabalhos.some((t) => getTrabalhoNome(t).toLowerCase() === titulo.toLowerCase())) {
+        state.trabalhos.push({ id: 't-' + Date.now(), titulo, data, valor });
+      }
+      atuaisMarcados.push(titulo);
+
+      document.getElementById('novoTrabalhoRapidoTitulo').value = '';
+      document.getElementById('novoTrabalhoRapidoValor').value = '';
+      renderTrabalhos();
+      renderCheckboxesTrabalhosCadastro(atuaisMarcados);
+      await gravarBanco(state);
+    });
 
     document.getElementById('formFilho')?.addEventListener('submit', async (e) => {
       e.preventDefault();
       const nome = (document.getElementById('filhoNome').value || '').trim();
       if (!nome) return;
+
+      const orixaDireto = (document.getElementById('filhoOrixaDireto')?.value || '').trim();
+      const orixaSub = (document.getElementById('filhoOrixaDetalhe')?.value || '').trim();
+      const orixaObs = (document.getElementById('filhoOrixaObs')?.value || '').trim();
+      const orixaFinal = orixaSub || orixaDireto;
+
+      const guiaDireto = (document.getElementById('filhoGuiaDireto')?.value || '').trim();
+      const guiaSub = (document.getElementById('filhoGuiaDetalhe')?.value || '').trim();
+      const guiaLinha = (document.getElementById('filhoGuiaLinha')?.value || '').trim();
+      const guiaFinal = guiaSub || guiaDireto;
+
+      const obsBase = (document.getElementById('filhoObs')?.value || '').trim();
+      const extrasObs = [
+        orixaObs ? `Orixá: ${orixaObs}` : '',
+        guiaLinha ? `Guia/Linha: ${guiaLinha}` : ''
+      ].filter(Boolean).join(' • ');
+      const obsFinal = [obsBase, extrasObs].filter(Boolean).join(' | ');
+
+      const trabalhosMarcados = [...document.querySelectorAll('.cad-trab-check:checked')].map((el) => el.value);
+
       const novo = {
         id: 'f-' + Date.now(),
         nome,
         Nome: nome,
-        orixa: (document.getElementById('filhoOrixa').value || '').trim(),
-        guia: (document.getElementById('filhoGuia').value || '').trim(),
-        funcao: (document.getElementById('filhoFuncao').value || '').trim() || 'Membro',
-        telefone: (document.getElementById('filhoTelefone').value || '').trim(),
-        obs: (document.getElementById('filhoObs').value || '').trim()
+        orixa: orixaFinal,
+        Orixa: orixaFinal,
+        guia: guiaFinal,
+        Guia: guiaFinal,
+        funcao: (document.getElementById('filhoFuncao')?.value || '').trim() || 'Membro',
+        telefone: (document.getElementById('filhoTelefone')?.value || '').trim(),
+        obs: obsFinal,
+        trabalhos: trabalhosMarcados
       };
+
       state.filhos.push(novo);
-      renderTudo();
-      e.target.reset();
-      await gravarBanco(state);
-    });
-
-    document.getElementById('formGuia')?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const nome = (document.getElementById('novoGuiaNome').value || '').trim();
-      const linha = (document.getElementById('novoGuiaLinha').value || '').trim();
-      if (!nome) return;
-      state.guias.push({ id: 'g-' + Date.now(), nome, linha });
-      renderTudo();
-      e.target.reset();
-      await gravarBanco(state);
-    });
-
-    document.getElementById('formOrixa')?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const nome = (document.getElementById('novoOrixaNome').value || '').trim();
-      const detalhe = (document.getElementById('novoOrixaDia').value || '').trim();
-      if (!nome) return;
-      state.orixas.push({ id: 'o-' + Date.now(), nome, detalhe });
       renderTudo();
       e.target.reset();
       await gravarBanco(state);
@@ -675,25 +924,52 @@
 
     document.getElementById('formTrabalho')?.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const titulo = (document.getElementById('trabTitulo').value || '').trim();
-      const data = (document.getElementById('trabData').value || '').trim();
-      const valor = (document.getElementById('trabValor').value || '').trim();
+      const titulo = (document.getElementById('trabTitulo')?.value || '').trim();
+      const data = (document.getElementById('trabData')?.value || '').trim();
+      const valor = (document.getElementById('trabValor')?.value || '').trim();
       if (!titulo || !data) return;
+
       state.trabalhos.push({
         id: 't-' + Date.now(),
         titulo,
         data,
         valor
       });
+
+      const indicesFilhos = [...document.querySelectorAll('.trab-filho-check:checked')]
+        .map((el) => Number(el.getAttribute('data-filho-idx')));
+
+      indicesFilhos.forEach((idx) => {
+        const f = state.filhos[idx];
+        if (!f) return;
+        const lista = normalizeTrabalhosFilho(f);
+        if (!lista.some((x) => x.toLowerCase() === titulo.toLowerCase())) {
+          lista.push(titulo);
+        }
+        f.trabalhos = lista;
+      });
+
       renderTudo();
       e.target.reset();
       await gravarBanco(state);
     });
 
+    document.getElementById('btnSalvarUrlTopo')?.addEventListener('click', async () => {
+      const novaUrl = (topoDbUrl?.value || '').trim();
+      if (!novaUrl) return;
+      runtimeDbUrl = novaUrl;
+      await sincronizarBanco();
+    });
+
+    document.getElementById('btnResetUrlTopo')?.addEventListener('click', async () => {
+      runtimeDbUrl = DEFAULT_DB_URL;
+      if (topoDbUrl) topoDbUrl.value = DEFAULT_DB_URL;
+      await sincronizarBanco();
+    });
+
     document.getElementById('btnSincronizarAgora')?.addEventListener('click', sincronizarBanco);
 
     document.getElementById('btnSair')?.addEventListener('click', () => {
-      try { sessionStorage.removeItem(SESSION_KEY); } catch (_) {}
       window.location.replace('index.html');
     });
 
@@ -701,9 +977,3 @@
   </script>
 </body>
 </html>
-"""
-
-with open("site_atualizado-v2.html", "w", encoding="utf-8") as f:
-    f.write(site_v2)
-
-print("Generated site_atualizado-v2.html")
