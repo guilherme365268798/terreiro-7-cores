@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instituto 7 Cores • Gestão do Terreiro</title>
-  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=sSfW8JI-jsoDBy0N3gglsoAQLyXjg0s0c6tUDUOBU3gms7ikicAWZdso28Sqc0Ubpj35twGv9ukGvQal9Zf_JEnGNZX3fbdMz4CU9MZ4cLHymQyOSvKwzAQadInkVIDXFn_pkDhD0_8W31iarQBrTUB_YUx331M-ttYbkjR8sx8F9HNCVZtPjTu4m_dRAYHmJequb4-V9_QyD6G53cIDJ6E0yXpSiZBRjl8zQrxNCxSoO-Tc92ZcM4EYea1pCe8oTw7QOZC04dTIOJpvhfzv7LlxaAHhU_Yi645fvfPJ3IUMXO9gdOsDwsNYxtQJlLFI_lHp4CDZgdZZPO8NqlCf9Q" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pCaE1UazFNMlF5T0RNNU5HUTJaakkxTURBd05qWXhNbVZpWmpjd1pEQmtPREF4TXpBM01USXpObVl4WVdWaE5EY1NDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPXNpdGVfYXR1YWxpemFkby12MTIuaHRtbCZvcGk9MTAzMTM1MDUw"/><script src="https://cdn.tailwindcss.com"></script>
+  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=hAWdgXBbKG4GhEb_LB6916-cDYxAPqStFVHc8-zeLFg-c13m9nOclQgRm4kCHuAhz4OW_LaJZJnAr1cJ7W4sujb8CJNUJzOEtkxAyOr1asMt7ngSqL8uY93yJ3vxMwzMw85PcMwpMHPu_gpH2xlNtcto9Z3xpPd5qwcE4cCWCIvCzxCKvOwINXPxGPQE8D5O_PS9Jcy0wHt82fZty-FwUUXj5T-VicK381hVTQABwZOwjVgkzJNuHgQBghFVwX9FKu2GBkfwuGq02oyN3N3HCushVNYb86-eEpHiYo4p4lmTxqrJr0dtfbYd1opTTv87vQNnV3eAUy-SWW3htZmOcA" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pBME56Vmlaak5sWldRMU4yUXpZekk1TURBd05qWXhNbVZrTkRZMk1XSTBaREE0T0RRNU1XUm1OR1l3T0dJeFpXRVNDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPXNpdGVfYXR1YWxpemFkby12MTMuaHRtbCZvcGk9MTAzMTM1MDUw"/><script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -210,17 +210,25 @@
             </div>
           </div>
 
-          <!-- TRABALHOS DO FILHO -->
+          <!-- TRABALHOS JÁ CADASTRADOS PARA ANEXAR AO FILHO -->
           <div class="rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-3">
-            <div>
-              <h3 class="text-xs sm:text-sm font-bold text-white">Trabalhos vinculáveis ao filho (marque 1 ou vários)</h3>
-              <p class="text-[11px] text-slate-400">Você também pode adicionar um trabalho novo na hora abaixo.</p>
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h3 class="text-xs sm:text-sm font-bold text-white">Trabalhos já cadastrados (marque 1 ou vários para anexar)</h3>
+                <p class="text-[11px] text-slate-400">Todos os trabalhos prontos da planilha ficam disponíveis aqui para vincular ao filho sem precisar recadastrar.</p>
+              </div>
+              <input
+                id="filtroTrabalhosCadastro"
+                type="text"
+                placeholder="Filtrar trabalho já cadastrado..."
+                class="px-3 py-1.5 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
+              >
             </div>
 
-            <div id="checkboxTrabalhosCadastro" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2"></div>
+            <div id="checkboxTrabalhosCadastro" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 max-h-60 overflow-y-auto pr-1"></div>
 
             <div class="flex flex-col sm:flex-row gap-2 pt-2 border-t border-violet-500/15">
-              <input id="novoTrabalhoRapidoTipo" type="text" placeholder="Tipo de trabalho (ex: Gira, Trabalho)..." class="flex-1 px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+              <input id="novoTrabalhoRapidoTipo" type="text" placeholder="Novo trabalho avulso (se ainda não existir)..." class="flex-1 px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
               <input id="novoTrabalhoRapidoData" type="date" class="px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white">
               <input id="novoTrabalhoRapidoValor" type="text" placeholder="Valor (ex: R$ 80,00)" class="px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
               <button type="button" id="btnAddTrabalhoRapido" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-violet-600 hover:bg-violet-500 text-white transition shrink-0">
@@ -674,23 +682,62 @@
       return [...nomes];
     }
 
-    function renderCheckboxesTrabalhosCadastro(marcados = []) {
+    let marcadosCadastroTemp = [];
+
+    function renderCheckboxesTrabalhosCadastro(marcadosOverride = null) {
       const wrap = document.getElementById('checkboxTrabalhosCadastro');
       if (!wrap) return;
-      const opcoes = getListaOpcoesTrabalhos();
+
+      if (Array.isArray(marcadosOverride)) {
+        marcadosCadastroTemp = [...marcadosOverride];
+      } else {
+        const atuaisDom = [...wrap.querySelectorAll('.cad-trab-check:checked')].map((el) => el.value);
+        if (atuaisDom.length > 0 || wrap.querySelector('.cad-trab-check')) {
+          const visiveis = [...wrap.querySelectorAll('.cad-trab-check')].map((el) => el.value.toLowerCase());
+          marcadosCadastroTemp = [
+            ...marcadosCadastroTemp.filter((m) => !visiveis.includes(m.toLowerCase())),
+            ...atuaisDom
+          ];
+        }
+      }
+
+      const filtro = (document.getElementById('filtroTrabalhosCadastro')?.value || '').trim().toLowerCase();
+      const opcoes = getListaOpcoesTrabalhos().filter((nome) => !filtro || nome.toLowerCase().includes(filtro));
+
       if (opcoes.length === 0) {
-        wrap.innerHTML = `<p class="text-xs text-slate-400 col-span-full">Nenhum trabalho cadastrado ainda. Adicione um abaixo ou na aba Trabalhos.</p>`;
+        wrap.innerHTML = `<p class="text-xs text-slate-400 col-span-full">Nenhum trabalho encontrado com esse filtro. Cadastre trabalhos na aba "Trabalhos & Vínculos" ou adicione um novo abaixo.</p>`;
         return;
       }
+
       wrap.innerHTML = opcoes.map((nome) => {
-        const checked = marcados.some((m) => m.toLowerCase() === nome.toLowerCase()) ? 'checked' : '';
+        const trabObj = (state.trabalhos || []).find((t) => getTrabalhoNome(t).toLowerCase() === nome.toLowerCase());
+        const dataTxt = trabObj ? extrairCampoFlexivel(trabObj, ['Data', 'data']) : '';
+        const valorTxt = trabObj ? extrairCampoFlexivel(trabObj, ['Valor', 'valor']) : '';
+        const metaTxt = [dataTxt, valorTxt].filter(Boolean).join(' • ');
+        const checked = marcadosCadastroTemp.some((m) => m.toLowerCase() === nome.toLowerCase()) ? 'checked' : '';
         return `
-          <label class="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900/90 border border-violet-500/20 text-xs text-slate-200 cursor-pointer hover:border-violet-400/50">
-            <input type="checkbox" class="cad-trab-check rounded accent-violet-500" value="${escapeHtml(nome)}" ${checked}>
-            <span class="truncate">${escapeHtml(nome)}</span>
+          <label class="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-slate-900/90 border border-violet-500/20 text-xs text-slate-200 cursor-pointer hover:border-violet-400/50">
+            <span class="flex items-center gap-2 min-w-0">
+              <input type="checkbox" class="cad-trab-check rounded accent-violet-500 shrink-0" value="${escapeHtml(nome)}" ${checked}>
+              <span class="truncate font-medium">${escapeHtml(nome)}</span>
+            </span>
+            ${metaTxt ? `<span class="text-[10px] text-violet-300/80 shrink-0">${escapeHtml(metaTxt)}</span>` : ''}
           </label>
         `;
       }).join('');
+
+      wrap.querySelectorAll('.cad-trab-check').forEach((chk) => {
+        chk.addEventListener('change', () => {
+          const val = chk.value;
+          if (chk.checked) {
+            if (!marcadosCadastroTemp.some((x) => x.toLowerCase() === val.toLowerCase())) {
+              marcadosCadastroTemp.push(val);
+            }
+          } else {
+            marcadosCadastroTemp = marcadosCadastroTemp.filter((x) => x.toLowerCase() !== val.toLowerCase());
+          }
+        });
+      });
     }
 
     function renderCheckboxesFilhosTrabalho() {
@@ -970,6 +1017,7 @@
     });
 
     document.getElementById('filtroPlanilha')?.addEventListener('input', renderPlanilha);
+    document.getElementById('filtroTrabalhosCadastro')?.addEventListener('input', () => renderCheckboxesTrabalhosCadastro());
 
     document.getElementById('btnAddTrabalhoRapido')?.addEventListener('click', async () => {
       const tipo = (document.getElementById('novoTrabalhoRapidoTipo')?.value || '').trim();
@@ -1002,6 +1050,11 @@
       if (!nome) return;
 
       const idFilho = 'f-' + Date.now();
+      const trabalhosSelecionados = [...new Set([
+        ...marcadosCadastroTemp,
+        ...[...document.querySelectorAll('.cad-trab-check:checked')].map((el) => el.value)
+      ])];
+
       const novo = {
         ID_Filho: idFilho,
         Nome: nome,
@@ -1010,7 +1063,7 @@
         telefone: (document.getElementById('filhoTelefone')?.value || '').trim(),
         dataNascimento: (document.getElementById('filhoDataNascimento')?.value || '').trim(),
         obs: (document.getElementById('filhoObs')?.value || '').trim(),
-        _trabalhosMarcados: [...document.querySelectorAll('.cad-trab-check:checked')].map((el) => el.value)
+        _trabalhosMarcados: trabalhosSelecionados
       };
 
       document.querySelectorAll('.cad-orixa-input').forEach((inp) => {
@@ -1024,8 +1077,9 @@
       });
 
       state.filhos.push(novo);
-      renderTudo();
+      marcadosCadastroTemp = [];
       e.target.reset();
+      renderTudo();
       await gravarBanco(state);
     });
 
