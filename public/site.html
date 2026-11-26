@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instituto 7 Cores • Gestão do Terreiro</title>
-  <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=6khXUVOVDDN4_A2Hcbb0MmqqW8zDzCOAesMF_dnGForz94_S3kqZKNrLFwm1X_v0K4efgrC7rvMKJ4JLZKqoaMw7-9L9cLoNMWIpKU_m3T7D78RC5Ork8RAmZAvYfNTQ69M74bGw-VIslIqDRUdDe1h4vZCZdKnZ00T73hY0Ggudhl8ztOL60P1zdAparCCjsCf6QrN9b6NZJjJjiwxKzNnq_PFP9PoOLag8kNswX3uddPzrUAKebALjJ16pURcAepC961Ln9c8S1kveuXSdkNKLKlEKxAj0VgojjWO3Neiqi2hKQTkZoKolDNPiRM7idi_bAUgH_toUs-r9sVJSAw" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jb250cmlidXRpb24udXNlcmNvbnRlbnQuZ29vZ2xlLmNvbS9kb3dubG9hZD9jPUNneGlZWEprWDNOMGIzSmhaMlVTVUJJTmNtVnpjRzl1YzJWZlpHRjBZUm9fQ2pBNVpHVmhZV1EyTVdVek4yUmpOV1EzTURBd05qWXhNbVUyWkdObFl6SXpaREF4TXpBM01HSTNaalV3TlRKbFpUSVNDeElIRVBTMDZkX0FIQmdCJmZpbGVuYW1lPXNpdGVfYXR1YWxpemFkby12Ny5odG1sJm9waT0xMDMxMzUwNTA"/><script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -50,20 +50,20 @@
         </div>
         <div>
           <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white">Instituto 7 Cores</h1>
-          <p class="text-xs text-violet-200/80">Gestão do Terreiro • Banco de Dados Compartilhado</p>
+          <p class="text-xs text-violet-200/80">Gestão do Terreiro • Planilha Compartilhada</p>
         </div>
       </div>
 
       <div class="flex items-center gap-2.5 flex-wrap">
         <span id="badgeUsuarioAtivo" class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-violet-500/15 border border-violet-500/30 text-violet-200">
-          Conectado ao Banco
+          Planilha Conectada
         </span>
         <button
           type="button"
           id="btnSincronizarAgora"
           class="px-3.5 py-2 rounded-xl text-xs font-bold bg-violet-600/80 hover:bg-violet-500 text-white border border-violet-400/30 transition"
         >
-          Sincronizar Banco
+          Sincronizar Planilha
         </button>
         <button
           type="button"
@@ -75,14 +75,14 @@
       </div>
     </header>
 
-    <!-- BARRA DE URL & SINCRONIZAÇÃO COM O BANCO DE DADOS SEMPRE VISÍVEL NO TOPO -->
+    <!-- BARRA DE URL & SINCRONIZAÇÃO COM A PLANILHA -->
     <section id="barraConexaoPlanilha" class="rounded-2xl border border-violet-500/30 bg-black/65 backdrop-blur-md p-4 space-y-2.5 shadow-lg">
       <div class="flex flex-wrap items-center justify-between gap-2">
         <label for="topoDbUrl" class="text-xs font-bold text-violet-200">
-          URL do Banco de Dados / Google Apps Script (/exec)
+          URL da Planilha / Google Apps Script (/exec)
         </label>
         <span id="statusSync" class="text-xs font-semibold text-violet-200 bg-violet-500/15 border border-violet-500/30 rounded-lg px-3 py-1">
-          Conectando ao banco de dados...
+          Acessando planilha...
         </span>
       </div>
       <div class="flex flex-col sm:flex-row gap-2">
@@ -129,29 +129,43 @@
     <section id="tab-planilha" class="tab-panel space-y-5">
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-4">
-          <p class="text-xs text-violet-200/75 font-semibold">Filhos no Banco</p>
+          <p class="text-xs text-violet-200/75 font-semibold">Filhos na Planilha</p>
           <p id="statFilhos" class="text-2xl font-extrabold text-white mt-1">0</p>
         </div>
         <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-4">
-          <p class="text-xs text-violet-200/75 font-semibold">Trabalhos no Banco</p>
+          <p class="text-xs text-violet-200/75 font-semibold">Trabalhos na Planilha</p>
           <p id="statTrabalhos" class="text-2xl font-extrabold text-white mt-1">0</p>
         </div>
         <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-4">
-          <p class="text-xs text-violet-200/75 font-semibold">Usuários no Banco</p>
-          <p id="statUsuarios" class="text-2xl font-extrabold text-white mt-1">0</p>
+          <p class="text-xs text-violet-200/75 font-semibold">Guias / Entidades</p>
+          <p id="statGuias" class="text-2xl font-extrabold text-white mt-1">0</p>
         </div>
+      </div>
+
+      <!-- FAIXA DOS 7 ORIXÁS (1 A 7) SEMPRE VISÍVEL -->
+      <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 class="text-sm sm:text-base font-extrabold text-white">7 Orixás (1 a 7)</h2>
+            <p class="text-xs text-slate-400">Clique em um Orixá de 1 a 7 para filtrar na planilha ou vincular no cadastro.</p>
+          </div>
+          <button type="button" id="btnLimparFiltroOrixa" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200">
+            Mostrar Todos
+          </button>
+        </div>
+        <div id="gradeSeteOrixas" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2"></div>
       </div>
 
       <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <h2 class="text-base font-extrabold text-white">Dados Compartilhados do Banco de Dados</h2>
-            <p class="text-xs text-slate-400">Tudo lido e gravado diretamente no banco para aparecer em todos os PCs conectados.</p>
+            <h2 class="text-base font-extrabold text-white">Planilha de Filhos, Orixás, Guias & Trabalhos</h2>
+            <p class="text-xs text-slate-400">Clique no nome de um filho para abrir o balão completo, editar ou salvar.</p>
           </div>
           <input
             id="filtroPlanilha"
             type="text"
-            placeholder="Buscar filho, orixá, guia ou trabalho..."
+            placeholder="Buscar filho, orixá (1-7), guia ou trabalho..."
             class="px-3.5 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
           >
         </div>
@@ -161,7 +175,7 @@
             <thead>
               <tr class="border-b border-violet-500/25 text-violet-200">
                 <th class="py-2.5 px-3 font-bold">Filho</th>
-                <th class="py-2.5 px-3 font-bold">Orixá</th>
+                <th class="py-2.5 px-3 font-bold">Orixá (1-7)</th>
                 <th class="py-2.5 px-3 font-bold">Guia</th>
                 <th class="py-2.5 px-3 font-bold">Trabalhos do Filho</th>
                 <th class="py-2.5 px-3 font-bold">Função</th>
@@ -173,13 +187,13 @@
       </div>
     </section>
 
-    <!-- SEÇÃO CADASTRO DE FILHOS -->
+    <!-- SEÇÃO CADASTRO DE FILHOS (COM SUB-ABAS DE ORIXÁ 1..7 E GUIA DENTRO DO CADASTRO) -->
     <section id="tab-filhos" class="tab-panel hidden space-y-5">
       <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-5">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 class="text-base font-extrabold text-white">Cadastro de Filho</h2>
-            <p class="text-xs text-slate-400">Dados principais, abas internas de Orixá e Guia junto ao cadastro e seleção de 1 ou vários trabalhos.</p>
+            <p class="text-xs text-slate-400">Dados principais, abas internas de Orixá (1 a 7) e Guia junto ao cadastro e seleção de 1 ou vários trabalhos.</p>
           </div>
 
           <div class="flex flex-wrap gap-1.5 bg-slate-900/90 p-1 rounded-xl border border-violet-500/25">
@@ -187,7 +201,7 @@
               Dados & Trabalhos
             </button>
             <button type="button" data-cad-subtab="orixa" class="cad-subtab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition">
-              Aba Orixá
+              Aba Orixá (1-7)
             </button>
             <button type="button" data-cad-subtab="guia" class="cad-subtab-btn px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white transition">
               Aba Guia
@@ -203,12 +217,12 @@
                 <input id="filhoNome" type="text" required placeholder="Nome completo *" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
               </div>
               <div>
-                <label for="filhoOrixaDireto" class="block text-xs font-semibold mb-1 text-slate-300">Orixá</label>
-                <input id="filhoOrixaDireto" type="text" placeholder="Ex: Oxóssi, Iansã, Ogum" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+                <label for="filhoOrixaDireto" class="block text-xs font-semibold mb-1 text-slate-300">Orixá (1 a 7 ou livre)</label>
+                <select id="filhoOrixaDireto" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white"></select>
               </div>
               <div>
                 <label for="filhoGuiaDireto" class="block text-xs font-semibold mb-1 text-slate-300">Guia / Entidade</label>
-                <input id="filhoGuiaDireto" type="text" placeholder="Ex: Caboclo Sete Flechas" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+                <input id="filhoGuiaDireto" type="text" list="sugestoesGuias" placeholder="Ex: Caboclo Sete Flechas" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
               </div>
               <div>
                 <label for="filhoFuncao" class="block text-xs font-semibold mb-1 text-slate-300">Função / Cargo</label>
@@ -246,11 +260,11 @@
           </div>
 
           <div id="cad-panel-orixa" class="cad-subpanel hidden rounded-xl border border-violet-500/25 bg-slate-950/75 p-4 space-y-3">
-            <h3 class="text-sm font-bold text-white">Detalhes de Orixá no Cadastro</h3>
+            <h3 class="text-sm font-bold text-white">Detalhes de Orixá (1 a 7) no Cadastro</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label for="filhoOrixaDetalhe" class="block text-xs font-semibold mb-1 text-slate-300">Orixá de Cabeça / Frente</label>
-                <input id="filhoOrixaDetalhe" type="text" placeholder="Ex: Xangô / Oxum" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+                <label for="filhoOrixaDetalhe" class="block text-xs font-semibold mb-1 text-slate-300">Escolha de 1 a 7 ou digite outro</label>
+                <input id="filhoOrixaDetalhe" type="text" list="listaOrixas1a7" placeholder="Ex: 1. Ogum ou 2. Oxóssi" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
               </div>
               <div>
                 <label for="filhoOrixaObs" class="block text-xs font-semibold mb-1 text-slate-300">Cor / Dia / Observação de Orixá</label>
@@ -264,7 +278,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label for="filhoGuiaDetalhe" class="block text-xs font-semibold mb-1 text-slate-300">Guia / Entidade Principal</label>
-                <input id="filhoGuiaDetalhe" type="text" placeholder="Ex: Preto Velho Pai Joaquim" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
+                <input id="filhoGuiaDetalhe" type="text" list="sugestoesGuias" placeholder="Ex: Preto Velho Pai Joaquim" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm border border-violet-500/30 bg-slate-900/90 text-white placeholder-slate-400">
               </div>
               <div>
                 <label for="filhoGuiaLinha" class="block text-xs font-semibold mb-1 text-slate-300">Linha / Outras Guias</label>
@@ -273,8 +287,11 @@
             </div>
           </div>
 
+          <datalist id="listaOrixas1a7"></datalist>
+          <datalist id="sugestoesGuias"></datalist>
+
           <button type="submit" class="w-full sm:w-auto px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white transition">
-            Salvar Filho no Banco de Dados
+            Salvar Filho na Planilha
           </button>
         </form>
       </div>
@@ -302,7 +319,7 @@
           </div>
 
           <button type="submit" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white transition">
-            Salvar Trabalho no Banco de Dados
+            Salvar Trabalho na Planilha
           </button>
         </form>
       </div>
@@ -316,8 +333,8 @@
     <!-- SEÇÃO USUÁRIOS -->
     <section id="tab-usuarios" class="tab-panel hidden space-y-5">
       <div class="rounded-2xl border border-violet-500/25 bg-black/60 p-5 space-y-3">
-        <h2 class="text-base font-extrabold text-white">Usuários Cadastrados no Banco de Dados</h2>
-        <p class="text-xs text-slate-400">Usuários carregados diretamente do banco para todos os PCs conectados.</p>
+        <h2 class="text-base font-extrabold text-white">Usuários Cadastrados na Planilha</h2>
+        <p class="text-xs text-slate-400">Usuários carregados diretamente da planilha para todos os PCs conectados.</p>
         <div id="listaUsuarios" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
       </div>
     </section>
@@ -341,15 +358,15 @@
       <div id="balaoFilhoDetalhes" class="space-y-1 text-xs sm:text-sm text-slate-200 border-t border-violet-500/20 pt-3"></div>
 
       <div class="border-t border-violet-500/20 pt-3 space-y-3">
-        <h4 class="text-xs font-bold uppercase tracking-wider text-violet-300">Editar Orixá, Guia, Função e Trabalhos deste Filho</h4>
+        <h4 class="text-xs font-bold uppercase tracking-wider text-violet-300">Editar Orixá (1-7), Guia, Função e Trabalhos deste Filho</h4>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           <div>
-            <label for="editFilhoOrixa" class="block text-xs font-semibold mb-1 text-slate-300">Orixá</label>
-            <input id="editFilhoOrixa" type="text" class="w-full px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900 text-white">
+            <label for="editFilhoOrixa" class="block text-xs font-semibold mb-1 text-slate-300">Orixá (1-7)</label>
+            <input id="editFilhoOrixa" type="text" list="listaOrixas1a7" class="w-full px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900 text-white">
           </div>
           <div>
             <label for="editFilhoGuia" class="block text-xs font-semibold mb-1 text-slate-300">Guia</label>
-            <input id="editFilhoGuia" type="text" class="w-full px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900 text-white">
+            <input id="editFilhoGuia" type="text" list="sugestoesGuias" class="w-full px-3 py-2 rounded-xl text-xs border border-violet-500/30 bg-slate-900 text-white">
           </div>
           <div class="sm:col-span-2">
             <label for="editFilhoFuncao" class="block text-xs font-semibold mb-1 text-slate-300">Função / Cargo</label>
@@ -361,7 +378,7 @@
           <div id="balaoTrabalhosCheckboxes" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
         </div>
         <button type="button" id="btnSalvarBalaoFilho" class="w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white transition">
-          Salvar Alterações no Banco de Dados
+          Salvar Alterações na Planilha
         </button>
       </div>
     </div>
@@ -370,6 +387,16 @@
   <script>
     const DEFAULT_DB_URL = 'https://script.google.com/macros/s/AKfycbydnBQeThbs_D_Ic3N34vA05JGkb8TaZ6F7DUAhDi6pUTouih0q3OfXsxdVCmcgT0ngng/exec';
     let runtimeDbUrl = DEFAULT_DB_URL;
+
+    const SETE_ORIXAS = [
+      '1. Ogum',
+      '2. Oxóssi',
+      '3. Xangô',
+      '4. Iansã',
+      '5. Oxum',
+      '6. Iemanjá',
+      '7. Omulu / Obaluaê'
+    ];
 
     const DEFAULT_USERS = [
       {
@@ -388,10 +415,12 @@
     let state = {
       filhos: [],
       trabalhos: [],
+      guias: [],
       usuarios: [...DEFAULT_USERS]
     };
 
     let filhoEditIndex = null;
+    let filtroOrixaAtivo = '';
 
     function getDbUrl() {
       return (runtimeDbUrl || DEFAULT_DB_URL).trim();
@@ -416,7 +445,7 @@
 
         const timer = setTimeout(() => {
           cleanup();
-          reject(new Error('Tempo limite ao ler banco de dados.'));
+          reject(new Error('Tempo limite ao ler planilha.'));
         }, timeoutMs);
 
         function cleanup() {
@@ -432,7 +461,7 @@
 
         script.onerror = () => {
           cleanup();
-          reject(new Error('Erro de rede ao ler banco de dados.'));
+          reject(new Error('Erro de rede ao ler planilha.'));
         };
 
         document.body.appendChild(script);
@@ -440,13 +469,21 @@
     }
 
     function pickArray(src, keys) {
+      if (!src || typeof src !== 'object') return [];
       for (const k of keys) {
         if (Array.isArray(src[k])) return src[k];
+      }
+      // Se o Apps Script retornar abas em um mapa de planilhas (ex: sheets: { Filhos: [...] })
+      if (src.sheets && typeof src.sheets === 'object') {
+        for (const k of keys) {
+          if (Array.isArray(src.sheets[k])) return src.sheets[k];
+        }
       }
       return [];
     }
 
     function normalizeTrabalhosFilho(f) {
+      if (!f || typeof f !== 'object') return [];
       const raw = f.trabalhos || f.Trabalhos || f.trabalho || f.Trabalho || [];
       if (Array.isArray(raw)) return raw.map((x) => String(x || '').trim()).filter(Boolean);
       if (typeof raw === 'string' && raw.trim()) {
@@ -455,7 +492,7 @@
       return [];
     }
 
-    function extrairDadosBanco(payload) {
+    function extrairDadosPlanilha(payload) {
       const root = payload && typeof payload === 'object' ? payload : {};
       const src = root.data && typeof root.data === 'object' ? root.data : root;
 
@@ -464,11 +501,13 @@
         trabalhos: normalizeTrabalhosFilho(f)
       }));
       const trabalhos = pickArray(src, ['trabalhos', 'Trabalhos', 'giras', 'Giras']);
+      const guias = pickArray(src, ['guias', 'Guias', 'entidades', 'Entidades']);
       const usuariosRaw = pickArray(src, ['usuarios', 'Usuarios', 'usuários', 'Usuários', 'users', 'Users']);
 
       return {
         filhos,
         trabalhos,
+        guias,
         usuarios: usuariosRaw.length > 0 ? usuariosRaw : [...DEFAULT_USERS]
       };
     }
@@ -493,7 +532,7 @@
 
     async function gravarBanco(nextState) {
       const url = getDbUrl();
-      setStatus('Gravando no banco de dados...');
+      setStatus('Gravando na planilha...');
       try {
         await fetch(url, {
           method: 'POST',
@@ -503,27 +542,33 @@
             action: 'write',
             filhos: nextState.filhos || [],
             trabalhos: nextState.trabalhos || [],
+            guias: nextState.guias || [],
             usuarios: nextState.usuarios || [],
             data: nextState,
             updatedAt: new Date().toISOString()
           })
         });
-        setStatus('Salvo no banco para todos os PCs.');
+        setStatus('Salvo na planilha para todos os PCs.');
       } catch (_) {
-        setStatus('Falha ao gravar no banco — confira a URL.');
+        setStatus('Falha ao gravar na planilha — confira a URL.');
       }
     }
 
     async function sincronizarBanco() {
-      setStatus('Sincronizando com o banco de dados...');
+      setStatus('Acessando planilha...');
       try {
         const payload = await lerBanco();
-        state = extrairDadosBanco(payload);
+        const temErro = payload && (payload.ok === false || payload.error || payload.status === 'error');
+        state = extrairDadosPlanilha(payload);
         renderTudo();
-        setStatus(`Banco sincronizado (${state.filhos.length} filho(s), ${state.trabalhos.length} trabalho(s))`);
+        if (temErro) {
+          setStatus(`Resposta com aviso da planilha: ${payload.error || payload.message || 'verifique o Apps Script'}`);
+        } else {
+          setStatus(`Planilha conectada (${state.filhos.length} filho(s), ${state.trabalhos.length} trabalho(s))`);
+        }
       } catch (_) {
         renderTudo();
-        setStatus('Erro ao conectar no banco — confira a URL acima');
+        setStatus('Erro ao acessar a planilha — confira a URL /exec e permissões do Apps Script');
       }
     }
 
@@ -551,6 +596,74 @@
 
     function getTrabalhoNome(t) {
       return typeof t === 'string' ? t : (t.titulo || t.nome || t.Nome || 'Trabalho');
+    }
+
+    function getListaGuiasConhecidas() {
+      const setGuias = new Set();
+      (state.guias || []).forEach((g) => {
+        const nome = typeof g === 'string' ? g : (g.nome || g.Nome || g.guia || g.Guia || '');
+        if (String(nome).trim()) setGuias.add(String(nome).trim());
+      });
+      (state.filhos || []).forEach((f) => {
+        const g = getFilhoGuia(f).trim();
+        if (g) setGuias.add(g);
+      });
+      return [...setGuias];
+    }
+
+    function popularOrixasEGuias() {
+      const selectOrixa = document.getElementById('filhoOrixaDireto');
+      const dlOrixas = document.getElementById('listaOrixas1a7');
+      const dlGuias = document.getElementById('sugestoesGuias');
+
+      if (selectOrixa) {
+        const atual = selectOrixa.value;
+        selectOrixa.innerHTML = [
+          `<option value="">Selecione um Orixá (1 a 7)...</option>`,
+          ...SETE_ORIXAS.map((o) => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`)
+        ].join('');
+        if (atual) selectOrixa.value = atual;
+      }
+
+      if (dlOrixas) {
+        dlOrixas.innerHTML = SETE_ORIXAS.map((o) => `<option value="${escapeHtml(o)}"></option>`).join('');
+      }
+
+      if (dlGuias) {
+        dlGuias.innerHTML = getListaGuiasConhecidas().map((g) => `<option value="${escapeHtml(g)}"></option>`).join('');
+      }
+    }
+
+    function renderGradeSeteOrixas() {
+      const wrap = document.getElementById('gradeSeteOrixas');
+      if (!wrap) return;
+      wrap.innerHTML = SETE_ORIXAS.map((orixa) => {
+        const qtd = state.filhos.filter((f) => getFilhoOrixa(f).toLowerCase().includes(orixa.toLowerCase()) || getFilhoOrixa(f).startsWith(orixa.slice(0, 2))).length;
+        const ativo = filtroOrixaAtivo && filtroOrixaAtivo.toLowerCase() === orixa.toLowerCase();
+        return `
+          <button
+            type="button"
+            data-orixa="${escapeHtml(orixa)}"
+            class="btn-filtro-orixa text-left rounded-xl border p-2.5 transition ${
+              ativo
+                ? 'border-violet-300 bg-violet-600 text-white'
+                : 'border-violet-500/25 bg-slate-950/80 text-slate-200 hover:border-violet-400/50'
+            }"
+          >
+            <p class="text-xs font-extrabold truncate">${escapeHtml(orixa)}</p>
+            <p class="text-[11px] opacity-80 mt-0.5">${qtd} filho(s)</p>
+          </button>
+        `;
+      }).join('');
+
+      wrap.querySelectorAll('.btn-filtro-orixa').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const val = btn.getAttribute('data-orixa') || '';
+          filtroOrixaAtivo = filtroOrixaAtivo === val ? '' : val;
+          renderGradeSeteOrixas();
+          renderPlanilha();
+        });
+      });
     }
 
     function getListaOpcoesTrabalhos() {
@@ -692,6 +805,13 @@
       const linhas = state.filhos
         .map((f, realIdx) => ({ f, realIdx }))
         .filter(({ f }) => {
+          const orixaAtual = getFilhoOrixa(f).toLowerCase();
+          if (filtroOrixaAtivo) {
+            const numPrefix = filtroOrixaAtivo.slice(0, 2).toLowerCase();
+            if (!orixaAtual.includes(filtroOrixaAtivo.toLowerCase()) && !orixaAtual.startsWith(numPrefix)) {
+              return false;
+            }
+          }
           if (!filtro) return true;
           const blob = [
             f.nome || f.Nome || '',
@@ -706,7 +826,7 @@
       if (linhas.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="5" class="py-4 px-3 text-slate-400 text-center">Nenhum registro no banco de dados.</td>
+            <td colspan="5" class="py-4 px-3 text-slate-400 text-center">Nenhum registro encontrado na planilha.</td>
           </tr>
         `;
         return;
@@ -745,7 +865,7 @@
       const wrap = document.getElementById('listaFilhos');
       if (!wrap) return;
       if (state.filhos.length === 0) {
-        wrap.innerHTML = `<p class="text-xs text-slate-400 col-span-full">Nenhum filho cadastrado no banco de dados.</p>`;
+        wrap.innerHTML = `<p class="text-xs text-slate-400 col-span-full">Nenhum filho cadastrado na planilha.</p>`;
         return;
       }
       wrap.innerHTML = state.filhos.map((f, idx) => {
@@ -777,7 +897,7 @@
       const wrap = document.getElementById('listaTrabalhos');
       if (!wrap) return;
       if (state.trabalhos.length === 0) {
-        wrap.innerHTML = `<p class="text-xs text-slate-400 col-span-full">Nenhum trabalho cadastrado no banco de dados.</p>`;
+        wrap.innerHTML = `<p class="text-xs text-slate-400 col-span-full">Nenhum trabalho cadastrado na planilha.</p>`;
         return;
       }
 
@@ -820,7 +940,9 @@
     function renderTudo() {
       document.getElementById('statFilhos').textContent = String(state.filhos.length);
       document.getElementById('statTrabalhos').textContent = String(state.trabalhos.length);
-      document.getElementById('statUsuarios').textContent = String(state.usuarios.length);
+      document.getElementById('statGuias').textContent = String(getListaGuiasConhecidas().length);
+      popularOrixasEGuias();
+      renderGradeSeteOrixas();
       renderPlanilha();
       renderFilhos();
       renderTrabalhos();
@@ -828,6 +950,12 @@
       renderCheckboxesTrabalhosCadastro();
       renderCheckboxesFilhosTrabalho();
     }
+
+    document.getElementById('btnLimparFiltroOrixa')?.addEventListener('click', () => {
+      filtroOrixaAtivo = '';
+      renderGradeSeteOrixas();
+      renderPlanilha();
+    });
 
     document.querySelectorAll('.tab-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -977,3 +1105,12 @@
   </script>
 </body>
 </html>
+"""
+
+assert "localStorage" not in site_v8
+assert "sessionStorage" not in site_v8
+
+with open("site_atualizado-v8.html", "w", encoding="utf-8") as f:
+    f.write(site_v8)
+
+print("Generated site_atualizado-v8.html successfully")
